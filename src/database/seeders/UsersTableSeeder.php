@@ -15,7 +15,7 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('users')->insert([
+        $users = [
             [
                 'id' => 1,
                 'name' => 'テストユーザー',
@@ -25,8 +25,6 @@ class UsersTableSeeder extends Seeder
                 'address' => '東京都渋谷区1-3',
                 'building' => '渋谷ヒカリエ601',
                 'profile_image' => null,
-                'created_at' => now(),
-                'updated_at' => now(),
             ],
             [
                 'id' => 2,
@@ -37,9 +35,14 @@ class UsersTableSeeder extends Seeder
                 'address' => '大阪府大阪市2-4',
                 'building' => 'なんばパークス301',
                 'profile_image' => null,
-                'created_at' => now(),
-                'updated_at' => now(),
             ],
-        ]);
+        ];
+
+        foreach ($users as $user) {
+            DB::table('users')->updateOrInsert(
+                ['email' => $user['email']],
+                array_merge($user, ['updated_at' => now(), 'created_at' => now()])
+            );
+        }
     }
 }

@@ -14,26 +14,31 @@ class TransactionsTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('transactions')->insert([
+        $transactions = [
             [
                 'buyer_id' => 1,
                 'item_id' => 1,
-                'status_id' => 4, // COMPLETED
+                'status_id' => 4,
                 'payment_method' => 'Credit Card',
                 'shipping_address' => '123 Test St, Tokyo',
-                'created_at' => now(),
-                'updated_at' => now(),
             ],
             [
                 'buyer_id' => 2,
                 'item_id' => 2,
-                'status_id' => 5, // CANCELLED
+                'status_id' => 5,
                 'payment_method' => 'PayPal',
                 'shipping_address' => '456 Another St, Osaka',
-                'created_at' => now(),
-                'updated_at' => now(),
             ],
-        ]);
+        ];
+
+        foreach ($transactions as $transaction) {
+            DB::table('transactions')->updateOrInsert(
+                [
+                    'buyer_id' => $transaction['buyer_id'],
+                    'item_id' => $transaction['item_id'],
+                ],
+                array_merge($transaction, ['updated_at' => now(), 'created_at' => now()])
+            );
+        }
     }
 }
-

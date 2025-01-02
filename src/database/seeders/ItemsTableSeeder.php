@@ -14,7 +14,7 @@ class ItemsTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('items')->insert([
+        $items = [
             [
                 'name' => '腕時計',
                 'description' => 'スタイリッシュなデザインのメンズ腕時計',
@@ -23,8 +23,6 @@ class ItemsTableSeeder extends Seeder
                 'image' => 'storage/items/Armani+Mens+Clock.jpg',
                 'user_id' => 1,
                 'status_id' => 1,
-                'created_at' => now(),
-                'updated_at' => now(),
             ],
             [
                 'name' => 'HDD',
@@ -34,8 +32,6 @@ class ItemsTableSeeder extends Seeder
                 'image' => 'storage/items/HDD+Hard+Disk.jpg',
                 'user_id' => 1,
                 'status_id' => 1,
-                'created_at' => now(),
-                'updated_at' => now(),
             ],
             [
                 'name' => '玉ねぎ3束',
@@ -45,8 +41,6 @@ class ItemsTableSeeder extends Seeder
                 'image' => 'storage/items/iLoveIMG+d.jpg',
                 'user_id' => 1,
                 'status_id' => 1,
-                'created_at' => now(),
-                'updated_at' => now(),
             ],
             [
                 'name' => '革靴',
@@ -56,8 +50,6 @@ class ItemsTableSeeder extends Seeder
                 'image' => 'storage/items/Leather+Shoes+Product+Photo.jpg',
                 'user_id' => 1,
                 'status_id' => 1,
-                'created_at' => now(),
-                'updated_at' => now(),
             ],
             [
                 'name' => 'ノートPC',
@@ -67,8 +59,6 @@ class ItemsTableSeeder extends Seeder
                 'image' => 'storage/items/Living+Room+Laptop.jpg',
                 'user_id' => 1,
                 'status_id' => 1,
-                'created_at' => now(),
-                'updated_at' => now(),
             ],
             [
                 'name' => 'マイク',
@@ -78,8 +68,6 @@ class ItemsTableSeeder extends Seeder
                 'image' => 'storage/items/Music+Mic+4632231.jpg',
                 'user_id' => 1,
                 'status_id' => 1,
-                'created_at' => now(),
-                'updated_at' => now(),
             ],
             [
                 'name' => 'ショルダーバッグ',
@@ -89,8 +77,6 @@ class ItemsTableSeeder extends Seeder
                 'image' => 'storage/items/Purse+fashion+pocket.jpg',
                 'user_id' => 1,
                 'status_id' => 1,
-                'created_at' => now(),
-                'updated_at' => now(),
             ],
             [
                 'name' => 'タンブラー',
@@ -100,8 +86,6 @@ class ItemsTableSeeder extends Seeder
                 'image' => 'storage/items/Tumbler+souvenir.jpg',
                 'user_id' => 1,
                 'status_id' => 1,
-                'created_at' => now(),
-                'updated_at' => now(),
             ],
             [
                 'name' => 'コーヒーミル',
@@ -111,8 +95,6 @@ class ItemsTableSeeder extends Seeder
                 'image' => 'storage/items/Waitress+with+Coffee+Grinder.jpg',
                 'user_id' => 1,
                 'status_id' => 1,
-                'created_at' => now(),
-                'updated_at' => now(),
             ],
             [
                 'name' => 'メイクセット',
@@ -122,33 +104,14 @@ class ItemsTableSeeder extends Seeder
                 'image' => 'storage/items/外出メイクアップセット.jpg',
                 'user_id' => 1,
                 'status_id' => 1,
-                'created_at' => now(),
-                'updated_at' => now(),
             ],
-        ]);
+        ];
 
-        DB::table('item_category')->insert([
-            ['item_id' => 1, 'category_id' => 1, 'created_at' => now(), 'updated_at' => now()],
-            ['item_id' => 1, 'category_id' => 2, 'created_at' => now(), 'updated_at' => now()],
-
-            ['item_id' => 2, 'category_id' => 3, 'created_at' => now(), 'updated_at' => now()],
-            ['item_id' => 2, 'category_id' => 4, 'created_at' => now(), 'updated_at' => now()],
-
-            ['item_id' => 3, 'category_id' => 5, 'created_at' => now(), 'updated_at' => now()],
-
-            ['item_id' => 4, 'category_id' => 6, 'created_at' => now(), 'updated_at' => now()],
-
-            ['item_id' => 5, 'category_id' => 7, 'created_at' => now(), 'updated_at' => now()],
-
-            ['item_id' => 6, 'category_id' => 8, 'created_at' => now(), 'updated_at' => now()],
-
-            ['item_id' => 7, 'category_id' => 9, 'created_at' => now(), 'updated_at' => now()],
-
-            ['item_id' => 8, 'category_id' => 10, 'created_at' => now(), 'updated_at' => now()],
-
-            ['item_id' => 9, 'category_id' => 1, 'created_at' => now(), 'updated_at' => now()],
-
-            ['item_id' => 10, 'category_id' => 2, 'created_at' => now(), 'updated_at' => now()],
-        ]);
+        foreach ($items as $item) {
+            DB::table('items')->updateOrInsert(
+                ['name' => $item['name']],
+                array_merge($item, ['updated_at' => now()])
+            );
+        }
     }
 }
