@@ -72,22 +72,25 @@ class User extends Authenticatable implements MustVerifyEmail
 
     protected function profileImageUrl(): Attribute
     {
-        return Attribute::make(
-            get: fn () => $this->profile_image
-                ? asset('storage/' . $this->profile_image)
-                : asset(self::DEFAULT_PROFILE_IMAGE),
+        return new Attribute(
+            function () {
+                return $this->profile_image
+                    ? asset('storage/' . $this->profile_image)
+                    : asset(self::DEFAULT_PROFILE_IMAGE);
+            }
         );
     }
 
     protected function profileImage(): Attribute
     {
-        return Attribute::make(
-            set: function ($value) {
+        return new Attribute(
+            null,
+            function ($value) {
                 if (is_file($value)) {
                     $fileName = time() . '_' . $value->getClientOriginalName();
                     $filePath = $value->storeAs('public/profile_images', $fileName);
                     if (!$filePath) {
-                        throw new \Exception('Failed to store the profile image.');
+                        throw new \RuntimeException('Profile image upload failed. Please try again.');
                     }
                     return 'profile_images/' . $fileName;
                 }

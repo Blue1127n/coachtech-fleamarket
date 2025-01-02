@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class Item extends Model
 {
@@ -13,7 +12,6 @@ class Item extends Model
     protected $fillable = [
         'user_id',
         'status_id',
-        'category_id',
         'name',
         'description',
         'price',
@@ -31,9 +29,9 @@ class Item extends Model
         return $this->belongsTo(Status::class);
     }
 
-    public function category()
+    public function categories()
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsToMany(Category::class, 'item_category', 'item_id', 'category_id');
     }
 
     public function transactions()
@@ -51,30 +49,25 @@ class Item extends Model
         return $this->hasMany(Comment::class);
     }
 
-    protected function imageUrl(): Attribute
+    public function getImageUrlAttribute()
     {
-        return Attribute::make(
-            get: fn () => $this->image
-                ? asset('storage/' . $this->image)
-                : asset('images/default-item.png'),
-        );
+        return $this->image
+            ? asset('storage/' . $this->image)
+            : asset('images/default-item.png');
     }
 
-    protected function image(): Attribute
+    public function setImageAttribute($value)
     {
-        return Attribute::make(
-            set: function ($value) {
-                if (is_file($value)) {
-                    $fileName = time() . '_' . $value->getClientOriginalName();
-                    $filePath = $value->storeAs('public/item_images', $fileName);
-                    if (!$filePath) {
-                        throw new \Exception('Failed to store the item image.');
-                    }
-                    return 'item_images/' . $fileName;
-                }
-                return $value;
+        if (is_file($value)) {
+            $fileName = uniqid() . '_' . time() . '_' . $value->getClientOriginalName();
+            $filePath = $value->storeAs('public/item_images', $fileName);
+            if (!$filePath) {
+                throw new \RuntimeException('Failed to store the item image.');
             }
-        );
+            $this->attributes['image'] = 'item_images/' . $fileName;
+        } else {
+            $this->attributes['image'] = $value;
+        }
     }
 
     public function likeCount(): int
@@ -87,8 +80,9 @@ class Item extends Model
         return $this->comments()->count();
     }
 
+    private const STATUS_SOLD = 'Sold';
     public function isPurchasable(): bool
     {
-        return $this->status && $this->status->name !== 'Sold';
+        return $this->status && $this->status->name !== self::STATUS_SOLD;
     }
 }

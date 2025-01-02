@@ -8,4 +8,18 @@ use Illuminate\Database\Eloquent\Model;
 class Category extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'name',
+    ];
+
+    public function items()
+    {
+        return $this->belongsToMany(Item::class, 'item_category', 'category_id', 'item_id');
+    }
+
+    public function itemCount(): int
+    {
+        return $this->items()->count();
+    }
 }

@@ -21,7 +21,6 @@ class ItemsTableSeeder extends Seeder
                 'price' => 15000,
                 'condition' => '良好',
                 'image' => 'storage/items/Armani+Mens+Clock.jpg',
-                'category_id' => 1,
                 'user_id' => 1,
                 'status_id' => 1,
                 'created_at' => now(),
@@ -33,7 +32,6 @@ class ItemsTableSeeder extends Seeder
                 'price' => 5000,
                 'condition' => '目立った傷や汚れなし',
                 'image' => 'storage/items/HDD+Hard+Disk.jpg',
-                'category_id' => 2,
                 'user_id' => 1,
                 'status_id' => 1,
                 'created_at' => now(),
@@ -45,7 +43,6 @@ class ItemsTableSeeder extends Seeder
                 'price' => 300,
                 'condition' => 'やや傷や汚れあり',
                 'image' => 'storage/items/iLoveIMG+d.jpg',
-                'category_id' => 3,
                 'user_id' => 1,
                 'status_id' => 1,
                 'created_at' => now(),
@@ -57,7 +54,6 @@ class ItemsTableSeeder extends Seeder
                 'price' => 4000,
                 'condition' => '状態が悪い',
                 'image' => 'storage/items/Leather+Shoes+Product+Photo.jpg',
-                'category_id' => 4,
                 'user_id' => 1,
                 'status_id' => 1,
                 'created_at' => now(),
@@ -69,7 +65,6 @@ class ItemsTableSeeder extends Seeder
                 'price' => 45000,
                 'condition' => '良好',
                 'image' => 'storage/items/Living+Room+Laptop.jpg',
-                'category_id' => 5,
                 'user_id' => 1,
                 'status_id' => 1,
                 'created_at' => now(),
@@ -81,7 +76,6 @@ class ItemsTableSeeder extends Seeder
                 'price' => 8000,
                 'condition' => '目立った傷や汚れなし',
                 'image' => 'storage/items/Music+Mic+4632231.jpg',
-                'category_id' => 6,
                 'user_id' => 1,
                 'status_id' => 1,
                 'created_at' => now(),
@@ -93,7 +87,6 @@ class ItemsTableSeeder extends Seeder
                 'price' => 3500,
                 'condition' => 'やや傷や汚れあり',
                 'image' => 'storage/items/Purse+fashion+pocket.jpg',
-                'category_id' => 7,
                 'user_id' => 1,
                 'status_id' => 1,
                 'created_at' => now(),
@@ -105,7 +98,6 @@ class ItemsTableSeeder extends Seeder
                 'price' => 500,
                 'condition' => '状態が悪い',
                 'image' => 'storage/items/Tumbler+souvenir.jpg',
-                'category_id' => 8,
                 'user_id' => 1,
                 'status_id' => 1,
                 'created_at' => now(),
@@ -117,7 +109,6 @@ class ItemsTableSeeder extends Seeder
                 'price' => 4000,
                 'condition' => '良好',
                 'image' => 'storage/items/Waitress+with+Coffee+Grinder.jpg',
-                'category_id' => 9,
                 'user_id' => 1,
                 'status_id' => 1,
                 'created_at' => now(),
@@ -129,12 +120,35 @@ class ItemsTableSeeder extends Seeder
                 'price' => 2500,
                 'condition' => '目立った傷や汚れなし',
                 'image' => 'storage/items/外出メイクアップセット.jpg',
-                'category_id' => 10,
                 'user_id' => 1,
                 'status_id' => 1,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
+        ]);
+
+        DB::table('item_category')->insert([
+            ['item_id' => 1, 'category_id' => 1, 'created_at' => now(), 'updated_at' => now()],
+            ['item_id' => 1, 'category_id' => 2, 'created_at' => now(), 'updated_at' => now()],
+
+            ['item_id' => 2, 'category_id' => 3, 'created_at' => now(), 'updated_at' => now()],
+            ['item_id' => 2, 'category_id' => 4, 'created_at' => now(), 'updated_at' => now()],
+
+            ['item_id' => 3, 'category_id' => 5, 'created_at' => now(), 'updated_at' => now()],
+
+            ['item_id' => 4, 'category_id' => 6, 'created_at' => now(), 'updated_at' => now()],
+
+            ['item_id' => 5, 'category_id' => 7, 'created_at' => now(), 'updated_at' => now()],
+
+            ['item_id' => 6, 'category_id' => 8, 'created_at' => now(), 'updated_at' => now()],
+
+            ['item_id' => 7, 'category_id' => 9, 'created_at' => now(), 'updated_at' => now()],
+
+            ['item_id' => 8, 'category_id' => 10, 'created_at' => now(), 'updated_at' => now()],
+
+            ['item_id' => 9, 'category_id' => 1, 'created_at' => now(), 'updated_at' => now()],
+
+            ['item_id' => 10, 'category_id' => 2, 'created_at' => now(), 'updated_at' => now()],
         ]);
     }
 }

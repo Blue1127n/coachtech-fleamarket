@@ -8,4 +8,45 @@ use Illuminate\Database\Eloquent\Model;
 class Transaction extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'buyer_id',
+        'item_id',
+        'status_id',
+        'payment_method',
+        'shipping_address',
+    ];
+
+    public function buyer()
+    {
+        return $this->belongsTo(User::class, 'buyer_id');
+    }
+
+    public function item()
+    {
+        return $this->belongsTo(Item::class);
+    }
+
+    public function status()
+    {
+        return $this->belongsTo(Status::class);
+    }
+
+    public function histories()
+    {
+        return $this->hasMany(History::class);
+    }
+
+    private const STATUS_COMPLETED = 'COMPLETED';
+    private const STATUS_CANCELLED = 'CANCELLED';
+
+    public function isCompleted(): bool
+    {
+        return $this->status && $this->status->name === self::STATUS_COMPLETED;
+    }
+
+    public function isCancelled(): bool
+    {
+        return $this->status && $this->status->name === self::STATUS_CANCELLED;
+    }
 }

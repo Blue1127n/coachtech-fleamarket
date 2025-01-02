@@ -17,7 +17,6 @@ class CreateItemsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('status_id');
-            $table->unsignedBigInteger('category_id');
             $table->string('name');
             $table->text('description')->nullable();
             $table->integer('price');
@@ -27,7 +26,6 @@ class CreateItemsTable extends Migration
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('status_id')->references('id')->on('statuses')->onDelete('cascade');
-            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
         });
     }
 
