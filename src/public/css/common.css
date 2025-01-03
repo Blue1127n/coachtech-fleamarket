@@ -1,21 +1,24 @@
-/* ヘッダー全体のスタイル */
 .header {
     background-color: rgba(0, 0, 0, 1);
-    padding: 10px 20px; /* 上下: 10px、左右: 20px */
+    padding: 10px 20px;
     display: flex;
-    justify-content: center; /* 中央揃え */
-    align-items: center; /* 縦方向も中央揃え */
-    width: 1515px;
-    height: 82px;
-    gap: 0px;
+    justify-content: center;
+    align-items: center;
 }
 
-/* ロゴ画像のスタイル */
 .header__logo {
-    max-width: 370px; /* ロゴの最大幅 */
+    max-width: 370px;
     height: 36.01px;
     gap: 0px;
     color: rgba(255, 255, 255, 1);
+}
+
+.container {
+    background-color: rgba(0, 0, 0, 1);
+    width: 1515px;
+    height: 82px;
+    gap: 0px;
+    padding: 22px 25px 0px 0px;
 }
 
 
