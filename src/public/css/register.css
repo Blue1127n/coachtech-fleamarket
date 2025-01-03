@@ -6,22 +6,16 @@ body {
     width: 100%;
 }
 
-.global-error {
-    color: rgba(255, 85, 85, 1);
-    font-size: 20px;
-    margin-bottom: 15px;
-    text-align: left;
-}
-
-.login-container {
+.register-container {
     max-width: 680px;
-    margin: 30px auto;
-    padding: 5px;
+    margin: 100px auto;
+    padding: 20px;
+    gap: 0px;
     background-color: rgba(255, 255, 255, 1);
     text-align: center;
 }
 
-.login-container h2 {
+.register-container h2 {
     margin-bottom: 40px;
     margin-top: 0px;
     color: rgba(0, 0, 0, 1);
@@ -31,6 +25,7 @@ body {
     text-align: center;
     text-underline-position: from-font;
     text-decoration-skip-ink: none;
+    text-align: center;
 }
 
 .form-group {
@@ -52,9 +47,9 @@ body {
 
 .input-text {
     width: 680px;
-    height: 56px;
-    gap: 0px;
+    height: 58px;
     padding: 10px;
+    gap: 0px;
     font-size: 14px;
     border: 1px solid rgba(95, 95, 95, 1);
     border-radius: 4px;
@@ -70,11 +65,8 @@ body {
 .btn-submit {
     display: block;
     width: 680px;
-    height: 65.25px;
-    padding: 10px;
+    height: 65px;
     gap: 0px;
-    margin-top: 60px;
-    margin-bottom: 30px;
     background-color: rgba(255, 85, 85, 1);
     color: rgba(255, 255, 255, 1);
     font-size: 26px;
@@ -86,13 +78,15 @@ body {
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    margin-top: 60px;
+    margin-bottom: 30px;
 }
 
 .btn-submit:hover {
     background-color: rgba(255, 85, 85, 1);
 }
 
-.login-container p a {
+.register-container p a {
     color: rgba(0, 115, 204, 1);
     text-decoration: none;
     font-size: 20px;
@@ -103,51 +97,68 @@ body {
     text-decoration-skip-ink: none;
 }
 
-.login-container p a:hover {
+.register-container p a:hover {
     text-decoration: underline;
 }
 
 @media screen and (max-width: 1540px) {
-    .login-container {
-        margin: 50px auto;
+    .register-container {
+        max-width: 90%;
     }
-
+    .input-text {
+        height: 45px;
+    }
     .btn-submit {
-        font-size: 22px;
-        height: 60px;
+        height: 45px;
     }
 }
 
 @media screen and (max-width: 850px) {
-    .login-container h2 {
-        font-size: 30px;
+    .register-container {
+        padding: 15px;
     }
-
+    h2 {
+        font-size: 28px;
+    }
     .form-group label {
-        font-size: 20px;
+        font-size: 16px;
     }
-
-    .input-text,
+    .input-text {
+        height: 40px;
+    }
     .btn-submit {
-        width: 100%;
+        font-size: 18px;
+        height: 40px;
+    }
+    .error-message {
+        font-size: 14px;
     }
 }
 
 @media screen and (max-width: 768px) {
-    .login-container {
-        padding: 15px;
+    .register-container {
+        padding: 10px;
     }
-
-    .btn-submit {
-        font-size: 18px;
-        height: 55px;
+    h2 {
+        font-size: 24px;
+        margin-bottom: 20px;
     }
-
     .form-group label {
-        font-size: 18px;
+        font-size: 14px;
     }
-
-    .login-container h2 {
-        font-size: 26px;
+    .input-text {
+        height: 36px;
+        font-size: 14px;
+    }
+    .btn-submit {
+        font-size: 16px;
+        height: 36px;
+        margin-top: 30px;
+    }
+    .error-message {
+        font-size: 12px;
+    }
+    .register-container p a {
+        font-size: 14px;
     }
 }

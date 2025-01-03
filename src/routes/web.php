@@ -14,11 +14,8 @@ use App\Http\Controllers\AuthController;
 |
 */
 
-// ログイン画面の表示
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
-
-// ログイン処理
 Route::post('/login', [AuthController::class, 'login']);
-
-// ログアウト処理
+Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
+Route::post('/register', [AuthController::class, 'register']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
