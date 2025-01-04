@@ -30,7 +30,7 @@
 }
 
 .header__search input {
-    width: 500px;
+    max-width: 500px;
     height: 50px;
     gap: 0px;
     padding: 0 10px;

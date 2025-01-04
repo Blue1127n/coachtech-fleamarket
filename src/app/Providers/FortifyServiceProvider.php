@@ -49,6 +49,11 @@ class FortifyServiceProvider extends ServiceProvider
             return view('auth.passwords.reset', ['request' => $request]); // パスワードリセット画面
         });
 
+        // メール認証画面
+        Fortify::verifyEmailView(function () {
+            return view('auth.verify-email'); // メール認証画面
+        });
+
         RateLimiter::for('login', function (Request $request) {
             $throttleKey = Str::transliterate(Str::lower($request->input(Fortify::username())).'|'.$request->ip());
 

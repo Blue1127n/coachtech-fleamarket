@@ -20,20 +20,30 @@ class AuthController extends Controller
     // ログイン処理
     public function login(LoginRequest $request)
     {
-        // 入力されたメールアドレスとパスワードを取得して認証を試みる
-        if (!Auth::attempt($request->only('email', 'password'))) {
-            // 認証失敗時のエラーを返す
+        \Log::info('Login request received', $request->all());
+
+        $credentials = $request->only('email', 'password');
+
+        \Log::info('Attempting login with credentials', $credentials);
+
+        // ユーザー名またはメールアドレスでログインを試みる
+        $loginByEmail = Auth::attempt(['email' => $credentials['email'], 'password' => $credentials['password']]);
+        $loginByName = Auth::attempt(['name' => $credentials['email'], 'password' => $credentials['password']]);
+
+        if (!$loginByEmail && !$loginByName) {
+            \Log::error('Login failed for credentials', $credentials);
             return back()->withErrors(['login' => 'ログイン情報が登録されていません'])->withInput();
         }
 
         // メール認証済みかを確認
         if (!Auth::user()->hasVerifiedEmail()) {
             Auth::logout(); // 認証を解除
-            return back()->withErrors(['login' => 'ログイン情報が登録されていません']);
+            return back()->withErrors(['login' => __('auth.unverified_email')])->withInput();
         }
 
         // 認証成功時の処理
         $request->session()->regenerate(); // セッションの再生成
+        \Log::info('Login successful for user', ['user' => Auth::user()]);
 
         return redirect()->intended('/')->with('success', 'ログインしました');
     }

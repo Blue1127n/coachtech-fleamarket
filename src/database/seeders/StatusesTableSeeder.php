@@ -15,17 +15,17 @@ class StatusesTableSeeder extends Seeder
     public function run()
     {
         $statuses = [
-            ['name' => 'available', 'description' => '購入可能'],
-            ['name' => 'sold', 'description' => '売却済み'],
-            ['name' => 'pending', 'description' => '取引中'],
+            ['name' => 'available', 'description' => '販売中'],
+            ['name' => 'pending', 'description' => '取引保留中'],
             ['name' => 'COMPLETED', 'description' => '取引完了'],
             ['name' => 'CANCELLED', 'description' => '取引キャンセル'],
+            ['name' => 'sold', 'description' => '売却済み'],
         ];
 
         foreach ($statuses as $status) {
             DB::table('statuses')->updateOrInsert(
                 ['name' => $status['name']],
-                ['description' => $status['description'], 'updated_at' => now()]
+                ['description' => $status['description'], 'created_at' => now(), 'updated_at' => now()]
             );
         }
     }
