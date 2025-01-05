@@ -11,7 +11,6 @@
 </head>
 <body>
     <div class="container">
-        <!-- ヘッダー -->
         <header class="main-header">
             <div class="logo">
                 <img src="{{ asset('storage/items/logo.svg') }}" alt="Logo">
@@ -20,13 +19,22 @@
                 <input type="text" placeholder="なにをお探しですか？" class="search-box">
             </div>
             <div class="header__menu">
-                <a href="{{ route('login') }}">ログイン</a>
+                @guest
+                    <a href="{{ route('login') }}">ログイン</a>
+                @endguest
+
+                @auth
+                    <form action="{{ route('logout') }}" method="POST" style="display: inline;">
+                        @csrf
+                        <button type="submit" class="logout-btn">ログアウト</button>
+                    </form>
+                @endauth
+
                 <a href="{{ route('profile.mypage') }}">マイページ</a>
                 <a href="{{ route('item.create') }}" class="header__sell-btn">出品</a>
             </div>
         </header>
 
-        <!-- メインコンテンツ -->
         <main>
             @yield('content')
         </main>

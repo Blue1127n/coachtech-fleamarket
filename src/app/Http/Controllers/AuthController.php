@@ -45,7 +45,7 @@ class AuthController extends Controller
         $request->session()->regenerate(); // セッションの再生成
         \Log::info('Login successful for user', ['user' => Auth::user()]);
 
-        return redirect()->intended('/')->with('success', 'ログインしました');
+        return redirect()->intended(route('products.index'))->with('success', 'ログインしました');
     }
 
     // 会員登録画面の表示
