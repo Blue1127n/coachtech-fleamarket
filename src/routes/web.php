@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\UserProfileController;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,6 +24,18 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+// メール認証関連
+Route::get('/email/verify', function () {
+    dd(Auth::check(), Auth::user());
+    return view('auth.verify-email'); // 作成した verify-email.blade.php を使用
+})->middleware('auth')->name('verification.notice');
+
+Route::post('/email/verification-notification', function (Request $request) {
+    $request->user()->sendEmailVerificationNotification();
+
+    return back()->with('message', '認証メールを再送信しました。');
+})->middleware(['auth', 'throttle:6,1'])->name('verification.resend');
 
 // トップページ & マイリスト
 Route::get('/', [ItemController::class, 'index'])->name('products.index'); // 商品一覧

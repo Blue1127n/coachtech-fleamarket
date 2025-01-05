@@ -21,8 +21,8 @@
             </div>
             <div class="header__menu">
                 <a href="{{ route('login') }}">ログイン</a>
-                <a href="{{ route('mypage') }}">マイページ</a>
-                <a href="{{ route('sell') }}" class="header__sell-btn">出品</a>
+                <a href="{{ route('profile.mypage') }}">マイページ</a>
+                <a href="{{ route('item.create') }}" class="header__sell-btn">出品</a>
             </div>
         </header>
 
