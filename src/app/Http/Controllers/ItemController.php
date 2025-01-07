@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Item;
+use Illuminate\Support\Facades\Storage;
 
 class ItemController extends Controller
 {
@@ -29,6 +30,11 @@ class ItemController extends Controller
                             ->orderBy('created_at', 'desc')
                             ->get();
 
+        // 画像パスをURLに変換
+        foreach ($products as $product) {
+            $product->image_url = asset($product->image);
+        }
+
         return view('products.index', compact('products'));
     }
 
@@ -41,6 +47,11 @@ class ItemController extends Controller
                             ->with('item.status') // ステータス情報もロード
                             ->get()
                             ->pluck('item'); // アイテム情報だけ取得
+
+        // 画像パスをURLに変換
+        foreach ($products as $product) {
+            $product->image_url = asset($product->image); // 'image'を使用してURLを生成
+        }
 
         return view('products.index', compact('products'));
     }
