@@ -10,7 +10,7 @@
 <div class="product-container">
     <div class="product-tabs">
         <a href="{{ route('products.index') }}"
-            class="tab active {{ request()->routeIs('products.index') ? 'active' : '' }}">おすすめ</a>
+            class="tab {{ request()->routeIs('products.index') ? 'active' : '' }}">おすすめ</a>
         @auth
         <a href="{{ route('products.mylist') }}"
             class="tab {{ request()->routeIs('products.mylist') ? 'active' : '' }}">マイリスト</a>

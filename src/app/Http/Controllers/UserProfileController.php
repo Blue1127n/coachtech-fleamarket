@@ -4,22 +4,29 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\ProfileRequest;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 class UserProfileController extends Controller
 {
-    // プロフィール画面
-    public function show()
+    // プロフィール画面を表示
+    public function show(Request $request)
     {
-        // プロフィール情報を取得し、ビューに渡す
-        return view('profile.mypage');
+        $user = Auth::user();
+        $page = $request->get('page', 'sell'); // デフォルトは出品した商品
+        $items = $page === 'sell' ? $user->items : $user->purchasedItems;
+
+        return view('profile.index', compact('user', 'items', 'page'));
     }
 
+    // プロフィール編集画面（初回ログイン時含む）を表示
     public function edit()
     {
-        return view('profile.image', ['user' => Auth::user()]);
+        $user = Auth::user();
+        return view('profile.edit', compact('user'));
     }
 
+    // プロフィールを更新
     public function update(ProfileRequest $request)
     {
         // バリデーション済みのデータを取得

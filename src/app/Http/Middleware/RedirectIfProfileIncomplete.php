@@ -18,16 +18,32 @@ class RedirectIfProfileIncomplete
     public function handle(Request $request, Closure $next)
     {
 
+        // 現在のルート名を取得
+    $currentRoute = $request->route()->getName();
+
+    \Log::info('Current route:', ['route' => $currentRoute]); // 現在のルートをログ
+    \Log::info('User data:', ['user' => Auth::user()]); // 現在のユーザー情報をログ
+
     // 1. 会員登録直後のリダイレクトフラグをチェック
     if (session('redirect_to_profile', false)) {
+        \Log::info('Redirecting to profile setup');
         session()->forget('redirect_to_profile'); // フラグを削除
-        return redirect()->route('profile.edit')->with('success', 'プロフィールを設定してください');
+
+        // 現在のルートがプロフィール画面でない場合のみリダイレクト
+        if ($currentRoute !== 'mypage.profile') {
+        return redirect()->route('mypage.profile')->with('success', 'プロフィールを設定してください');
     }
+}
 
     // 2. ログインしている場合で、プロフィール情報が未設定の場合
     if (Auth::check() && empty(Auth::user()->address)) {
-        return redirect()->route('profile.edit')->with('message', 'プロフィールを設定してください。');
+        \Log::info('Redirecting due to missing profile address'); // ログで確認
+
+        // 現在のルートがプロフィール編集ページでない場合のみリダイレクト
+        if ($currentRoute !== 'mypage.profile') {
+        return redirect()->route('mypage.profile')->with('message', 'プロフィールを設定してください');
     }
+}
 
         return $next($request);
     }

@@ -51,6 +51,12 @@ class AuthController extends Controller
         $request->session()->regenerate(); // セッションの再生成
         \Log::info('Login successful for user', ['user' => Auth::user()]);
 
+        // プロフィール設定が必要ならプロフィール画面にリダイレクト
+        if (session('redirect_to_profile', false)) {
+            session()->forget('redirect_to_profile');
+            return redirect()->route('mypage.profile')->with('success', 'プロフィールを設定してください');
+        }
+
         return redirect()->intended(route('products.index'))->with('success', 'ログインしました');
     }
 
@@ -64,14 +70,20 @@ class AuthController extends Controller
     public function register(RegisterRequest $request)
     {
         // ユーザー作成
-        User::create([
+        $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password), // パスワードをハッシュ化
         ]);
 
+        // 自動的にログイン
+        Auth::login($user);
+
+        // 初回ログイン後のリダイレクトフラグを設定
+        session(['redirect_to_profile' => true]);
+
         // 登録成功後、ログイン画面へリダイレクト
-        return redirect()->route('login')->with('success', '会員登録が完了しました。ログインしてください。');
+        return redirect()->route('mypage.profile')->with('success', '会員登録が完了しました。プロフィールを設定してください。');
     }
 
     // ログアウト処理
@@ -104,6 +116,6 @@ class AuthController extends Controller
             'building' => $validated['building'] ?? null,
         ]);
 
-        return redirect()->route('profile.mypage')->with('success', '住所情報が更新されました');
+        return redirect()->route('mypage')->with('success', '住所情報が更新されました');
     }
 }
