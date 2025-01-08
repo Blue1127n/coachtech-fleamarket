@@ -49,9 +49,8 @@ Route::get('/sell', [ItemController::class, 'create'])->name('item.create'); // 
 
 // プロフィール関連
 Route::middleware(['auth', 'profile.complete'])->group(function () {
-    Route::get('/mypage', [UserProfileController::class, 'show'])->name('profile.mypage');// プロフィール確認
-    Route::get('/mypage/profile', [UserProfileController::class, 'edit'])->name('profile.edit');// プロフィール編集
-    Route::post('/mypage/profile', [UserProfileController::class, 'update'])->name('profile.update');// プロフィール更新
-    Route::get('/mypage/buy', [UserProfileController::class, 'purchasedItems'])->name('profile.purchased'); // 購入商品一覧
-    Route::get('/mypage/sell', [UserProfileController::class, 'soldItems'])->name('profile.sold'); // 出品商品一覧
+    Route::get('/mypage', [UserProfileController::class, 'show'])->name('mypage'); // プロフィール確認
+    Route::get('/mypage/profile', [UserProfileController::class, 'edit'])->name('mypage.profile'); // プロフィール編集
+    Route::put('/mypage/profile', [UserProfileController::class, 'update'])->name('mypage.profile.update'); // プロフィール更新
+    Route::get('/mypage/items', [UserProfileController::class, 'listItems'])->name('mypage.items'); // 購入・出品商品一覧（パラメータで切り替え）
 });

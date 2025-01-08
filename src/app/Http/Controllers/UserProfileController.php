@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\ProfileRequest;
 use Illuminate\Support\Facades\Auth;
 
 class UserProfileController extends Controller
@@ -16,10 +17,10 @@ class UserProfileController extends Controller
 
     public function edit()
     {
-        return view('profile.edit', ['user' => Auth::user()]);
+        return view('profile.image', ['user' => Auth::user()]);
     }
 
-    public function update(AddressRequest $request)
+    public function update(ProfileRequest $request)
     {
         // バリデーション済みのデータを取得
         $validated = $request->validated();
@@ -36,7 +37,7 @@ class UserProfileController extends Controller
         // プロフィール画像がアップロードされた場合
         if ($request->hasFile('profile_image')) {
             $path = $request->file('profile_image')->store('public/profile_images');
-            $user->profile_image = $path;
+            $user->profile_image = str_replace('public/', '', $path);
             $user->save();
         }
 

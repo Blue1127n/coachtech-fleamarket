@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
+use App\Http\Requests\AddressRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -39,6 +40,11 @@ class AuthController extends Controller
         if (!Auth::user()->hasVerifiedEmail()) {
             Auth::logout(); // 認証を解除
             return back()->withErrors(['login' => __('auth.unverified_email')])->withInput();
+        }
+
+        // 初回ログイン後のプロフィール設定リダイレクトフラグを設定
+        if (is_null(Auth::user()->address)) { // 初回ログインかどうかを判定
+            session(['redirect_to_profile' => true]);
         }
 
         // 認証成功時の処理
@@ -78,5 +84,26 @@ class AuthController extends Controller
         $request->session()->regenerateToken();
 
         return redirect('/')->with('success', 'ログアウトしました');
+    }
+
+    public function edit()
+    {
+        return view('profile.address', ['user' => Auth::user()]);
+    }
+
+    public function update(AddressRequest $request)
+    {
+        $validated = $request->validated();
+
+        // ユーザー情報を更新
+        $user = Auth::user();
+        $user->update([
+            'name' => $validated['name'],
+            'postal_code' => $validated['postal_code'],
+            'address' => $validated['address'],
+            'building' => $validated['building'] ?? null,
+        ]);
+
+        return redirect()->route('profile.mypage')->with('success', '住所情報が更新されました');
     }
 }

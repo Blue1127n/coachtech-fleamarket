@@ -30,7 +30,7 @@
                     </form>
                 @endauth
 
-                <a href="{{ route('profile.mypage') }}">マイページ</a>
+                <a href="{{ route('mypage') }}">マイページ</a>
                 <a href="{{ route('item.create') }}" class="header__sell-btn">出品</a>
             </div>
         </header>
