@@ -23,6 +23,7 @@ class AddressRequest extends FormRequest
      */
     public function rules()
     {
+        dd('AddressRequestが呼び出されました'); // この行を追加
         return [
             'name' => 'required|string|max:255',
             'postal_code' => 'required|string|size:8',

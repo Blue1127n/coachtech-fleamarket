@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\AddressRequest;
 use App\Http\Requests\ProfileRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class UserProfileController extends Controller
 {
@@ -27,28 +29,34 @@ class UserProfileController extends Controller
     }
 
     // プロフィールを更新
-    public function update(ProfileRequest $request)
+    public function update(AddressRequest $addressRequest, ProfileRequest $profileRequest)
     {
-        // バリデーション済みのデータを取得
-        $validated = $request->validated();
+        // バリデーション失敗時のエラーを確認
+    if (session()->has('errors')) {
+        dd(session()->get('errors')->all());
+    }
+
+        // バリデーション済みデータを取得
+        $validatedAddress = $addressRequest->validated();
+        $validatedProfile = $profileRequest->validated();
 
         // ユーザー情報を更新
         $user = auth()->user();
         $user->update([
-            'name' => $request->name,
-            'postal_code' => $request->postal_code,
-            'address' => $request->address,
-            'building' => $request->building,
+            'name' => $validatedAddress['name'],
+            'postal_code' => $validatedAddress['postal_code'],
+            'address' => $validatedAddress['address'],
+            'building' => $validatedAddress['building'] ?? null,
         ]);
 
         // プロフィール画像がアップロードされた場合
-        if ($request->hasFile('profile_image')) {
-            $path = $request->file('profile_image')->store('public/profile_images');
+        if ($profileRequest->hasFile('profile_image')) {
+            $path = $profileRequest->file('profile_image')->store('public/profile_images');
             $user->profile_image = str_replace('public/', '', $path);
             $user->save();
         }
 
-        return redirect()->route('profile.mypage')->with('success', 'プロフィールが更新されました');
+        return redirect()->route('mypage')->with('success', 'プロフィールが更新されました');
     }
 
     // 購入した商品一覧

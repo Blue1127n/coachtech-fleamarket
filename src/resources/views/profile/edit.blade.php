@@ -32,6 +32,17 @@
 @section('content')
 <div class="profile-edit-container">
     <h2>プロフィール設定</h2>
+
+    @if($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     <div class="profile-image-section">
         <div class="image-preview">
             @if(auth()->user()->profile_image)
@@ -44,15 +55,18 @@
             画像を選択する
             <input type="file" name="profile_image" id="profile_image" onchange="previewImage(event)" style="display: none;">
         </label>
+        @error('profile_image')
+            <div class="error-message">{{ $message }}</div>
+        @enderror
         </div>
 
-        <form action="{{ route('mypage.profile.update') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('mypage.profile.update') }}" method="POST" enctype="multipart/form-data" novalidate>
             @csrf
             @method('PUT')
 
         <div class="form-group">
             <label for="name">ユーザー名</label>
-            <input type="text" name="name" id="name" value="{{ old('name', auth()->user()->name) }}" required>
+            <input type="text" name="name" id="name" value="{{ old('name', auth()->user()->name) }}">
             @error('name')
                 <div class="error-message">{{ $message }}</div>
             @enderror
@@ -60,7 +74,7 @@
 
         <div class="form-group">
             <label for="postal_code">郵便番号</label>
-            <input type="text" name="postal_code" id="postal_code" value="{{ old('postal_code', auth()->user()->postal_code) }}" required>
+            <input type="text" name="postal_code" id="postal_code" value="{{ old('postal_code', auth()->user()->postal_code) }}">
             @error('postal_code')
                 <div class="error-message">{{ $message }}</div>
             @enderror
@@ -68,7 +82,7 @@
 
         <div class="form-group">
             <label for="address">住所</label>
-            <input type="text" name="address" id="address" value="{{ old('address', auth()->user()->address) }}" required>
+            <input type="text" name="address" id="address" value="{{ old('address', auth()->user()->address) }}">
             @error('address')
                 <div class="error-message">{{ $message }}</div>
             @enderror

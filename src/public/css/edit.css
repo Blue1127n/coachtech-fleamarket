@@ -4,7 +4,7 @@ body {
     background-color: rgba(255, 255, 255, 1);
     font-family: Inter;
 }
-/* 全体のコンテナ */
+
 .profile-edit-container {
     max-width: 1512px;
     margin: 0 auto;
@@ -16,7 +16,6 @@ body {
     align-items: center;
 }
 
-/* 見出し */
 .profile-edit-container h2 {
     font-size: 36px;
     font-weight: 700;
@@ -28,13 +27,13 @@ body {
     margin-bottom: 30px;
 }
 
-/* プロフィール画像セクション */
 .profile-image-section {
     margin-bottom: 30px;
     gap: 20px;
     display: flex;
-    flex-direction: column;
     align-items: center;
+    justify-content: flex-start;
+    width: 680px;
 }
 
 .image-preview {
@@ -42,11 +41,11 @@ body {
     justify-content: center;
     align-items: center;
     overflow: hidden;
-    width: 120px;
-    height: 120px;
+    width: 150px;
+    height: 150px;
+    gap: 0px;
     border-radius: 50%;
-    border: 2px solid rgba(200, 200, 200, 1);
-    background-color: rgba(240, 240, 240, 1);
+    background: rgba(217, 217, 217, 1);
 }
 
 .image-preview img {
@@ -59,19 +58,25 @@ body {
     width: 100%;
     height: 100%;
     border-radius: 50%;
-    background-color: rgba(200, 200, 200, 1);
+    background-color: rgba(217, 217, 217, 1);
 }
 
 .btn-select-image {
     display: inline-block;
     padding: 10px 20px;
-    font-size: 16px;
     color: rgba(255, 85, 85, 1);
     background-color: rgba(255, 255, 255, 1);
     border: 2px solid rgba(255, 85, 85, 1);
     border-radius: 5px;
     cursor: pointer;
     transition: all 0.3s;
+    gap: 0px;
+    font-size: 20px;
+    font-weight: 700;
+    text-align: center;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+    margin-left: 30px;
 }
 
 .btn-select-image:hover {
@@ -79,7 +84,6 @@ body {
     color: rgba(255, 255, 255, 1);
 }
 
-/* フォーム全体 */
 form {
     display: flex;
     flex-direction: column;
@@ -87,7 +91,6 @@ form {
     gap: 15px;
 }
 
-/* フォームグループ */
 .form-group {
     display: flex;
     flex-direction: column;
@@ -125,30 +128,12 @@ form {
     box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 }
 
-/* プロフィール画像プレビュー */
-.image-preview {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 10px;
-}
-
-.image-preview img {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    border: 2px solid rgba(200, 200, 200, 1);
-    object-fit: cover;
-}
-
-/* エラーメッセージ */
 .error-message {
     font-size: 12px;
     color: rgba(255, 85, 85, 1);
     margin-top: 5px;
 }
 
-/* 更新ボタン */
 .btn-submit {
     width: 680px;
     height: 60px;
@@ -173,7 +158,6 @@ form {
     background-color: rgba(255, 85, 85, 1);
 }
 
-/* レスポンシブ対応 */
 @media (max-width: 768px) {
     .profile-edit-container {
         padding: 15px;
