@@ -32,24 +32,23 @@
 @section('content')
 <div class="profile-edit-container">
     <h2>プロフィール設定</h2>
-    <form action="{{ route('mypage.profile.update') }}" method="POST" enctype="multipart/form-data">
-        @csrf
-        @method('PUT')
-
-        <div class="form-group">
-            <label for="profile_image">プロフィール画像</label>
-            <input type="file" name="profile_image" id="profile_image" onchange="previewImage(event)">
-            <div class="image-preview">
-                @if(auth()->user()->profile_image)
-                    <img id="preview" src="{{ asset('storage/' . auth()->user()->profile_image) }}" alt="現在のプロフィール画像">
-                @else
-                    <img id="preview" src="#" alt="プロフィール画像を選択してください">
-                @endif
-            </div>
-            @error('profile_image')
-                <div class="error-message">{{ $message }}</div>
-            @enderror
+    <div class="profile-image-section">
+        <div class="image-preview">
+            @if(auth()->user()->profile_image)
+                <img id="preview" src="{{ asset('storage/' . auth()->user()->profile_image) }}" alt="プロフィール画像">
+            @else
+                <div id="preview" class="placeholder"></div>
+            @endif
         </div>
+        <label class="btn-select-image">
+            画像を選択する
+            <input type="file" name="profile_image" id="profile_image" onchange="previewImage(event)" style="display: none;">
+        </label>
+        </div>
+
+        <form action="{{ route('mypage.profile.update') }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            @method('PUT')
 
         <div class="form-group">
             <label for="name">ユーザー名</label>

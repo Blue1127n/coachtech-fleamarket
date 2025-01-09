@@ -18,6 +18,11 @@ class RedirectIfProfileIncomplete
     public function handle(Request $request, Closure $next)
     {
 
+        // ログインしていない場合、このミドルウェアは適用されない
+        if (!Auth::check()) {
+            return $next($request);
+        }
+
         // 現在のルート名を取得
     $currentRoute = $request->route()->getName();
 
