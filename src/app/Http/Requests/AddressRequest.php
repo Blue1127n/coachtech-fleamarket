@@ -23,10 +23,10 @@ class AddressRequest extends FormRequest
      */
     public function rules()
     {
-        dd('AddressRequestが呼び出されました'); // この行を追加
+        \Log::info('AddressRequestが呼び出されました');
         return [
             'name' => 'required|string|max:255',
-            'postal_code' => 'required|string|size:8',
+            'postal_code' => 'required|regex:/^9999999$/',
             'address' => 'required|string|max:255',
             'building' => 'nullable|string|max:255',
         ];

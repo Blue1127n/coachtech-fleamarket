@@ -54,6 +54,14 @@ body {
     object-fit: cover;
 }
 
+#preview {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    display: block; /* これを確認 */
+    object-fit: cover;
+}
+
 .placeholder {
     width: 100%;
     height: 100%;
@@ -129,7 +137,7 @@ form {
 }
 
 .error-message {
-    font-size: 12px;
+    font-size: 18px;
     color: rgba(255, 85, 85, 1);
     margin-top: 5px;
 }

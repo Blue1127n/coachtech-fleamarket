@@ -11,6 +11,7 @@
     function previewImage(event) {
         const input = event.target;
         const preview = document.getElementById('preview');
+        const placeholder = document.getElementById('placeholder');
 
         if (input.files && input.files[0]) {
             const reader = new FileReader();
@@ -18,12 +19,18 @@
             reader.onload = function(e) {
                 preview.src = e.target.result;
                 preview.style.display = 'block';
+                if (placeholder) {
+                placeholder.style.display = 'none';
+            }
             };
 
             reader.readAsDataURL(input.files[0]);
         } else {
             preview.src = '#';
             preview.style.display = 'none';
+            if (placeholder) {
+            placeholder.style.display = 'block';
+        }
         }
     }
 </script>
@@ -45,12 +52,15 @@
 
     <div class="profile-image-section">
         <div class="image-preview">
-            @if(auth()->user()->profile_image)
-                <img id="preview" src="{{ asset('storage/' . auth()->user()->profile_image) }}" alt="プロフィール画像">
-            @else
-                <div id="preview" class="placeholder"></div>
-            @endif
-        </div>
+        <img 
+        id="preview" 
+        src="{{ auth()->user()->profile_image ? asset('storage/' . auth()->user()->profile_image) : '#' }}" 
+        alt="プロフィール画像" 
+        style="display: {{ auth()->user()->profile_image ? 'block' : 'none' }};">
+    @if(!auth()->user()->profile_image)
+        <div id="placeholder" class="placeholder"></div>
+    @endif
+</div>
         <label class="btn-select-image">
             画像を選択する
             <input type="file" name="profile_image" id="profile_image" onchange="previewImage(event)" style="display: none;">

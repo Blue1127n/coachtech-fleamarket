@@ -16,40 +16,65 @@ class RedirectIfProfileIncomplete
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
     public function handle(Request $request, Closure $next)
-    {
+{
+    // ミドルウェアが開始されたことをログに記録
+    \Log::info('RedirectIfProfileIncomplete middleware started', [
+        'route' => $request->route() ? $request->route()->getName() : 'unknown',
+        'user' => Auth::check() ? Auth::user()->toArray() : 'guest',
+    ]);
 
-        // ログインしていない場合、このミドルウェアは適用されない
-        if (!Auth::check()) {
-            return $next($request);
-        }
-
-        // 現在のルート名を取得
-    $currentRoute = $request->route()->getName();
-
-    \Log::info('Current route:', ['route' => $currentRoute]); // 現在のルートをログ
-    \Log::info('User data:', ['user' => Auth::user()]); // 現在のユーザー情報をログ
-
-    // 1. 会員登録直後のリダイレクトフラグをチェック
-    if (session('redirect_to_profile', false)) {
-        \Log::info('Redirecting to profile setup');
-        session()->forget('redirect_to_profile'); // フラグを削除
-
-        // 現在のルートがプロフィール画面でない場合のみリダイレクト
-        if ($currentRoute !== 'mypage.profile') {
-        return redirect()->route('mypage.profile')->with('success', 'プロフィールを設定してください');
-    }
-}
-
-    // 2. ログインしている場合で、プロフィール情報が未設定の場合
-    if (Auth::check() && empty(Auth::user()->address)) {
-        \Log::info('Redirecting due to missing profile address'); // ログで確認
-
-        // 現在のルートがプロフィール編集ページでない場合のみリダイレクト
-        if ($currentRoute !== 'mypage.profile') {
-        return redirect()->route('mypage.profile')->with('message', 'プロフィールを設定してください');
-    }
-}
-
+    if (!Auth::check()) {
+        \Log::info('User is not authenticated');
         return $next($request);
     }
+
+    $currentRoute = $this->getCurrentRouteName($request);
+    \Log::info('Current route', ['route' => $currentRoute]);
+
+    // `mypage.profile.update` を例外として除外
+    if (in_array($currentRoute, ['mypage.profile.update'])) {
+        \Log::info('Skipping middleware for route', ['route' => $currentRoute]);
+        return $next($request);
+    }
+
+    if ($this->shouldRedirectToProfileSetup() && $currentRoute !== 'mypage.profile') {
+        \Log::info('Redirecting to profile setup');
+        return redirect()->route('mypage.profile')->with('message', 'プロフィールを設定してください');
+    }
+
+    if ($this->isProfileIncomplete() && $currentRoute !== 'mypage.profile') {
+        \Log::info('Redirecting due to incomplete profile', [
+            'incomplete_fields' => [
+                'name' => empty(Auth::user()->name),
+                'postal_code' => empty(Auth::user()->postal_code),
+                'address' => empty(Auth::user()->address),
+            ],
+        ]);
+        return redirect()->route('mypage.profile')->with('message', 'プロフィールを設定してください');
+    }
+
+    \Log::info('Middleware passed successfully');
+    return $next($request);
+
+}
+
+private function getCurrentRouteName(Request $request): ?string
+{
+    return $request->route() ? $request->route()->getName() : null;
+}
+
+private function shouldRedirectToProfileSetup(): bool
+{
+    if (session('redirect_to_profile', false)) {
+        session()->forget('redirect_to_profile');
+        return true;
+    }
+    return false;
+}
+
+private function isProfileIncomplete(): bool
+{
+    $user = Auth::user();
+    return empty($user->address) || empty($user->postal_code) || empty($user->name);
+}
 }

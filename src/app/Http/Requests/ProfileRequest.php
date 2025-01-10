@@ -23,7 +23,7 @@ class ProfileRequest extends FormRequest
      */
     public function rules()
     {
-        dd('ProfileRequestが呼び出されました'); // この行を追加
+        \Log::info('ProfileRequestが呼び出されました');
         return [
             'profile_image' => 'nullable|image|mimes:jpeg,png|max:2048',
         ];

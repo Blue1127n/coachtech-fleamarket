@@ -31,14 +31,26 @@ class UserProfileController extends Controller
     // プロフィールを更新
     public function update(AddressRequest $addressRequest, ProfileRequest $profileRequest)
     {
+        \Log::info('Update method started', ['request' => $addressRequest->all()]);
+
+        dd('フォームリクエストが実行されています');
+
         // バリデーション失敗時のエラーを確認
     if (session()->has('errors')) {
+        \Log::info('Session has errors', ['errors' => session()->get('errors')->all()]); // エラー内容を記録
         dd(session()->get('errors')->all());
     }
+
+    \Log::info('Validation passed, processing update'); // バリデーションが成功したことを記録
 
         // バリデーション済みデータを取得
         $validatedAddress = $addressRequest->validated();
         $validatedProfile = $profileRequest->validated();
+
+        \Log::info('Validated data', [
+            'address' => $validatedAddress,
+            'profile' => $validatedProfile,
+        ]);
 
         // ユーザー情報を更新
         $user = auth()->user();
@@ -49,11 +61,15 @@ class UserProfileController extends Controller
             'building' => $validatedAddress['building'] ?? null,
         ]);
 
+        \Log::info('User profile updated', ['user' => $user->toArray()]);
+
         // プロフィール画像がアップロードされた場合
         if ($profileRequest->hasFile('profile_image')) {
             $path = $profileRequest->file('profile_image')->store('public/profile_images');
             $user->profile_image = str_replace('public/', '', $path);
             $user->save();
+
+            \Log::info('Profile image updated', ['path' => $path]);
         }
 
         return redirect()->route('mypage')->with('success', 'プロフィールが更新されました');
