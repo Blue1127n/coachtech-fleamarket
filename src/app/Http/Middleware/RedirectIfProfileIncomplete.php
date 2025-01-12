@@ -17,7 +17,6 @@ class RedirectIfProfileIncomplete
      */
     public function handle(Request $request, Closure $next)
 {
-    // ミドルウェアが開始されたことをログに記録
     \Log::info('RedirectIfProfileIncomplete middleware started', [
         'route' => $request->route() ? $request->route()->getName() : 'unknown',
         'user' => Auth::check() ? Auth::user()->toArray() : 'guest',
@@ -31,50 +30,36 @@ class RedirectIfProfileIncomplete
     $currentRoute = $this->getCurrentRouteName($request);
     \Log::info('Current route', ['route' => $currentRoute]);
 
-    // `mypage.profile.update` を例外として除外
-    if (in_array($currentRoute, ['mypage.profile.update'])) {
-        \Log::info('Skipping middleware for route', ['route' => $currentRoute]);
-        return $next($request);
-    }
-
-    if ($this->shouldRedirectToProfileSetup() && $currentRoute !== 'mypage.profile') {
-        \Log::info('Redirecting to profile setup');
-        return redirect()->route('mypage.profile')->with('message', 'プロフィールを設定してください');
-    }
-
-    if ($this->isProfileIncomplete() && $currentRoute !== 'mypage.profile') {
-        \Log::info('Redirecting due to incomplete profile', [
-            'incomplete_fields' => [
+    if ($this->isProfileIncomplete()) {
+        \Log::info('Profile is incomplete', [
+            'missing_fields' => [
                 'name' => empty(Auth::user()->name),
                 'postal_code' => empty(Auth::user()->postal_code),
                 'address' => empty(Auth::user()->address),
             ],
         ]);
+
+        if (in_array($currentRoute, ['mypage.profile', 'mypage.profile.update'], true)) {
+            \Log::info('Skipping redirect for profile-related routes', ['route' => $currentRoute]);
+            return $next($request);
+        }
+
         return redirect()->route('mypage.profile')->with('message', 'プロフィールを設定してください');
     }
 
     \Log::info('Middleware passed successfully');
     return $next($request);
-
 }
+
 
 private function getCurrentRouteName(Request $request): ?string
 {
     return $request->route() ? $request->route()->getName() : null;
 }
 
-private function shouldRedirectToProfileSetup(): bool
-{
-    if (session('redirect_to_profile', false)) {
-        session()->forget('redirect_to_profile');
-        return true;
-    }
-    return false;
-}
-
 private function isProfileIncomplete(): bool
 {
     $user = Auth::user();
-    return empty($user->address) || empty($user->postal_code) || empty($user->name);
+    return empty($user->name) || empty($user->postal_code) || empty($user->address);
 }
 }

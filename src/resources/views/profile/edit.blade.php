@@ -10,6 +10,7 @@
 <script>
     function previewImage(event) {
         const input = event.target;
+        console.log('File selected:', input.files); // 選択されたファイルを確認
         const preview = document.getElementById('preview');
         const placeholder = document.getElementById('placeholder');
 
@@ -19,21 +20,18 @@
             reader.onload = function(e) {
                 preview.src = e.target.result;
                 preview.style.display = 'block';
-                if (placeholder) {
-                placeholder.style.display = 'none';
-            }
+                if (placeholder) placeholder.style.display = 'none';
             };
 
             reader.readAsDataURL(input.files[0]);
         } else {
             preview.src = '#';
             preview.style.display = 'none';
-            if (placeholder) {
-            placeholder.style.display = 'block';
-        }
+            if (placeholder) placeholder.style.display = 'block';
         }
     }
 </script>
+
 @endpush
 
 @section('content')
@@ -54,13 +52,19 @@
         <div class="image-preview">
         <img 
         id="preview" 
-        src="{{ auth()->user()->profile_image ? asset('storage/' . auth()->user()->profile_image) : '#' }}" 
+        src="{{ session('profile_image_temp') ?: (auth()->user()->profile_image ? asset('storage/' . auth()->user()->profile_image) : '#') }}" 
         alt="プロフィール画像" 
-        style="display: {{ auth()->user()->profile_image ? 'block' : 'none' }};">
-    @if(!auth()->user()->profile_image)
-        <div id="placeholder" class="placeholder"></div>
+        style="display: {{ session('profile_image_temp') || auth()->user()->profile_image ? 'block' : 'none' }};">
+        @if (!auth()->user()->profile_image && !session('profile_image_temp'))
+            <div id="placeholder" class="placeholder"></div>
+        @endif
+    </div>
+    @if (session()->has('profile_image_temp'))
+        <p>Session Profile Image Temp Path: {{ session('profile_image_temp') }}</p>
+    @else
+        <p>No profile image temp found in session.</p>
     @endif
-</div>
+
         <label class="btn-select-image">
             画像を選択する
             <input type="file" name="profile_image" id="profile_image" onchange="previewImage(event)" style="display: none;">
@@ -70,7 +74,7 @@
         @enderror
         </div>
 
-        <form action="{{ route('mypage.profile.update') }}" method="POST" enctype="multipart/form-data" novalidate>
+        <form action="{{ route('mypage.profile.update') }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
 

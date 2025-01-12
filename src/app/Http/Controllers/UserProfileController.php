@@ -7,6 +7,7 @@ use App\Http\Requests\AddressRequest;
 use App\Http\Requests\ProfileRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 
 class UserProfileController extends Controller
@@ -30,30 +31,47 @@ class UserProfileController extends Controller
 
     // プロフィールを更新
     public function update(AddressRequest $addressRequest, ProfileRequest $profileRequest)
-    {
-        \Log::info('Update method started', ['request' => $addressRequest->all()]);
+{
+    \Log::info('Updateメソッドが呼び出されました', [
+        'route_name' => request()->route()->getName(),
+        'method' => request()->method(),
+        'inputs' => $addressRequest->all(),
+    ]);
 
-        dd('フォームリクエストが実行されています');
-
-        // バリデーション失敗時のエラーを確認
+    // バリデーションエラーがセッションに存在する場合、ログに記録
     if (session()->has('errors')) {
-        \Log::info('Session has errors', ['errors' => session()->get('errors')->all()]); // エラー内容を記録
-        dd(session()->get('errors')->all());
+        \Log::error('セッションにバリデーションエラーが存在します', ['errors' => session('errors')->all()]);
     }
 
-    \Log::info('Validation passed, processing update'); // バリデーションが成功したことを記録
-
-        // バリデーション済みデータを取得
+    try {
+        // バリデーション処理開始
+        \Log::info('Validation処理を開始します');
         $validatedAddress = $addressRequest->validated();
         $validatedProfile = $profileRequest->validated();
 
-        \Log::info('Validated data', [
-            'address' => $validatedAddress,
-            'profile' => $validatedProfile,
+        \Log::info('Validationが正常に完了しました', [
+            'validatedAddress' => $validatedAddress,
+            'validatedProfile' => $validatedProfile,
         ]);
 
-        // ユーザー情報を更新
         $user = auth()->user();
+
+        // プロフィール画像のアップロード処理
+        if ($profileRequest->hasFile('profile_image')) {
+            \Log::info('プロフィール画像のアップロードを検出しました');
+            $file = $profileRequest->file('profile_image');
+            if ($file->isValid()) {
+                $tempPath = $file->store('temp', 'public');
+                \Log::info('一時保存されたプロフィール画像', ['path' => $tempPath]);
+                session(['profile_image_temp' => $tempPath]);
+            } else {
+                \Log::error('無効なプロフィール画像がアップロードされました');
+                return redirect()->back()->withErrors(['profile_image' => '無効なファイルがアップロードされました']);
+            }
+        }
+
+        // ユーザー情報の更新
+        \Log::info('ユーザー情報を更新します');
         $user->update([
             'name' => $validatedAddress['name'],
             'postal_code' => $validatedAddress['postal_code'],
@@ -61,19 +79,33 @@ class UserProfileController extends Controller
             'building' => $validatedAddress['building'] ?? null,
         ]);
 
-        \Log::info('User profile updated', ['user' => $user->toArray()]);
+        // プロフィール画像の永続保存
+        if (session()->has('profile_image_temp')) {
+            $tempPath = session('profile_image_temp');
+            $finalPath = str_replace('temp/', 'profile_images/', $tempPath);
 
-        // プロフィール画像がアップロードされた場合
-        if ($profileRequest->hasFile('profile_image')) {
-            $path = $profileRequest->file('profile_image')->store('public/profile_images');
-            $user->profile_image = str_replace('public/', '', $path);
-            $user->save();
-
-            \Log::info('Profile image updated', ['path' => $path]);
+            if (\Storage::disk('public')->exists($tempPath)) {
+                \Storage::disk('public')->move($tempPath, $finalPath);
+                $user->profile_image = str_replace('public/', '', $finalPath);
+                $user->save();
+                \Log::info('プロフィール画像が保存されました', ['finalPath' => $finalPath]);
+                session()->forget('profile_image_temp');
+            } else {
+                \Log::warning('一時保存画像が存在しません', ['path' => $tempPath]);
+            }
         }
 
+        \Log::info('プロフィール更新が正常に完了しました');
         return redirect()->route('mypage')->with('success', 'プロフィールが更新されました');
+    } catch (\Exception $e) {
+        \Log::error('エラーが発生しました: ' . $e->getMessage(), [
+            'file' => $e->getFile(),
+            'line' => $e->getLine(),
+        ]);
+        return redirect()->back()->withErrors(['message' => '予期しないエラーが発生しました']);
     }
+}
+
 
     // 購入した商品一覧
     public function purchasedItems()
