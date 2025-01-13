@@ -19,7 +19,7 @@ class UserProfileController extends Controller
         $page = $request->get('page', 'sell'); // デフォルトは出品した商品
         $items = $page === 'sell' ? $user->items : $user->purchasedItems;
 
-        return view('profile.index', compact('user', 'items', 'page'));
+        return view('profile.show', compact('user', 'items', 'page'));
     }
 
     // プロフィール編集画面（初回ログイン時含む）を表示
@@ -32,10 +32,20 @@ class UserProfileController extends Controller
     // プロフィールを更新
     public function update(AddressRequest $addressRequest, ProfileRequest $profileRequest)
 {
-    \Log::info('Updateメソッドが呼び出されました', [
-        'route_name' => request()->route()->getName(),
+    // リクエストメソッドとCSRFトークンを確認
+    \Log::info('リクエストメソッド確認', [
         'method' => request()->method(),
-        'inputs' => $addressRequest->all(),
+        'expected' => 'PUT',
+    ]);
+    \Log::info('CSRFトークン', [
+        'csrf_token' => request()->header('X-CSRF-TOKEN'),
+    ]);
+
+    \Log::info('Updateメソッドに到達しました - リクエスト内容', [
+        'method' => request()->method(),
+        'url' => request()->url(),
+        'input' => request()->all(),
+        'files' => request()->file(),
     ]);
 
     // バリデーションエラーがセッションに存在する場合、ログに記録

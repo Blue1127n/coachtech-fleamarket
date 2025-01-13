@@ -22,6 +22,7 @@ class RedirectIfProfileIncomplete
         'user' => Auth::check() ? Auth::user()->toArray() : 'guest',
     ]);
 
+    // 未認証のユーザーをスキップ
     if (!Auth::check()) {
         \Log::info('User is not authenticated');
         return $next($request);
@@ -30,6 +31,7 @@ class RedirectIfProfileIncomplete
     $currentRoute = $this->getCurrentRouteName($request);
     \Log::info('Current route', ['route' => $currentRoute]);
 
+    // プロフィール未設定の確認
     if ($this->isProfileIncomplete()) {
         \Log::info('Profile is incomplete', [
             'missing_fields' => [
@@ -39,11 +41,18 @@ class RedirectIfProfileIncomplete
             ],
         ]);
 
-        if (in_array($currentRoute, ['mypage.profile', 'mypage.profile.update'], true)) {
+        // リダイレクトをスキップする条件
+        if ($request->isMethod('PUT') && $currentRoute === 'mypage.profile.update') {
+            \Log::info('Skipping redirect for PUT method on mypage.profile.update route');
+            return $next($request);
+        }
+
+        if (in_array($currentRoute, ['mypage.profile'], true)) {
             \Log::info('Skipping redirect for profile-related routes', ['route' => $currentRoute]);
             return $next($request);
         }
 
+        // リダイレクト
         return redirect()->route('mypage.profile')->with('message', 'プロフィールを設定してください');
     }
 

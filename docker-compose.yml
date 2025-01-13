@@ -16,6 +16,8 @@ services:
     volumes:
       - ./src:/var/www/
       - ./src/storage:/var/www/storage
+    ports:
+      - "8000:8000"
 
   mysql:
     image: mysql:8.0.26

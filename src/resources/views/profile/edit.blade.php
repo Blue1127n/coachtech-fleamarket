@@ -10,7 +10,7 @@
 <script>
     function previewImage(event) {
         const input = event.target;
-        console.log('File selected:', input.files); // 選択されたファイルを確認
+        console.log('File selected:', input.files);
         const preview = document.getElementById('preview');
         const placeholder = document.getElementById('placeholder');
 
