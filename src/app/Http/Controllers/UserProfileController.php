@@ -19,6 +19,16 @@ class UserProfileController extends Controller
         $page = $request->get('page', 'sell'); // デフォルトは出品した商品
         $items = $page === 'sell' ? $user->items : $user->purchasedItems;
 
+        // items が null の場合は空のコレクションを返す
+        $items = $items ?? collect();
+
+        \Log::info('Profile items data', [
+            'user' => $user->id,
+            'page' => $page,
+            'items_count' => $items->count(),
+        ]);
+
+
         return view('profile.show', compact('user', 'items', 'page'));
     }
 
@@ -30,35 +40,42 @@ class UserProfileController extends Controller
     }
 
     // プロフィールを更新
-    public function update(AddressRequest $addressRequest, ProfileRequest $profileRequest)
+    public function update(Request $request, AddressRequest $addressRequest, ProfileRequest $profileRequest)
 {
-    // リクエストメソッドとCSRFトークンを確認
+    // リクエスト内容のログ
+    \Log::info('Profile update method called', [
+        'request' => $request->all(),
+    ]);
+
+    // リクエストメソッドとCSRFトークンの確認ログ
     \Log::info('リクエストメソッド確認', [
-        'method' => request()->method(),
+        'method' => $request->method(),
         'expected' => 'PUT',
     ]);
     \Log::info('CSRFトークン', [
-        'csrf_token' => request()->header('X-CSRF-TOKEN'),
+        'csrf_token' => $request->header('X-CSRF-TOKEN'),
     ]);
 
+    // リクエストの内容ログ
     \Log::info('Updateメソッドに到達しました - リクエスト内容', [
-        'method' => request()->method(),
-        'url' => request()->url(),
-        'input' => request()->all(),
-        'files' => request()->file(),
+        'method' => $request->method(),
+        'url' => $request->url(),
+        'input' => $request->all(),
+        'files' => $request->file(),
     ]);
 
-    // バリデーションエラーがセッションに存在する場合、ログに記録
+    // セッションにバリデーションエラーが存在する場合のログ
     if (session()->has('errors')) {
         \Log::error('セッションにバリデーションエラーが存在します', ['errors' => session('errors')->all()]);
     }
 
     try {
-        // バリデーション処理開始
+        // バリデーションの開始ログ
         \Log::info('Validation処理を開始します');
         $validatedAddress = $addressRequest->validated();
         $validatedProfile = $profileRequest->validated();
 
+        // バリデーション完了ログ
         \Log::info('Validationが正常に完了しました', [
             'validatedAddress' => $validatedAddress,
             'validatedProfile' => $validatedProfile,
@@ -66,7 +83,7 @@ class UserProfileController extends Controller
 
         $user = auth()->user();
 
-        // プロフィール画像のアップロード処理
+        // プロフィール画像のアップロード処理ログ
         if ($profileRequest->hasFile('profile_image')) {
             \Log::info('プロフィール画像のアップロードを検出しました');
             $file = $profileRequest->file('profile_image');
@@ -80,8 +97,14 @@ class UserProfileController extends Controller
             }
         }
 
-        // ユーザー情報の更新
-        \Log::info('ユーザー情報を更新します');
+        // ユーザー情報の更新処理
+        \Log::info('ユーザー情報を更新します', [
+            'name' => $validatedAddress['name'],
+            'postal_code' => $validatedAddress['postal_code'],
+            'address' => $validatedAddress['address'],
+            'building' => $validatedAddress['building'] ?? null,
+        ]);
+
         $user->update([
             'name' => $validatedAddress['name'],
             'postal_code' => $validatedAddress['postal_code'],
@@ -89,7 +112,7 @@ class UserProfileController extends Controller
             'building' => $validatedAddress['building'] ?? null,
         ]);
 
-        // プロフィール画像の永続保存
+        // プロフィール画像の永続保存処理
         if (session()->has('profile_image_temp')) {
             $tempPath = session('profile_image_temp');
             $finalPath = str_replace('temp/', 'profile_images/', $tempPath);
@@ -105,9 +128,11 @@ class UserProfileController extends Controller
             }
         }
 
+        // プロフィール更新完了ログ
         \Log::info('プロフィール更新が正常に完了しました');
         return redirect()->route('mypage')->with('success', 'プロフィールが更新されました');
     } catch (\Exception $e) {
+        // エラー発生時のログ
         \Log::error('エラーが発生しました: ' . $e->getMessage(), [
             'file' => $e->getFile(),
             'line' => $e->getLine(),
@@ -115,7 +140,6 @@ class UserProfileController extends Controller
         return redirect()->back()->withErrors(['message' => '予期しないエラーが発生しました']);
     }
 }
-
 
     // 購入した商品一覧
     public function purchasedItems()

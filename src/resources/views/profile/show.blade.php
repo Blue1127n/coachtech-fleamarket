@@ -19,14 +19,16 @@
     </div>
 
     <div class="items">
-        @foreach($items as $item)
-            <div class="item">
-                <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->name }}">
-                <p>{{ $item->name }}</p>
-            </div>
-        @empty
+        @if($items->isNotEmpty())
+            @foreach($items as $item)
+                <div class="item">
+                    <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->name }}">
+                    <p>{{ $item->name }}</p>
+                </div>
+            @endforeach
+        @else
             <p>表示する商品がありません</p>
-        @endforelse
+        @endif
     </div>
 </div>
 @endsection

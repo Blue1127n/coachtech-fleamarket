@@ -41,25 +41,24 @@ class RedirectIfProfileIncomplete
             ],
         ]);
 
-        // リダイレクトをスキップする条件
-        if ($request->isMethod('PUT') && $currentRoute === 'mypage.profile.update') {
-            \Log::info('Skipping redirect for PUT method on mypage.profile.update route');
-            return $next($request);
+        // プロフィール更新直後なら、商品一覧にリダイレクト
+        if ($currentRoute === 'mypage.profile.update' && $request->isMethod('PUT')) {
+            \Log::info('Profile updated, redirecting to products.index');
+            return redirect()->route('products.index'); // 商品一覧画面に遷移
         }
 
-        if (in_array($currentRoute, ['mypage.profile'], true)) {
-            \Log::info('Skipping redirect for profile-related routes', ['route' => $currentRoute]);
-            return $next($request);
+        // プロフィール編集画面以外はリダイレクト
+        if ($currentRoute === 'mypage.profile') {
+            return redirect()->route('mypage.profile')->with('message', 'プロフィールを設定してください');
         }
 
-        // リダイレクト
-        return redirect()->route('mypage.profile')->with('message', 'プロフィールを設定してください');
+        // リダイレクト処理
+        return redirect()->route('products.index')->with('success', 'プロフィールが更新されました');
     }
 
     \Log::info('Middleware passed successfully');
     return $next($request);
 }
-
 
 private function getCurrentRouteName(Request $request): ?string
 {

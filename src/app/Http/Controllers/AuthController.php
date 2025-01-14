@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
-use App\Http\Requests\AddressRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -83,7 +82,7 @@ class AuthController extends Controller
         session(['redirect_to_profile' => true]);
 
         // 登録成功後、ログイン画面へリダイレクト
-        return redirect()->route('mypage.profile')->with('success', '会員登録が完了しました。プロフィールを設定してください。');
+        return redirect()->route('products.mylist')->with('success', '会員登録が完了しました。マイリストをご確認ください。');
     }
 
     // ログアウト処理
@@ -96,26 +95,5 @@ class AuthController extends Controller
         $request->session()->regenerateToken();
 
         return redirect('/')->with('success', 'ログアウトしました');
-    }
-
-    public function edit()
-    {
-        return view('profile.address', ['user' => Auth::user()]);
-    }
-
-    public function update(AddressRequest $request)
-    {
-        $validated = $request->validated();
-
-        // ユーザー情報を更新
-        $user = Auth::user();
-        $user->update([
-            'name' => $validated['name'],
-            'postal_code' => $validated['postal_code'],
-            'address' => $validated['address'],
-            'building' => $validated['building'] ?? null,
-        ]);
-
-        return redirect()->route('mypage')->with('success', '住所情報が更新されました');
     }
 }

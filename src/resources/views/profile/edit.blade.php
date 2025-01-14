@@ -38,16 +38,6 @@
 <div class="profile-edit-container">
     <h2>プロフィール設定</h2>
 
-    @if($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-
     <div class="profile-image-section">
         <div class="image-preview">
         <img 
@@ -59,11 +49,6 @@
             <div id="placeholder" class="placeholder"></div>
         @endif
     </div>
-    @if (session()->has('profile_image_temp'))
-        <p>Session Profile Image Temp Path: {{ session('profile_image_temp') }}</p>
-    @else
-        <p>No profile image temp found in session.</p>
-    @endif
 
         <label class="btn-select-image">
             画像を選択する

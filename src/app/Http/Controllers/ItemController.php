@@ -14,15 +14,14 @@ class ItemController extends Controller
         $search = $request->input('search'); // 検索クエリ
         $query = Item::query();
 
-        // 自分の出品を除外（ログイン中のみ）
+        // ログイン済みかをチェック
         if (auth()->check()) {
-            $query->where('user_id', '!=', auth()->id());
+            // ログイン済みの場合はマイリストを表示
+            return $this->mylist($request); // ログイン済みの場合はマイリストを表示
         }
 
-        // 検索機能
-        if ($search) {
-            $query->where('name', 'like', "%$search%");
-        }
+        // 非ログインの場合は全商品を表示
+        $query = $this->applySearchFilter($query, $search);
 
         // 商品取得
         $products = $query->with('status') // ステータスのリレーションをロード
@@ -35,12 +34,14 @@ class ItemController extends Controller
             $product->image_url = asset($product->image);
         }
 
-        return view('products.index', compact('products'));
+        return view('products.index', ['products' => $products, 'isMyList' => false]);
     }
 
     // マイリストの表示
-    public function mylist()
+    public function mylist(Request $request)
     {
+        $search = $request->input('search'); // 検索クエリ
+
         // ユーザーが「いいね」した商品を取得
         $products = auth()->user()
                             ->likes()
@@ -48,11 +49,27 @@ class ItemController extends Controller
                             ->get()
                             ->pluck('item'); // アイテム情報だけ取得
 
+        // 検索条件の適用（コレクションに対するフィルタリング）
+        if ($search) {
+            $products = $products->filter(function ($product) use ($search) {
+                return stripos($product->name, $search) !== false;
+            });
+        }
+
         // 画像パスをURLに変換
         foreach ($products as $product) {
             $product->image_url = asset($product->image); // 'image'を使用してURLを生成
         }
 
-        return view('products.index', compact('products'));
+        return view('products.index', ['products' => $products, 'isMyList' => true]);
+    }
+
+    // 検索条件の適用
+    private function applySearchFilter($query, $search)
+    {
+        if ($search) {
+            $query->where('name', 'like', "%$search%");
+        }
+        return $query;
     }
 }
