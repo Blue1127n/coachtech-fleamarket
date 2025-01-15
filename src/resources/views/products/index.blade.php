@@ -11,10 +11,8 @@
     <div class="product-tabs">
         <a href="{{ route('products.index') }}"
             class="tab {{ request()->routeIs('products.index') ? 'active' : '' }}">おすすめ</a>
-        @auth
-        <a href="{{ route('products.mylist') }}"
+        <a href="{{ auth()->check() ? route('products.mylist') : route('login') }}"
             class="tab {{ request()->routeIs('products.mylist') ? 'active' : '' }}">マイリスト</a>
-        @endauth
     </div>
 
     <div class="product-grid">

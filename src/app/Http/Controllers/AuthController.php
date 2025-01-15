@@ -14,6 +14,7 @@ class AuthController extends Controller
     // ログイン画面を表示
     public function showLoginForm()
     {
+        \Log::info('Rendering login form.');
         return view('auth.login');
     }
 

@@ -16,7 +16,9 @@
                 <img src="{{ asset('storage/items/logo.svg') }}" alt="Logo">
             </div>
             <div class="header__search">
-                <input type="text" placeholder="なにをお探しですか？" class="search-box">
+                <form action="{{ route('products.index') }}" method="GET">
+                    <input type="text" name="search" placeholder="なにをお探しですか？" class="search-box" value="{{ request('search') }}">
+                </form>
             </div>
             <div class="header__menu">
                 @guest
