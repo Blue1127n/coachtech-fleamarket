@@ -55,7 +55,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function transactions()
     {
-        return $this->hasMany(Transaction::class, 'buyer_id');
+        return $this->hasMany(Transaction::class);
     }
 
     public function likes()
@@ -68,36 +68,43 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Comment::class);
     }
 
-    private const DEFAULT_PROFILE_IMAGE = 'images/default-profile.png';
-
-    protected function profileImageUrl(): Attribute
-    {
-        return new Attribute(
-            function () {
-                return $this->profile_image
-                    ? asset('storage/' . $this->profile_image)
-                    : asset(self::DEFAULT_PROFILE_IMAGE);
+    protected function profileImageUrl()
+{
+    return new Attribute(
+        get: function () {
+            if ($this->profile_image && \Storage::disk('public')->exists($this->profile_image)) {
+                return asset('storage/' . $this->profile_image);
             }
-        );
-    }
-
-    protected function profileImage(): Attribute
-    {
-        return new Attribute(
-            null,
-            function ($value) {
-                if (is_file($value)) {
-                    $fileName = time() . '_' . $value->getClientOriginalName();
-                    $filePath = $value->storeAs('public/profile_images', $fileName);
-                    if (!$filePath) {
-                        throw new \RuntimeException('Profile image upload failed. Please try again.');
-                    }
-                    return 'profile_images/' . $fileName;
-                }
-                return $value;
-            }
-        );
-    }
+            // プロフィール画像が存在しない場合は null を返す
+            return null;
+        }
+    );
 }
 
+    protected function profileImage()
+{
+    return new Attribute(
+        null,
+        function ($value) {
+            if ($value instanceof \Illuminate\Http\UploadedFile) {
+                // 一意のファイル名を生成
+                $fileName = uniqid() . '_' . time() . '_' . $value->getClientOriginalName();
+
+                // 拡張子の検証
+                if (!in_array($value->getClientOriginalExtension(), ['jpeg', 'png'])) {
+                    throw new \RuntimeException('JPEGまたはPNG形式の画像のみアップロードできます。');
+                }
+
+                // ファイルを保存
+                $filePath = $value->storeAs('public/profile_images', $fileName);
+                if (!$filePath) {
+                    throw new \RuntimeException('プロフィール画像のアップロードに失敗しました。再試行してください。');
+                }
+                return 'profile_images/' . $fileName;
+            }
+            return $value;
+        }
+    );
+}
+}
 

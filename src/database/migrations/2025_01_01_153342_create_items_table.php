@@ -22,6 +22,7 @@ class CreateItemsTable extends Migration
             $table->integer('price');
             $table->string('condition');
             $table->string('image')->nullable();
+            $table->string('brand')->nullable();
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

@@ -16,15 +16,15 @@ class TransactionsTableSeeder extends Seeder
     {
         $transactions = [
             [
-                'buyer_id' => 1,
                 'item_id' => 1,
+                'buyer_id' => 1,
                 'status_id' => 4,
                 'payment_method' => 'Credit Card',
                 'shipping_address' => '123 Test St, Tokyo',
             ],
             [
-                'buyer_id' => 2,
                 'item_id' => 2,
+                'buyer_id' => 2,
                 'status_id' => 5,
                 'payment_method' => 'PayPal',
                 'shipping_address' => '456 Another St, Osaka',

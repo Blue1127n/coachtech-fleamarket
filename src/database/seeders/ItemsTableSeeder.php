@@ -21,6 +21,7 @@ class ItemsTableSeeder extends Seeder
                 'price' => 15000,
                 'condition' => '良好',
                 'image' => 'items/Armani+Mens+Clock.jpg',
+                'brand' => 'Armani',
                 'user_id' => 1,
                 'status_id' => 1,
             ],
@@ -30,6 +31,7 @@ class ItemsTableSeeder extends Seeder
                 'price' => 5000,
                 'condition' => '目立った傷や汚れなし',
                 'image' => 'items/HDD+Hard+Disk.jpg',
+                'brand' => 'Western Digital',
                 'user_id' => 1,
                 'status_id' => 1,
             ],
@@ -39,6 +41,7 @@ class ItemsTableSeeder extends Seeder
                 'price' => 300,
                 'condition' => 'やや傷や汚れあり',
                 'image' => 'items/iLoveIMG+d.jpg',
+                'brand' => null,
                 'user_id' => 1,
                 'status_id' => 1,
             ],
@@ -48,6 +51,7 @@ class ItemsTableSeeder extends Seeder
                 'price' => 4000,
                 'condition' => '状態が悪い',
                 'image' => 'items/Leather+Shoes+Product+Photo.jpg',
+                'brand' => 'ALDEN',
                 'user_id' => 1,
                 'status_id' => 1,
             ],
@@ -57,6 +61,7 @@ class ItemsTableSeeder extends Seeder
                 'price' => 45000,
                 'condition' => '良好',
                 'image' => 'items/Living+Room+Laptop.jpg',
+                'brand' => 'Dell',
                 'user_id' => 1,
                 'status_id' => 1,
             ],
@@ -66,6 +71,7 @@ class ItemsTableSeeder extends Seeder
                 'price' => 8000,
                 'condition' => '目立った傷や汚れなし',
                 'image' => 'items/Music+Mic+4632231.jpg',
+                'brand' => null,
                 'user_id' => 1,
                 'status_id' => 1,
             ],
@@ -75,6 +81,7 @@ class ItemsTableSeeder extends Seeder
                 'price' => 3500,
                 'condition' => 'やや傷や汚れあり',
                 'image' => 'items/Purse+fashion+pocket.jpg',
+                'brand' => null,
                 'user_id' => 1,
                 'status_id' => 1,
             ],
@@ -84,6 +91,7 @@ class ItemsTableSeeder extends Seeder
                 'price' => 500,
                 'condition' => '状態が悪い',
                 'image' => 'items/Tumbler+souvenir.jpg',
+                'brand' => null,
                 'user_id' => 1,
                 'status_id' => 1,
             ],
@@ -93,6 +101,7 @@ class ItemsTableSeeder extends Seeder
                 'price' => 4000,
                 'condition' => '良好',
                 'image' => 'items/Waitress+with+Coffee+Grinder.jpg',
+                'brand' => null,
                 'user_id' => 1,
                 'status_id' => 1,
             ],
@@ -102,6 +111,7 @@ class ItemsTableSeeder extends Seeder
                 'price' => 2500,
                 'condition' => '目立った傷や汚れなし',
                 'image' => 'items/外出メイクアップセット.jpg',
+                'brand' => null,
                 'user_id' => 1,
                 'status_id' => 1,
             ],
@@ -110,7 +120,7 @@ class ItemsTableSeeder extends Seeder
         foreach ($items as $item) {
             DB::table('items')->updateOrInsert(
                 ['name' => $item['name']],
-                array_merge($item, ['updated_at' => now()])
+                array_merge($item, ['updated_at' => now(), 'created_at' => now()])
             );
         }
     }

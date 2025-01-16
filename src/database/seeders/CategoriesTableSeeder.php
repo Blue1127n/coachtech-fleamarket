@@ -15,16 +15,20 @@ class CategoriesTableSeeder extends Seeder
     public function run()
     {
         $categories = [
-            ['name' => '腕時計'],
-            ['name' => 'HDD'],
-            ['name' => '玉ねぎ3束'],
-            ['name' => '革靴'],
-            ['name' => 'ノートPC'],
-            ['name' => 'マイク'],
-            ['name' => 'ショルダーバッグ'],
-            ['name' => 'タンブラー'],
-            ['name' => 'コーヒーミル'],
-            ['name' => 'メイクセット'],
+            ['name' => 'ファッション'],
+            ['name' => '家電'],
+            ['name' => 'インテリア'],
+            ['name' => 'レディース'],
+            ['name' => 'メンズ'],
+            ['name' => 'コスメ'],
+            ['name' => '本'],
+            ['name' => 'ゲーム'],
+            ['name' => 'スポーツ'],
+            ['name' => 'キッチン'],
+            ['name' => 'ハンドメイド'],
+            ['name' => 'アクセサリー'],
+            ['name' => 'おもちゃ'],
+            ['name' => 'ベビー・キッズ'],
         ];
 
         foreach ($categories as $category) {

@@ -15,8 +15,8 @@ class CreateTransactionsTable extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('item_id')->unique();
             $table->unsignedBigInteger('buyer_id');
-            $table->unsignedBigInteger('item_id');
             $table->unsignedBigInteger('status_id');
             $table->string('payment_method', 50);
             $table->text('shipping_address');

@@ -10,21 +10,21 @@ class Transaction extends Model
     use HasFactory;
 
     protected $fillable = [
-        'buyer_id',
         'item_id',
+        'buyer_id',
         'status_id',
         'payment_method',
         'shipping_address',
     ];
 
-    public function buyer()
-    {
-        return $this->belongsTo(User::class, 'buyer_id');
-    }
-
     public function item()
     {
         return $this->belongsTo(Item::class);
+    }
+
+    public function buyer()
+    {
+    return $this->belongsTo(User::class, 'buyer_id');
     }
 
     public function status()

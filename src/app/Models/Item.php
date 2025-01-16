@@ -17,6 +17,7 @@ class Item extends Model
         'price',
         'condition',
         'image',
+        'brand',
     ];
 
     public function user()
@@ -50,11 +51,18 @@ class Item extends Model
     }
 
     public function getImageUrlAttribute()
-    {
-        return $this->image
-            ? asset('storage/' . $this->image)
-            : asset('images/default-item.png');
+{
+    // 現在の画像がある場合のみチェック
+    if ($this->image) {
+        $extension = pathinfo($this->image, PATHINFO_EXTENSION); // 拡張子を取得
+        if (in_array($extension, ['jpeg', 'png'])) {
+            return asset('storage/' . $this->image);
+        }
     }
+
+    // 画像が存在しない場合は null を返す
+    return null;
+}
 
     public function setImageAttribute($value)
     {

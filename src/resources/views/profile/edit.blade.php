@@ -25,7 +25,7 @@
 
             reader.readAsDataURL(input.files[0]);
         } else {
-            preview.src = '#';
+            preview.src = '';
             preview.style.display = 'none';
             if (placeholder) placeholder.style.display = 'block';
         }
@@ -42,9 +42,9 @@
         <div class="image-preview">
         <img 
         id="preview" 
-        src="{{ session('profile_image_temp') ?: (auth()->user()->profile_image ? asset('storage/' . auth()->user()->profile_image) : '#') }}" 
+        src="{{ session('profile_image_temp') ?: (auth()->user()->profile_image ? asset('storage/' . auth()->user()->profile_image) : '') }}" 
         alt="プロフィール画像" 
-        style="display: {{ session('profile_image_temp') || auth()->user()->profile_image ? 'block' : 'none' }};">
+        class="{{ session('profile_image_temp') || auth()->user()->profile_image ? 'show' : '' }}">
         @if (!auth()->user()->profile_image && !session('profile_image_temp'))
             <div id="placeholder" class="placeholder"></div>
         @endif

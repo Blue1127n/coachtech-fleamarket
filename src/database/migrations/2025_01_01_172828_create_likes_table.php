@@ -23,6 +23,9 @@ class CreateLikesTable extends Migration
             $table->foreign('item_id')->references('id')->on('items')->onDelete('cascade');
 
             $table->unique(['user_id', 'item_id'], 'unique_user_item');
+
+            $table->index('user_id');
+            $table->index('item_id');
         });
     }
 

@@ -58,8 +58,12 @@ body {
     width: 150px;
     height: 150px;
     border-radius: 50%;
-    display: block; /* これを確認 */
+    display: none; /* 初期状態で非表示 */
     object-fit: cover;
+}
+
+#preview.show {
+    display: block;
 }
 
 .placeholder {
