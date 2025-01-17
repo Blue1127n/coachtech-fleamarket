@@ -70,15 +70,12 @@ class User extends Authenticatable implements MustVerifyEmail
 
     protected function profileImageUrl()
 {
-    return new Attribute(
-        get: function () {
-            if ($this->profile_image && \Storage::disk('public')->exists($this->profile_image)) {
-                return asset('storage/' . $this->profile_image);
-            }
-            // プロフィール画像が存在しない場合は null を返す
-            return null;
-        }
-    );
+    if ($this->profile_image && \Storage::disk('public')->exists($this->profile_image)) {
+        return asset('storage/' . $this->profile_image);
+    }
+
+    // プロフィール画像が存在しない場合はnullを返す
+    return null;
 }
 
     protected function profileImage()

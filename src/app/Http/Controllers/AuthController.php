@@ -79,8 +79,10 @@ class AuthController extends Controller
         // 自動的にログイン
         Auth::login($user);
 
-        // 初回ログイン後のリダイレクトフラグを設定
-        session(['redirect_to_profile' => true]);
+        // ユーザーがメール認証済みでない場合、/email/verify にリダイレクト
+        if (!Auth::user()->hasVerifiedEmail()) {
+            return redirect()->route('verification.notice');
+        }
 
         // 登録成功後、ログイン画面へリダイレクト
         return redirect()->route('products.mylist')->with('success', '会員登録が完了しました。マイリストをご確認ください。');

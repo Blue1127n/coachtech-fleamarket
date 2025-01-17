@@ -33,8 +33,11 @@ Route::middleware(['auth'])->group(function () {
 
 // メール認証関連
 Route::get('/email/verify', function () {
-    dd(Auth::check(), Auth::user());
-    return view('auth.verify-email'); // 作成した verify-email.blade.php を使用
+    \Log::info('Email verification check', ['user' => Auth::user()]);
+    if (Auth::user()->hasVerifiedEmail()) {
+        return redirect()->route('mypage.profile'); // すでに認証済みの場合、プロフィール設定画面にリダイレクト
+    }
+    return view('auth.verify-email'); // 認証待ちの場合に認証画面を表示
 })->middleware('auth')->name('verification.notice');
 
 Route::post('/email/verification-notification', function (Request $request) {
@@ -54,7 +57,7 @@ Route::get('/purchase/address/{item_id}', [ItemController::class, 'changeAddress
 Route::get('/sell', [ItemController::class, 'create'])->name('item.create'); // 商品出品
 
 // プロフィール関連
-Route::middleware(['auth', 'profile.complete'])->group(function () {
+Route::middleware(['auth', 'verified', 'profile.complete'])->group(function () {
     Route::get('/mypage', [UserProfileController::class, 'show'])->name('mypage'); // プロフィール確認
     Route::get('/mypage/profile', [UserProfileController::class, 'edit'])->name('mypage.profile'); // プロフィール編集
     Route::put('/mypage/profile', [UserProfileController::class, 'update'])->name('mypage.profile.update'); // プロフィール更新
