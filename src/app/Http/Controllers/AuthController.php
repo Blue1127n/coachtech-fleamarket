@@ -79,6 +79,12 @@ class AuthController extends Controller
         // 自動的にログイン
         Auth::login($user);
 
+        // デバッグ: メール送信トリガーをログに記録
+        \Log::info('Sending verification email to ' . $user->email);
+
+        // 認証メールを送信
+        $user->sendEmailVerificationNotification();
+
         // ユーザーがメール認証済みでない場合、/email/verify にリダイレクト
         if (!Auth::user()->hasVerifiedEmail()) {
             return redirect()->route('verification.notice');

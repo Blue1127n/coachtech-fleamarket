@@ -10,7 +10,19 @@
 <div class="verify-email-container">
     <h1>メールアドレス認証</h1>
     <p>ご登録頂きましたメールアドレスに認証リンクを送信致しました<br>
-    認証リンクをクリックして、メールアドレスの認証を完了してください</p>
-    <p>認証メールを受け取らない場合は、<a href="{{ route('verification.resend') }}">こちら</a>をクリックして再送信してください。</p>
+    以下の認証リンクをクリックして、メールアドレスの認証を完了してください。</p>
+
+    {{-- メッセージを表示 --}}
+    @if (session('message'))
+        <p style="color: green;">{{ session('message') }}</p>
+    @endif
+
+    <p>認証メールを受け取っていない場合は、以下のボタンを押してください</p>
+
+    {{-- 認証メール再送信フォーム --}}
+    <form action="{{ route('verification.resend') }}" method="POST">
+        @csrf
+        <button type="submit" class="resend-button">認証メールを再送信</button>
+    </form>
 </div>
 @endsection
