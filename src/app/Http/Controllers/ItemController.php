@@ -29,7 +29,7 @@ class ItemController extends Controller
 
         // 画像パスをURLに変換
         foreach ($products as $product) {
-            $product->image_url = asset($product->image);
+            $product->image_url = asset('storage/' . $product->image);
         }
 
         return view('products.index', [
@@ -65,7 +65,7 @@ class ItemController extends Controller
 
         // 画像パスをURLに変換
         foreach ($products as $product) {
-            $product->image_url = asset($product->image); // 'image'を使用してURLを生成
+            $product->image_url = asset('storage/' . $product->image); // 'image'を使用してURLを生成
         }
 
         return view('products.index', [

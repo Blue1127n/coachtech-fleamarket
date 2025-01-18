@@ -29,6 +29,12 @@ class RedirectIfProfileIncomplete
             return $next($request);
         }
 
+        // プロフィール更新処理の際はミドルウェアをスキップ
+        if ($request->route()->getName() === 'mypage.profile.update') {
+            \Log::info('Skipping middleware for profile update');
+            return $next($request);
+        }
+
         $currentRoute = $this->getCurrentRouteName($request);
 
         // メール未認証の場合はスキップ

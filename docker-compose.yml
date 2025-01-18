@@ -15,7 +15,6 @@ services:
     build: ./docker/php
     volumes:
       - ./src:/var/www/
-      - ./src/storage:/var/www/storage
     ports:
       - "8000:8000"
 

@@ -22,7 +22,7 @@
             @foreach ($products as $product)
                 <div class="product-card">
                     <div class="product-image">
-                        <img src="{{ $product->image_url }}" alt="商品画像">
+                        <img src="{{ 'storage/' . $product->image }}" alt="商品画像">
                         @if($product->status_id !== 1) {{-- status_id 1以外はSOLD --}}
                             <div class="sold-badge">SOLD</div>
                         @endif

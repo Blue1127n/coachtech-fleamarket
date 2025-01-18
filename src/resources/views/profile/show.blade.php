@@ -9,8 +9,15 @@
 @section('content')
 <div class="profile-container">
     <div class="profile-header">
-        <h2>{{ $user->name }}</h2>
-        <a href="{{ route('mypage.profile') }}" class="btn">プロフィールを編集</a>
+        <div class="profile-image">
+            <img src="{{ asset('images/default-profile.png') }}" alt="プロフィール画像">
+
+        </div>
+
+        <div class="profile-info">
+            <h2>{{ $user->name }}</h2>
+            <a href="{{ route('mypage.profile') }}" class="btn">プロフィールを編集</a>
+        </div>
     </div>
 
     <div class="tabs">

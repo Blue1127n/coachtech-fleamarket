@@ -42,13 +42,20 @@ class UserProfileController extends Controller
     // プロフィールを更新
     public function update(Request $request, AddressRequest $addressRequest, ProfileRequest $profileRequest)
 {
-    \Log::info('プロフィール更新開始', ['user_id' => Auth::id()]);
+    \Log::info('更新リクエストデータ', ['request_data' => $request->all()]);
+    \Log::info('Received request data', $request->all());
+    \Log::info('Received AddressRequest Data', $addressRequest->all());
+    \Log::info('Received ProfileRequest Data', $profileRequest->all());
 
     try {
         // バリデーションの開始ログ
         $validatedAddress = $addressRequest->validated();
         $validatedProfile = $profileRequest->validated();
-        \Log::info('バリデーション成功', ['user_id' => Auth::id()]);
+
+        \Log::info('バリデーション結果', [
+            'validated_address' => $validatedAddress,
+            'validated_profile' => $validatedProfile,
+        ]);
 
         // ユーザー情報更新
         $user = auth()->user();
@@ -59,20 +66,40 @@ class UserProfileController extends Controller
             'building' => $validatedAddress['building'] ?? null,
         ]);
 
+        \Log::info('データベース保存結果', ['user_data' => $user->only(['name', 'postal_code', 'address', 'building'])]);
+
         // 画像アップロード
         if ($profileRequest->hasFile('profile_image')) {
+            try {
             $file = $profileRequest->file('profile_image');
             $finalPath = $file->store('profile_images', 'public');
             $user->update(['profile_image' => $finalPath]);
-            \Log::info('プロフィール画像保存成功', ['user_id' => Auth::id(), 'path' => $finalPath]);
-        }
 
-        \Log::info('プロフィール更新完了', ['user_id' => Auth::id()]);
-        return redirect()->route('mypage')->with('success', 'プロフィールが更新されました');
-    } catch (\Exception $e) {
-        \Log::error('プロフィール更新エラー', ['error' => $e->getMessage()]);
-        return redirect()->back()->withErrors(['message' => '予期しないエラーが発生しました']);
+            \Log::info('プロフィール画像保存成功', [
+                'user_id' => Auth::id(),
+                'path' => $finalPath,
+            ]);
+        } catch (\Exception $imageException) {
+            \Log::error('プロフィール画像保存エラー', [
+                'error' => $imageException->getMessage(),
+            ]);
+
+            return redirect()->back()->withErrors(['message' => '画像アップロードに失敗しました']);
+        }
+    } else {
+        \Log::info('プロフィール画像はアップロードされていません', ['user_id' => Auth::id()]);
     }
+
+    \Log::info('プロフィール更新完了', ['user_id' => Auth::id()]);
+
+    // プロフィール更新後、商品一覧画面にリダイレクト
+    return redirect()->route('products.index')->with('success', 'プロフィールが更新されました');
+} catch (\Exception $e) {
+    // 予期しないエラーが発生した場合
+    \Log::error('プロフィール更新エラー', ['error' => $e->getMessage()]);
+
+    return redirect()->back()->withErrors(['message' => '予期しないエラーが発生しました']);
+}
 }
 
     // 購入した商品一覧

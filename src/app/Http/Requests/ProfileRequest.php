@@ -23,7 +23,8 @@ class ProfileRequest extends FormRequest
      */
     public function rules()
     {
-        \Log::info('ProfileRequest Rules Triggered', ['data' => $this->all()]);
+        \Log::info('ProfileRequest Validation Rules Triggered', ['data' => $this->all()]);
+
         return [
         'profile_image' => 'nullable|image|mimes:jpeg,png|max:2048',
         ];
@@ -31,7 +32,8 @@ class ProfileRequest extends FormRequest
 
     public function messages()
     {
-        \Log::info('ProfileRequest Messages Triggered');
+        \Log::info('ProfileRequest Messages Triggered', ['data' => $this->all()]);
+
         return [
             'profile_image.image' => 'プロフィール画像はjpegまたはpng形式でアップロードしてください',
             'profile_image.mimes' => 'プロフィール画像はjpegまたはpng形式でアップロードしてください',

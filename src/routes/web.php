@@ -6,7 +6,6 @@ use App\Http\Controllers\ItemController;
 use App\Http\Controllers\UserProfileController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
 
 /*
 |--------------------------------------------------------------------------
@@ -64,3 +63,4 @@ Route::middleware(['auth', 'verified', 'profile.complete'])->group(function () {
     Route::put('/mypage/profile', [UserProfileController::class, 'update'])->name('mypage.profile.update'); // プロフィール更新
     Route::get('/mypage/items', [UserProfileController::class, 'listItems'])->name('mypage.items'); // 購入・出品商品一覧（パラメータで切り替え）
 });
+
