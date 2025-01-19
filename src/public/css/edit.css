@@ -32,8 +32,8 @@ body {
     gap: 20px;
     display: flex;
     align-items: center;
-    justify-content: flex-start;
     width: 680px;
+    flex-direction: column;
 }
 
 .image-preview {
@@ -72,10 +72,6 @@ body {
     height: 100%;
     border-radius: 50%;
     background-color: rgba(217, 217, 217, 1);
-}
-
-.image-controls {
-    margin-top: 10px; /* プレビューとの間に余白 */
 }
 
 .btn-select-image {

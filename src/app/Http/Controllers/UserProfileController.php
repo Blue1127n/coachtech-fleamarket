@@ -80,13 +80,21 @@ class UserProfileController extends Controller
         if ($profileRequest->hasFile('profile_image')) {
             \Log::info('画像アップロード処理開始');
             try {
+            // ファイル取得
             $file = $profileRequest->file('profile_image');
+            // ファイル保存
             $finalPath = $file->store('profile_images', 'public');
             $user->update(['profile_image' => $finalPath]);
+            // 成功ログ
             \Log::info('プロフィール画像保存成功', ['path' => $finalPath]);
         } catch (\Exception $imageException) {
-            \Log::error('プロフィール画像保存エラー', ['error' => $imageException->getMessage()]);
-            return redirect()->back()->withErrors(['message' => '画像アップロードに失敗しました']);
+            // エラーログ
+            \Log::error('プロフィール画像保存エラー', [
+                'error' => $imageException->getMessage(), // エラー内容
+                'file' => $file->getClientOriginalName(), // アップロードされたファイル名
+            ]);
+            // ユーザーへのエラー通知
+            return redirect()->back()->withErrors(['profile_image' => '画像アップロードに失敗しました']);
         }
     } else {
         \Log::info('プロフィール画像はアップロードされていません');

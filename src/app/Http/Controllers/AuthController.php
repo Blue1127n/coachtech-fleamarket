@@ -24,15 +24,18 @@ class AuthController extends Controller
         \Log::info('Login request received', $request->all());
 
         $credentials = $request->only('email', 'password');
-
         \Log::info('Attempting login with credentials', $credentials);
 
         // ユーザー名またはメールアドレスでログインを試みる
         $loginByEmail = Auth::attempt(['email' => $credentials['email'], 'password' => $credentials['password']]);
-        $loginByName = Auth::attempt(['name' => $credentials['email'], 'password' => $credentials['password']]);
+        \Log::info('Login by email:', ['result' => $loginByEmail]);
 
+        $loginByName = Auth::attempt(['name' => $credentials['email'], 'password' => $credentials['password']]);
+        \Log::info('Login by name:', ['result' => $loginByName]);
+
+        // ログイン失敗時の処理
         if (!$loginByEmail && !$loginByName) {
-            \Log::error('Login failed for credentials', $credentials);
+            \Log::error('Login failed: Invalid credentials', ['email' => $credentials['email']]);
             return back()->withErrors(['login' => 'ログイン情報が登録されていません'])->withInput();
         }
 
@@ -43,13 +46,13 @@ class AuthController extends Controller
         }
 
         // 初回ログイン後のプロフィール設定リダイレクトフラグを設定
-        if (is_null(Auth::user()->address)) { // 初回ログインかどうかを判定
+        if (is_null(Auth::user()->address) || empty(Auth::user()->postal_code)) { // 初回ログインかどうかを判定
             session(['redirect_to_profile' => true]);
         }
 
         // 認証成功時の処理
         $request->session()->regenerate(); // セッションの再生成
-        \Log::info('Login successful for user', ['user' => Auth::user()]);
+        \Log::info('Login successful for user', ['user' => Auth::user()->id]);
 
         // プロフィール設定が必要ならプロフィール画面にリダイレクト
         if (session('redirect_to_profile', false)) {

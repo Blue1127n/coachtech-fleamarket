@@ -26,10 +26,10 @@ class AddressRequest extends FormRequest
         \Log::info('AddressRequest Validation Rules Triggered', ['data' => $this->all()]);
 
         return [
-            'name' => 'required|string|max:255',
-            'postal_code' => 'required|regex:/^\d{3}-\d{4}$/',
-            'address' => 'required|string|max:255',
-            'building' => 'nullable|string|max:255',
+            'name' => ['required', 'string', 'max:255'],
+            'postal_code' => ['required', 'regex:/^\d{3}-\d{4}$/'],
+            'address' => ['required', 'string', 'max:255'],
+            'building' => ['nullable','string','max:255'],
         ];
     }
 
@@ -43,5 +43,16 @@ class AddressRequest extends FormRequest
             'postal_code.regex' => '郵便番号は「XXX-XXXX」の形式の8桁で入力してください',
             'address.required' => '住所を入力してください',
         ];
+    }
+
+    protected function prepareForValidation()
+    {
+        \Log::info('Before prepareForValidation', ['postal_code' => $this->postal_code]);
+        if ($this->has('postal_code')) {
+            $this->merge([
+                'postal_code' => preg_replace('/^(\d{3})(\d{4})$/', '$1-$2', $this->postal_code),
+            ]);
+        }
+        \Log::info('After prepareForValidation', ['postal_code' => $this->postal_code]);
     }
 }
