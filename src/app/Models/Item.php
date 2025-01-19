@@ -12,10 +12,10 @@ class Item extends Model
     protected $fillable = [
         'user_id',
         'status_id',
+        'condition_id',
         'name',
         'description',
         'price',
-        'condition',
         'image',
         'brand',
     ];
@@ -26,6 +26,11 @@ class Item extends Model
     }
 
     public function status()
+    {
+        return $this->belongsTo(Status::class);
+    }
+
+    public function condition()
     {
         return $this->belongsTo(Status::class);
     }

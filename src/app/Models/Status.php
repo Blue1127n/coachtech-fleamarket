@@ -24,11 +24,6 @@ class Status extends Model
         return $this->hasMany(Item::class);
     }
 
-    public function histories()
-    {
-        return $this->hasMany(History::class);
-    }
-
     private const ARCHIVED_STATUS = 'ARCHIVED';
 
     public function isActive(): bool

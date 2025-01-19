@@ -97,12 +97,13 @@ class AuthController extends Controller
     // ログアウト処理
     public function logout(Request $request)
     {
-        Auth::logout(); // ログアウト
+        Auth::logout(); // ログアウト処理を実行
 
         // セッションの無効化と再生成
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
+        $request->session()->invalidate(); // セッションを無効化（セッションデータを削除）
+        $request->session()->regenerateToken(); // CSRFトークンを再生成
 
+        // 商品一覧画面（トップページ）にリダイレクト
         return redirect('/')->with('success', 'ログアウトしました');
     }
 }

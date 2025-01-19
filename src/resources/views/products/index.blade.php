@@ -11,13 +11,17 @@
     <div class="product-tabs">
         <a href="{{ route('products.index') }}"
             class="tab {{ request()->routeIs('products.index') ? 'active' : '' }}">おすすめ</a>
-        <a href="{{ auth()->check() ? route('products.mylist') : route('login') }}"
+        <a href="{{ route('products.mylist') }}"
             class="tab {{ request()->routeIs('products.mylist') ? 'active' : '' }}">マイリスト</a>
     </div>
 
     <div class="product-grid">
         @if($products->isEmpty())
-            <p>商品がありません。</p>
+            @if($isMyList && !auth()->check())
+                <p>ログインするとマイリストを表示できます</p>
+            @else
+                <p>商品がありません</p>
+            @endif
         @else
             @foreach ($products as $product)
                 <div class="product-card">

@@ -32,11 +32,6 @@ class Transaction extends Model
         return $this->belongsTo(Status::class);
     }
 
-    public function histories()
-    {
-        return $this->hasMany(History::class);
-    }
-
     private const STATUS_COMPLETED = 'COMPLETED';
     private const STATUS_CANCELLED = 'CANCELLED';
 

@@ -46,6 +46,7 @@ body {
     gap: 0px;
     border-radius: 50%;
     background: rgba(217, 217, 217, 1);
+    margin-bottom: 10px;
 }
 
 .image-preview img {
@@ -73,8 +74,11 @@ body {
     background-color: rgba(217, 217, 217, 1);
 }
 
+.image-controls {
+    margin-top: 10px; /* プレビューとの間に余白 */
+}
+
 .btn-select-image {
-    display: inline-block;
     padding: 10px 20px;
     color: rgba(255, 85, 85, 1);
     background-color: rgba(255, 255, 255, 1);

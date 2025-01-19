@@ -42,14 +42,18 @@ class ItemController extends Controller
     // マイリストの表示
     public function mylist(Request $request)
     {
-        if (!auth()->check()) {
-            // ログインしていない場合はログインページにリダイレクト
-            return redirect()->route('login');
-        }
-
         $search = $request->input('search'); // 検索クエリ
 
-        // ユーザーが「いいね」した商品を取得
+        // ログインしていない場合は空のコレクションを渡す
+        if (!auth()->check()) {
+            return view('products.index', [
+                'products' => collect(), // 空のコレクションを渡す
+                'isMyList' => true,
+                'search' => $search, // 検索クエリをビューに渡す
+            ]);
+        }
+
+        // ログインしている場合は「いいね」した商品を取得
         $products = auth()->user()
                             ->likes()
                             ->with('item.status') // ステータス情報もロード

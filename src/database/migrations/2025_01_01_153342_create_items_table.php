@@ -17,16 +17,17 @@ class CreateItemsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('status_id');
+            $table->unsignedBigInteger('condition_id');
             $table->string('name');
             $table->text('description')->nullable();
             $table->integer('price');
-            $table->string('condition');
             $table->string('image')->nullable();
             $table->string('brand')->nullable();
             $table->timestamps();
-
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('status_id')->references('id')->on('statuses')->onDelete('cascade');
+            $table->foreign('condition_id')->references('id')->on('conditions')->onDelete('cascade');
+
         });
     }
 

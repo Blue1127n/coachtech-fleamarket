@@ -30,6 +30,19 @@
             if (placeholder) placeholder.style.display = 'block';
         }
     }
+
+    // ファイル選択時のログ出力
+    document.getElementById('profile_image').addEventListener('change', (event) => {
+    const file = event.target.files[0];
+    console.log('選択されたファイル:', file);
+    if (file) {
+        console.log('ファイル名:', file.name);
+        console.log('ファイルタイプ:', file.type);
+        console.log('ファイルサイズ:', file.size);
+    } else {
+        console.log('ファイルが選択されていません');
+    }
+});
 </script>
 
 @endpush
@@ -37,6 +50,10 @@
 @section('content')
 <div class="profile-edit-container">
     <h2>プロフィール設定</h2>
+
+<form action="{{ route('mypage.profile.update') }}" method="POST" enctype="multipart/form-data">
+    @csrf
+    @method('PUT')
 
     <div class="profile-image-section">
         <div class="image-preview">
@@ -48,20 +65,18 @@
         @if (!auth()->user()->profile_image && !session('profile_image_temp'))
             <div id="placeholder" class="placeholder"></div>
         @endif
-    </div>
+        </div>
 
         <label class="btn-select-image">
             画像を選択する
             <input type="file" name="profile_image" id="profile_image" onchange="previewImage(event)" style="display: none;">
         </label>
-        @error('profile_image')
-            <div class="error-message">{{ $message }}</div>
-        @enderror
-        </div>
-
-        <form action="{{ route('mypage.profile.update') }}" method="POST" enctype="multipart/form-data">
-            @csrf
-            @method('PUT')
+        @if ($errors->has('profile_image'))
+            <div class="error-message">
+                {{ $errors->first('profile_image') }}
+            </div>
+        @endif
+    </div>
 
         <div class="form-group">
             <label for="name">ユーザー名</label>
