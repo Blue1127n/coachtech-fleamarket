@@ -87,7 +87,21 @@ body {
     justify-content: flex-start;
     margin-top: 60px;
     margin-bottom: 20px;
-    margin-left: 100px;
+    position: relative;
+    width: 100%;
+    padding-left: 20px;
+    box-sizing: border-box;/* 線のはみ出し防止 */
+}
+
+.tabs::after {
+    content: '';
+    position: absolute;
+    bottom: -5px; /* 線をタブの下に配置 */
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: rgba(95, 95, 95, 1); /* 線の色 */
+    z-index: 1; /* 他の要素より前面に */
 }
 
 .tabs a {
@@ -102,28 +116,35 @@ body {
     text-underline-position: from-font;
     text-decoration-skip-ink: none;
     margin: 0 30px;
+    position: relative; /* 下線と競合しないように */
+    z-index: 2; /* 線より前面に表示 */
+    background-color: rgba(255, 255, 255, 1); /* 線に被らないよう背景色を追加 */
 }
 
 .tabs a.active {
-    border-bottom: 2px solid #f05a5a;
     color: rgba(255, 0, 0, 1);
 }
 
 .items {
     display: flex;
     flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
+    justify-content: flex-start;
+    gap: 50px;
+    padding: 20px;
+    margin-left: 50px;
+    margin-bottom: 30px;
+    box-sizing: border-box;
 }
 
 .item {
-    width: 180px;
-    padding: 10px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 290px;
+    height: 320px;
+    gap: 0px;
+    background-color: rgba(255, 255, 255, 1);
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    border-radius: 4px;
     text-align: center;
-    transition: transform 0.2s;
+    transition: transform 0.2s ease;
 }
 
 .item:hover {
@@ -132,15 +153,25 @@ body {
 
 .item img {
     width: 100%;
-    height: 150px;
+    max-width: 290px;
+    height: 280px;
+    gap: 0px;
     object-fit: cover;
-    border-radius: 5px;
+    border-radius: 4px;
     margin-bottom: 10px;
 }
 
 .item p {
-    font-size: 14px;
-    color: #333;
+    font-size: 25px;
+    font-weight: 400;
+    line-height: 30.26px;
+    text-align: left;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+    color: rgba(0, 0, 0, 1);
+    padding-left: 5px;
     margin: 0;
-    font-weight: bold;
 }
+
+
+
