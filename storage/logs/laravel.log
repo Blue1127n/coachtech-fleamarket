@@ -853,3 +853,388 @@
 [2025-01-19 21:49:17] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"login","user_authenticated":false,"user":null} 
 [2025-01-19 21:49:17] local.INFO: User not authenticated, skipping middleware  
 [2025-01-19 21:49:17] local.INFO: Rendering login form.  
+[2025-01-20 14:22:32] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"login","user_authenticated":false,"user":null} 
+[2025-01-20 14:22:32] local.INFO: User not authenticated, skipping middleware  
+[2025-01-20 14:22:32] local.INFO: Rendering login form.  
+[2025-01-20 14:22:52] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":null,"user_authenticated":false,"user":null} 
+[2025-01-20 14:22:52] local.INFO: User not authenticated, skipping middleware  
+[2025-01-20 14:22:52] local.INFO: Validation errors ["正しいメール形式で入力してください"] 
+[2025-01-20 14:22:52] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"login","user_authenticated":false,"user":null} 
+[2025-01-20 14:22:52] local.INFO: User not authenticated, skipping middleware  
+[2025-01-20 14:22:52] local.INFO: Rendering login form.  
+[2025-01-20 14:23:40] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":null,"user_authenticated":false,"user":null} 
+[2025-01-20 14:23:40] local.INFO: User not authenticated, skipping middleware  
+[2025-01-20 14:23:40] local.INFO: Validation errors ["正しいメール形式で入力してください"] 
+[2025-01-20 14:23:40] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"login","user_authenticated":false,"user":null} 
+[2025-01-20 14:23:40] local.INFO: User not authenticated, skipping middleware  
+[2025-01-20 14:23:40] local.INFO: Rendering login form.  
+[2025-01-20 14:23:57] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":null,"user_authenticated":false,"user":null} 
+[2025-01-20 14:23:57] local.INFO: User not authenticated, skipping middleware  
+[2025-01-20 14:23:57] local.INFO: Login request received {"_token":"dUogoYNQB91vQKvT61nFMnxkKxAzEfH1ufyHJ8ut","email":"test@example.com","password":"password"} 
+[2025-01-20 14:23:57] local.INFO: Attempting login with credentials {"email":"test@example.com","password":"password"} 
+[2025-01-20 14:23:57] local.INFO: Login by email: {"result":true} 
+[2025-01-20 14:23:57] local.INFO: Login by name: {"result":false} 
+[2025-01-20 14:23:57] local.INFO: Login successful for user {"user":1} 
+[2025-01-20 14:23:57] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"products.index","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 14:23:57] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 14:23:57] local.INFO: Products fetched for index: {"products":{"Illuminate\\Database\\Eloquent\\Collection":[{"id":1,"user_id":1,"status_id":1,"condition_id":1,"name":"腕時計","description":"スタイリッシュなデザインのメンズ腕時計","price":15000,"image":"items/Armani+Mens+Clock.jpg","brand":"Armani","created_at":"2025-01-19T10:56:28.000000Z","updated_at":"2025-01-19T10:56:28.000000Z","status":{"id":1,"name":"available","description":"販売中","created_at":"2025-01-19T10:56:28.000000Z","updated_at":"2025-01-19T10:56:28.000000Z"}},{"id":2,"user_id":1,"status_id":1,"condition_id":2,"name":"HDD","description":"高速で信頼性の高いハードディスク","price":5000,"image":"items/HDD+Hard+Disk.jpg","brand":"Western Digital","created_at":"2025-01-19T10:56:28.000000Z","updated_at":"2025-01-19T10:56:28.000000Z","status":{"id":1,"name":"available","description":"販売中","created_at":"2025-01-19T10:56:28.000000Z","updated_at":"2025-01-19T10:56:28.000000Z"}},{"id":3,"user_id":1,"status_id":1,"condition_id":3,"name":"玉ねぎ3束","description":"新鮮な玉ねぎ3束のセット","price":300,"image":"items/iLoveIMG+d.jpg","brand":null,"created_at":"2025-01-19T10:56:28.000000Z","updated_at":"2025-01-19T10:56:28.000000Z","status":{"id":1,"name":"available","description":"販売中","created_at":"2025-01-19T10:56:28.000000Z","updated_at":"2025-01-19T10:56:28.000000Z"}},{"id":4,"user_id":1,"status_id":1,"condition_id":4,"name":"革靴","description":"クラシックなデザインの革靴","price":4000,"image":"items/Leather+Shoes+Product+Photo.jpg","brand":"ALDEN","created_at":"2025-01-19T10:56:28.000000Z","updated_at":"2025-01-19T10:56:28.000000Z","status":{"id":1,"name":"available","description":"販売中","created_at":"2025-01-19T10:56:28.000000Z","updated_at":"2025-01-19T10:56:28.000000Z"}},{"id":5,"user_id":1,"status_id":1,"condition_id":1,"name":"ノートPC","description":"高性能なノートパソコン","price":45000,"image":"items/Living+Room+Laptop.jpg","brand":"Dell","created_at":"2025-01-19T10:56:28.000000Z","updated_at":"2025-01-19T10:56:28.000000Z","status":{"id":1,"name":"available","description":"販売中","created_at":"2025-01-19T10:56:28.000000Z","updated_at":"2025-01-19T10:56:28.000000Z"}},{"id":6,"user_id":1,"status_id":1,"condition_id":2,"name":"マイク","description":"高音質のレコーディング用マイク","price":8000,"image":"items/Music+Mic+4632231.jpg","brand":null,"created_at":"2025-01-19T10:56:28.000000Z","updated_at":"2025-01-19T10:56:28.000000Z","status":{"id":1,"name":"available","description":"販売中","created_at":"2025-01-19T10:56:28.000000Z","updated_at":"2025-01-19T10:56:28.000000Z"}},{"id":7,"user_id":1,"status_id":1,"condition_id":3,"name":"ショルダーバッグ","description":"おしゃれなショルダーバッグ","price":3500,"image":"items/Purse+fashion+pocket.jpg","brand":null,"created_at":"2025-01-19T10:56:28.000000Z","updated_at":"2025-01-19T10:56:28.000000Z","status":{"id":1,"name":"available","description":"販売中","created_at":"2025-01-19T10:56:28.000000Z","updated_at":"2025-01-19T10:56:28.000000Z"}},{"id":8,"user_id":1,"status_id":1,"condition_id":4,"name":"タンブラー","description":"使いやすいタンブラー","price":500,"image":"items/Tumbler+souvenir.jpg","brand":null,"created_at":"2025-01-19T10:56:28.000000Z","updated_at":"2025-01-19T10:56:28.000000Z","status":{"id":1,"name":"available","description":"販売中","created_at":"2025-01-19T10:56:28.000000Z","updated_at":"2025-01-19T10:56:28.000000Z"}},{"id":9,"user_id":1,"status_id":1,"condition_id":1,"name":"コーヒーミル","description":"手動のコーヒーミル","price":4000,"image":"items/Waitress+with+Coffee+Grinder.jpg","brand":null,"created_at":"2025-01-19T10:56:28.000000Z","updated_at":"2025-01-19T10:56:28.000000Z","status":{"id":1,"name":"available","description":"販売中","created_at":"2025-01-19T10:56:28.000000Z","updated_at":"2025-01-19T10:56:28.000000Z"}},{"id":10,"user_id":1,"status_id":1,"condition_id":2,"name":"メイクセット","description":"便利なメイクアップセット","price":2500,"image":"items/外出メイクアップセット.jpg","brand":null,"created_at":"2025-01-19T10:56:28.000000Z","updated_at":"2025-01-19T10:56:28.000000Z","status":{"id":1,"name":"available","description":"販売中","created_at":"2025-01-19T10:56:28.000000Z","updated_at":"2025-01-19T10:56:28.000000Z"}}]}} 
+[2025-01-20 14:24:34] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"products.mylist","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 14:24:34] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 14:24:35] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 14:24:35] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 14:24:35] local.INFO: Profile items data {"user":1,"page":"sell","items_count":10} 
+[2025-01-20 14:24:47] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage.profile","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 14:24:47] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 14:27:47] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage.profile","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 14:27:47] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 14:27:48] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage.profile","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 14:27:48] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 14:28:09] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage.profile","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 14:28:09] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 14:33:42] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage.profile","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 14:33:42] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 14:33:42] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage.profile","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 14:33:42] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 14:34:54] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage.profile","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 14:34:54] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 14:44:00] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage.profile","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 14:44:00] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 14:46:53] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage.profile","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 14:46:53] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 14:47:53] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage.profile","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 14:47:53] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 14:47:54] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage.profile","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 14:47:54] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 14:52:47] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage.profile","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 14:52:47] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 14:53:13] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage.profile","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 14:53:13] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 14:53:38] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage.profile.update","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 14:53:38] local.INFO: Skipping middleware for profile update  
+[2025-01-20 14:53:38] local.INFO: Before prepareForValidation {"postal_code":"123-4567"} 
+[2025-01-20 14:53:38] local.INFO: After prepareForValidation {"postal_code":"123-4567"} 
+[2025-01-20 14:53:38] local.INFO: AddressRequest Validation Rules Triggered {"data":{"_token":"K1OPXFami6tHsSWOhklbY0XLpu1YPLzORL0OrJ2L","_method":"PUT","name":"テストユーザー","postal_code":"123-4567","address":"東京都渋谷区1-3","building":"渋谷ヒカリエ601","profile_image":{"Illuminate\\Http\\UploadedFile":"/tmp/phpMMZpxL"}}} 
+[2025-01-20 14:53:38] local.INFO: AddressRequest Messages Triggered {"data":{"_token":"K1OPXFami6tHsSWOhklbY0XLpu1YPLzORL0OrJ2L","_method":"PUT","name":"テストユーザー","postal_code":"123-4567","address":"東京都渋谷区1-3","building":"渋谷ヒカリエ601","profile_image":{"Illuminate\\Http\\UploadedFile":"/tmp/phpMMZpxL"}}} 
+[2025-01-20 14:53:38] local.INFO: ProfileRequest Constructed  
+[2025-01-20 14:53:38] local.INFO: ProfileRequest Validation Rules Triggered {"data":{"_token":"K1OPXFami6tHsSWOhklbY0XLpu1YPLzORL0OrJ2L","_method":"PUT","name":"テストユーザー","postal_code":"123-4567","address":"東京都渋谷区1-3","building":"渋谷ヒカリエ601","profile_image":{"Illuminate\\Http\\UploadedFile":"/tmp/phpMMZpxL"}}} 
+[2025-01-20 14:53:38] local.INFO: ProfileRequest Messages Triggered {"data":{"_token":"K1OPXFami6tHsSWOhklbY0XLpu1YPLzORL0OrJ2L","_method":"PUT","name":"テストユーザー","postal_code":"123-4567","address":"東京都渋谷区1-3","building":"渋谷ヒカリエ601","profile_image":{"Illuminate\\Http\\UploadedFile":"/tmp/phpMMZpxL"}}} 
+[2025-01-20 14:53:38] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage.profile","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 14:53:38] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 14:55:47] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage.profile","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 14:55:47] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 14:55:59] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage.profile.update","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 14:55:59] local.INFO: Skipping middleware for profile update  
+[2025-01-20 14:55:59] local.INFO: Before prepareForValidation {"postal_code":"123-4567"} 
+[2025-01-20 14:55:59] local.INFO: After prepareForValidation {"postal_code":"123-4567"} 
+[2025-01-20 14:55:59] local.INFO: AddressRequest Validation Rules Triggered {"data":{"_token":"K1OPXFami6tHsSWOhklbY0XLpu1YPLzORL0OrJ2L","_method":"PUT","name":"テストユーザー","postal_code":"123-4567","address":"東京都渋谷区1-3","building":"渋谷ヒカリエ601","profile_image":{"Illuminate\\Http\\UploadedFile":"/tmp/phpm4Jkr7"}}} 
+[2025-01-20 14:55:59] local.INFO: AddressRequest Messages Triggered {"data":{"_token":"K1OPXFami6tHsSWOhklbY0XLpu1YPLzORL0OrJ2L","_method":"PUT","name":"テストユーザー","postal_code":"123-4567","address":"東京都渋谷区1-3","building":"渋谷ヒカリエ601","profile_image":{"Illuminate\\Http\\UploadedFile":"/tmp/phpm4Jkr7"}}} 
+[2025-01-20 14:55:59] local.INFO: ProfileRequest Constructed  
+[2025-01-20 14:55:59] local.INFO: ProfileRequest Validation Rules Triggered {"data":{"_token":"K1OPXFami6tHsSWOhklbY0XLpu1YPLzORL0OrJ2L","_method":"PUT","name":"テストユーザー","postal_code":"123-4567","address":"東京都渋谷区1-3","building":"渋谷ヒカリエ601","profile_image":{"Illuminate\\Http\\UploadedFile":"/tmp/phpm4Jkr7"}}} 
+[2025-01-20 14:55:59] local.INFO: ProfileRequest Messages Triggered {"data":{"_token":"K1OPXFami6tHsSWOhklbY0XLpu1YPLzORL0OrJ2L","_method":"PUT","name":"テストユーザー","postal_code":"123-4567","address":"東京都渋谷区1-3","building":"渋谷ヒカリエ601","profile_image":{"Illuminate\\Http\\UploadedFile":"/tmp/phpm4Jkr7"}}} 
+[2025-01-20 14:55:59] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage.profile","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 14:55:59] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 14:57:16] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage.profile","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 14:57:16] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 14:58:13] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage.profile","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 14:58:13] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 14:58:25] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage.profile.update","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 14:58:25] local.INFO: Skipping middleware for profile update  
+[2025-01-20 14:58:25] local.INFO: Before prepareForValidation {"postal_code":"123-4567"} 
+[2025-01-20 14:58:25] local.INFO: After prepareForValidation {"postal_code":"123-4567"} 
+[2025-01-20 14:58:25] local.INFO: AddressRequest Validation Rules Triggered {"data":{"_token":"K1OPXFami6tHsSWOhklbY0XLpu1YPLzORL0OrJ2L","_method":"PUT","name":"テストユーザー","postal_code":"123-4567","address":"東京都渋谷区1-3","building":"渋谷ヒカリエ601","profile_image":{"Illuminate\\Http\\UploadedFile":"/tmp/phpjZC7xV"}}} 
+[2025-01-20 14:58:25] local.INFO: AddressRequest Messages Triggered {"data":{"_token":"K1OPXFami6tHsSWOhklbY0XLpu1YPLzORL0OrJ2L","_method":"PUT","name":"テストユーザー","postal_code":"123-4567","address":"東京都渋谷区1-3","building":"渋谷ヒカリエ601","profile_image":{"Illuminate\\Http\\UploadedFile":"/tmp/phpjZC7xV"}}} 
+[2025-01-20 14:58:25] local.INFO: ProfileRequest Constructed  
+[2025-01-20 14:58:25] local.INFO: ProfileRequest Validation Rules Triggered {"data":{"_token":"K1OPXFami6tHsSWOhklbY0XLpu1YPLzORL0OrJ2L","_method":"PUT","name":"テストユーザー","postal_code":"123-4567","address":"東京都渋谷区1-3","building":"渋谷ヒカリエ601","profile_image":{"Illuminate\\Http\\UploadedFile":"/tmp/phpjZC7xV"}}} 
+[2025-01-20 14:58:25] local.INFO: ProfileRequest Messages Triggered {"data":{"_token":"K1OPXFami6tHsSWOhklbY0XLpu1YPLzORL0OrJ2L","_method":"PUT","name":"テストユーザー","postal_code":"123-4567","address":"東京都渋谷区1-3","building":"渋谷ヒカリエ601","profile_image":{"Illuminate\\Http\\UploadedFile":"/tmp/phpjZC7xV"}}} 
+[2025-01-20 14:58:25] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage.profile","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 14:58:25] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 15:01:06] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage.profile","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 15:01:06] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 15:01:51] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage.profile","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 15:01:51] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 15:02:20] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage.profile","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 15:02:20] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 15:02:41] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage.profile.update","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 15:02:41] local.INFO: Skipping middleware for profile update  
+[2025-01-20 15:02:41] local.INFO: Before prepareForValidation {"postal_code":"123-4567"} 
+[2025-01-20 15:02:41] local.INFO: After prepareForValidation {"postal_code":"123-4567"} 
+[2025-01-20 15:02:41] local.INFO: AddressRequest Validation Rules Triggered {"data":{"_token":"K1OPXFami6tHsSWOhklbY0XLpu1YPLzORL0OrJ2L","_method":"PUT","name":"テストユーザー","postal_code":"123-4567","address":"東京都渋谷区1-3","building":"渋谷ヒカリエ601","profile_image":{"Illuminate\\Http\\UploadedFile":"/tmp/phpIFiYam"}}} 
+[2025-01-20 15:02:41] local.INFO: AddressRequest Messages Triggered {"data":{"_token":"K1OPXFami6tHsSWOhklbY0XLpu1YPLzORL0OrJ2L","_method":"PUT","name":"テストユーザー","postal_code":"123-4567","address":"東京都渋谷区1-3","building":"渋谷ヒカリエ601","profile_image":{"Illuminate\\Http\\UploadedFile":"/tmp/phpIFiYam"}}} 
+[2025-01-20 15:02:41] local.INFO: ProfileRequest Constructed  
+[2025-01-20 15:02:41] local.INFO: ProfileRequest Validation Rules Triggered {"data":{"_token":"K1OPXFami6tHsSWOhklbY0XLpu1YPLzORL0OrJ2L","_method":"PUT","name":"テストユーザー","postal_code":"123-4567","address":"東京都渋谷区1-3","building":"渋谷ヒカリエ601","profile_image":{"Illuminate\\Http\\UploadedFile":"/tmp/phpIFiYam"}}} 
+[2025-01-20 15:02:41] local.INFO: ProfileRequest Messages Triggered {"data":{"_token":"K1OPXFami6tHsSWOhklbY0XLpu1YPLzORL0OrJ2L","_method":"PUT","name":"テストユーザー","postal_code":"123-4567","address":"東京都渋谷区1-3","building":"渋谷ヒカリエ601","profile_image":{"Illuminate\\Http\\UploadedFile":"/tmp/phpIFiYam"}}} 
+[2025-01-20 15:02:41] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage.profile","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 15:02:41] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 15:02:58] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage.profile.update","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 15:02:58] local.INFO: Skipping middleware for profile update  
+[2025-01-20 15:02:58] local.INFO: Before prepareForValidation {"postal_code":"123-4567"} 
+[2025-01-20 15:02:58] local.INFO: After prepareForValidation {"postal_code":"123-4567"} 
+[2025-01-20 15:02:58] local.INFO: AddressRequest Validation Rules Triggered {"data":{"_token":"K1OPXFami6tHsSWOhklbY0XLpu1YPLzORL0OrJ2L","_method":"PUT","name":"テストユーザー","postal_code":"123-4567","address":null,"building":"渋谷ヒカリエ601"}} 
+[2025-01-20 15:02:58] local.INFO: AddressRequest Messages Triggered {"data":{"_token":"K1OPXFami6tHsSWOhklbY0XLpu1YPLzORL0OrJ2L","_method":"PUT","name":"テストユーザー","postal_code":"123-4567","address":null,"building":"渋谷ヒカリエ601"}} 
+[2025-01-20 15:02:58] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage.profile","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 15:02:58] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 15:03:35] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage.profile.update","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 15:03:35] local.INFO: Skipping middleware for profile update  
+[2025-01-20 15:03:35] local.INFO: Before prepareForValidation {"postal_code":"123-4567"} 
+[2025-01-20 15:03:35] local.INFO: After prepareForValidation {"postal_code":"123-4567"} 
+[2025-01-20 15:03:35] local.INFO: AddressRequest Validation Rules Triggered {"data":{"_token":"K1OPXFami6tHsSWOhklbY0XLpu1YPLzORL0OrJ2L","_method":"PUT","name":"テストユーザー","postal_code":"123-4567","address":"東京都渋谷区1-3","building":"渋谷ヒカリエ601","profile_image":{"Illuminate\\Http\\UploadedFile":"/tmp/phpeShQVq"}}} 
+[2025-01-20 15:03:35] local.INFO: AddressRequest Messages Triggered {"data":{"_token":"K1OPXFami6tHsSWOhklbY0XLpu1YPLzORL0OrJ2L","_method":"PUT","name":"テストユーザー","postal_code":"123-4567","address":"東京都渋谷区1-3","building":"渋谷ヒカリエ601","profile_image":{"Illuminate\\Http\\UploadedFile":"/tmp/phpeShQVq"}}} 
+[2025-01-20 15:03:35] local.INFO: ProfileRequest Constructed  
+[2025-01-20 15:03:35] local.INFO: ProfileRequest Validation Rules Triggered {"data":{"_token":"K1OPXFami6tHsSWOhklbY0XLpu1YPLzORL0OrJ2L","_method":"PUT","name":"テストユーザー","postal_code":"123-4567","address":"東京都渋谷区1-3","building":"渋谷ヒカリエ601","profile_image":{"Illuminate\\Http\\UploadedFile":"/tmp/phpeShQVq"}}} 
+[2025-01-20 15:03:35] local.INFO: ProfileRequest Messages Triggered {"data":{"_token":"K1OPXFami6tHsSWOhklbY0XLpu1YPLzORL0OrJ2L","_method":"PUT","name":"テストユーザー","postal_code":"123-4567","address":"東京都渋谷区1-3","building":"渋谷ヒカリエ601","profile_image":{"Illuminate\\Http\\UploadedFile":"/tmp/phpeShQVq"}}} 
+[2025-01-20 15:03:35] local.INFO: ProfileRequest ファイル情報 {"files":{"profile_image":{"Illuminate\\Http\\UploadedFile":"/tmp/phpeShQVq"}}} 
+[2025-01-20 15:03:35] local.INFO: AddressRequest バリデーション結果 {"validated_address":{"name":"テストユーザー","postal_code":"123-4567","address":"東京都渋谷区1-3","building":"渋谷ヒカリエ601"}} 
+[2025-01-20 15:03:35] local.INFO: ProfileRequest バリデーション結果 {"validated_profile":{"profile_image":{"Illuminate\\Http\\UploadedFile":"/tmp/phpeShQVq"}}} 
+[2025-01-20 15:03:35] local.INFO: データベース保存結果 {"user_data":{"name":"テストユーザー","postal_code":"123-4567","address":"東京都渋谷区1-3","building":"渋谷ヒカリエ601"}} 
+[2025-01-20 15:03:35] local.INFO: 画像アップロード処理開始  
+[2025-01-20 15:03:35] local.INFO: プロフィール画像保存成功 {"path":"profile_images/9Is04Ak4FU5FipLNalvefqpuhscmKHcYhF8xQOxa.jpg"} 
+[2025-01-20 15:03:35] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"products.index","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 15:03:35] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 15:03:35] local.INFO: Products fetched for index: {"products":{"Illuminate\\Database\\Eloquent\\Collection":[{"id":1,"user_id":1,"status_id":1,"condition_id":1,"name":"腕時計","description":"スタイリッシュなデザインのメンズ腕時計","price":15000,"image":"items/Armani+Mens+Clock.jpg","brand":"Armani","created_at":"2025-01-19T10:56:28.000000Z","updated_at":"2025-01-19T10:56:28.000000Z","status":{"id":1,"name":"available","description":"販売中","created_at":"2025-01-19T10:56:28.000000Z","updated_at":"2025-01-19T10:56:28.000000Z"}},{"id":2,"user_id":1,"status_id":1,"condition_id":2,"name":"HDD","description":"高速で信頼性の高いハードディスク","price":5000,"image":"items/HDD+Hard+Disk.jpg","brand":"Western Digital","created_at":"2025-01-19T10:56:28.000000Z","updated_at":"2025-01-19T10:56:28.000000Z","status":{"id":1,"name":"available","description":"販売中","created_at":"2025-01-19T10:56:28.000000Z","updated_at":"2025-01-19T10:56:28.000000Z"}},{"id":3,"user_id":1,"status_id":1,"condition_id":3,"name":"玉ねぎ3束","description":"新鮮な玉ねぎ3束のセット","price":300,"image":"items/iLoveIMG+d.jpg","brand":null,"created_at":"2025-01-19T10:56:28.000000Z","updated_at":"2025-01-19T10:56:28.000000Z","status":{"id":1,"name":"available","description":"販売中","created_at":"2025-01-19T10:56:28.000000Z","updated_at":"2025-01-19T10:56:28.000000Z"}},{"id":4,"user_id":1,"status_id":1,"condition_id":4,"name":"革靴","description":"クラシックなデザインの革靴","price":4000,"image":"items/Leather+Shoes+Product+Photo.jpg","brand":"ALDEN","created_at":"2025-01-19T10:56:28.000000Z","updated_at":"2025-01-19T10:56:28.000000Z","status":{"id":1,"name":"available","description":"販売中","created_at":"2025-01-19T10:56:28.000000Z","updated_at":"2025-01-19T10:56:28.000000Z"}},{"id":5,"user_id":1,"status_id":1,"condition_id":1,"name":"ノートPC","description":"高性能なノートパソコン","price":45000,"image":"items/Living+Room+Laptop.jpg","brand":"Dell","created_at":"2025-01-19T10:56:28.000000Z","updated_at":"2025-01-19T10:56:28.000000Z","status":{"id":1,"name":"available","description":"販売中","created_at":"2025-01-19T10:56:28.000000Z","updated_at":"2025-01-19T10:56:28.000000Z"}},{"id":6,"user_id":1,"status_id":1,"condition_id":2,"name":"マイク","description":"高音質のレコーディング用マイク","price":8000,"image":"items/Music+Mic+4632231.jpg","brand":null,"created_at":"2025-01-19T10:56:28.000000Z","updated_at":"2025-01-19T10:56:28.000000Z","status":{"id":1,"name":"available","description":"販売中","created_at":"2025-01-19T10:56:28.000000Z","updated_at":"2025-01-19T10:56:28.000000Z"}},{"id":7,"user_id":1,"status_id":1,"condition_id":3,"name":"ショルダーバッグ","description":"おしゃれなショルダーバッグ","price":3500,"image":"items/Purse+fashion+pocket.jpg","brand":null,"created_at":"2025-01-19T10:56:28.000000Z","updated_at":"2025-01-19T10:56:28.000000Z","status":{"id":1,"name":"available","description":"販売中","created_at":"2025-01-19T10:56:28.000000Z","updated_at":"2025-01-19T10:56:28.000000Z"}},{"id":8,"user_id":1,"status_id":1,"condition_id":4,"name":"タンブラー","description":"使いやすいタンブラー","price":500,"image":"items/Tumbler+souvenir.jpg","brand":null,"created_at":"2025-01-19T10:56:28.000000Z","updated_at":"2025-01-19T10:56:28.000000Z","status":{"id":1,"name":"available","description":"販売中","created_at":"2025-01-19T10:56:28.000000Z","updated_at":"2025-01-19T10:56:28.000000Z"}},{"id":9,"user_id":1,"status_id":1,"condition_id":1,"name":"コーヒーミル","description":"手動のコーヒーミル","price":4000,"image":"items/Waitress+with+Coffee+Grinder.jpg","brand":null,"created_at":"2025-01-19T10:56:28.000000Z","updated_at":"2025-01-19T10:56:28.000000Z","status":{"id":1,"name":"available","description":"販売中","created_at":"2025-01-19T10:56:28.000000Z","updated_at":"2025-01-19T10:56:28.000000Z"}},{"id":10,"user_id":1,"status_id":1,"condition_id":2,"name":"メイクセット","description":"便利なメイクアップセット","price":2500,"image":"items/外出メイクアップセット.jpg","brand":null,"created_at":"2025-01-19T10:56:28.000000Z","updated_at":"2025-01-19T10:56:28.000000Z","status":{"id":1,"name":"available","description":"販売中","created_at":"2025-01-19T10:56:28.000000Z","updated_at":"2025-01-19T10:56:28.000000Z"}}]}} 
+[2025-01-20 15:03:37] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 15:03:37] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 15:03:37] local.INFO: Profile items data {"user":1,"page":"sell","items_count":10} 
+[2025-01-20 15:03:43] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage.profile","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 15:03:43] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 15:03:48] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage.profile.update","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 15:03:48] local.INFO: Skipping middleware for profile update  
+[2025-01-20 15:03:48] local.INFO: Before prepareForValidation {"postal_code":"123-4567"} 
+[2025-01-20 15:03:48] local.INFO: After prepareForValidation {"postal_code":"123-4567"} 
+[2025-01-20 15:03:48] local.INFO: AddressRequest Validation Rules Triggered {"data":{"_token":"K1OPXFami6tHsSWOhklbY0XLpu1YPLzORL0OrJ2L","_method":"PUT","name":"テストユーザー","postal_code":"123-4567","address":"東京都渋谷区1-3","building":"渋谷ヒカリエ601"}} 
+[2025-01-20 15:03:48] local.INFO: AddressRequest Messages Triggered {"data":{"_token":"K1OPXFami6tHsSWOhklbY0XLpu1YPLzORL0OrJ2L","_method":"PUT","name":"テストユーザー","postal_code":"123-4567","address":"東京都渋谷区1-3","building":"渋谷ヒカリエ601"}} 
+[2025-01-20 15:03:48] local.INFO: ProfileRequest Constructed  
+[2025-01-20 15:03:48] local.INFO: ProfileRequest Validation Rules Triggered {"data":{"_token":"K1OPXFami6tHsSWOhklbY0XLpu1YPLzORL0OrJ2L","_method":"PUT","name":"テストユーザー","postal_code":"123-4567","address":"東京都渋谷区1-3","building":"渋谷ヒカリエ601"}} 
+[2025-01-20 15:03:48] local.INFO: ProfileRequest Messages Triggered {"data":{"_token":"K1OPXFami6tHsSWOhklbY0XLpu1YPLzORL0OrJ2L","_method":"PUT","name":"テストユーザー","postal_code":"123-4567","address":"東京都渋谷区1-3","building":"渋谷ヒカリエ601"}} 
+[2025-01-20 15:03:48] local.INFO: ProfileRequest ファイル情報 {"files":[]} 
+[2025-01-20 15:03:48] local.INFO: AddressRequest バリデーション結果 {"validated_address":{"name":"テストユーザー","postal_code":"123-4567","address":"東京都渋谷区1-3","building":"渋谷ヒカリエ601"}} 
+[2025-01-20 15:03:48] local.INFO: ProfileRequest バリデーション結果 {"validated_profile":[]} 
+[2025-01-20 15:03:48] local.INFO: データベース保存結果 {"user_data":{"name":"テストユーザー","postal_code":"123-4567","address":"東京都渋谷区1-3","building":"渋谷ヒカリエ601"}} 
+[2025-01-20 15:03:48] local.INFO: プロフィール画像はアップロードされていません  
+[2025-01-20 15:03:48] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"products.index","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 15:03:48] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 15:03:48] local.INFO: Products fetched for index: {"products":{"Illuminate\\Database\\Eloquent\\Collection":[{"id":1,"user_id":1,"status_id":1,"condition_id":1,"name":"腕時計","description":"スタイリッシュなデザインのメンズ腕時計","price":15000,"image":"items/Armani+Mens+Clock.jpg","brand":"Armani","created_at":"2025-01-19T10:56:28.000000Z","updated_at":"2025-01-19T10:56:28.000000Z","status":{"id":1,"name":"available","description":"販売中","created_at":"2025-01-19T10:56:28.000000Z","updated_at":"2025-01-19T10:56:28.000000Z"}},{"id":2,"user_id":1,"status_id":1,"condition_id":2,"name":"HDD","description":"高速で信頼性の高いハードディスク","price":5000,"image":"items/HDD+Hard+Disk.jpg","brand":"Western Digital","created_at":"2025-01-19T10:56:28.000000Z","updated_at":"2025-01-19T10:56:28.000000Z","status":{"id":1,"name":"available","description":"販売中","created_at":"2025-01-19T10:56:28.000000Z","updated_at":"2025-01-19T10:56:28.000000Z"}},{"id":3,"user_id":1,"status_id":1,"condition_id":3,"name":"玉ねぎ3束","description":"新鮮な玉ねぎ3束のセット","price":300,"image":"items/iLoveIMG+d.jpg","brand":null,"created_at":"2025-01-19T10:56:28.000000Z","updated_at":"2025-01-19T10:56:28.000000Z","status":{"id":1,"name":"available","description":"販売中","created_at":"2025-01-19T10:56:28.000000Z","updated_at":"2025-01-19T10:56:28.000000Z"}},{"id":4,"user_id":1,"status_id":1,"condition_id":4,"name":"革靴","description":"クラシックなデザインの革靴","price":4000,"image":"items/Leather+Shoes+Product+Photo.jpg","brand":"ALDEN","created_at":"2025-01-19T10:56:28.000000Z","updated_at":"2025-01-19T10:56:28.000000Z","status":{"id":1,"name":"available","description":"販売中","created_at":"2025-01-19T10:56:28.000000Z","updated_at":"2025-01-19T10:56:28.000000Z"}},{"id":5,"user_id":1,"status_id":1,"condition_id":1,"name":"ノートPC","description":"高性能なノートパソコン","price":45000,"image":"items/Living+Room+Laptop.jpg","brand":"Dell","created_at":"2025-01-19T10:56:28.000000Z","updated_at":"2025-01-19T10:56:28.000000Z","status":{"id":1,"name":"available","description":"販売中","created_at":"2025-01-19T10:56:28.000000Z","updated_at":"2025-01-19T10:56:28.000000Z"}},{"id":6,"user_id":1,"status_id":1,"condition_id":2,"name":"マイク","description":"高音質のレコーディング用マイク","price":8000,"image":"items/Music+Mic+4632231.jpg","brand":null,"created_at":"2025-01-19T10:56:28.000000Z","updated_at":"2025-01-19T10:56:28.000000Z","status":{"id":1,"name":"available","description":"販売中","created_at":"2025-01-19T10:56:28.000000Z","updated_at":"2025-01-19T10:56:28.000000Z"}},{"id":7,"user_id":1,"status_id":1,"condition_id":3,"name":"ショルダーバッグ","description":"おしゃれなショルダーバッグ","price":3500,"image":"items/Purse+fashion+pocket.jpg","brand":null,"created_at":"2025-01-19T10:56:28.000000Z","updated_at":"2025-01-19T10:56:28.000000Z","status":{"id":1,"name":"available","description":"販売中","created_at":"2025-01-19T10:56:28.000000Z","updated_at":"2025-01-19T10:56:28.000000Z"}},{"id":8,"user_id":1,"status_id":1,"condition_id":4,"name":"タンブラー","description":"使いやすいタンブラー","price":500,"image":"items/Tumbler+souvenir.jpg","brand":null,"created_at":"2025-01-19T10:56:28.000000Z","updated_at":"2025-01-19T10:56:28.000000Z","status":{"id":1,"name":"available","description":"販売中","created_at":"2025-01-19T10:56:28.000000Z","updated_at":"2025-01-19T10:56:28.000000Z"}},{"id":9,"user_id":1,"status_id":1,"condition_id":1,"name":"コーヒーミル","description":"手動のコーヒーミル","price":4000,"image":"items/Waitress+with+Coffee+Grinder.jpg","brand":null,"created_at":"2025-01-19T10:56:28.000000Z","updated_at":"2025-01-19T10:56:28.000000Z","status":{"id":1,"name":"available","description":"販売中","created_at":"2025-01-19T10:56:28.000000Z","updated_at":"2025-01-19T10:56:28.000000Z"}},{"id":10,"user_id":1,"status_id":1,"condition_id":2,"name":"メイクセット","description":"便利なメイクアップセット","price":2500,"image":"items/外出メイクアップセット.jpg","brand":null,"created_at":"2025-01-19T10:56:28.000000Z","updated_at":"2025-01-19T10:56:28.000000Z","status":{"id":1,"name":"available","description":"販売中","created_at":"2025-01-19T10:56:28.000000Z","updated_at":"2025-01-19T10:56:28.000000Z"}}]}} 
+[2025-01-20 15:03:51] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 15:03:51] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 15:03:51] local.INFO: Profile items data {"user":1,"page":"sell","items_count":10} 
+[2025-01-20 15:32:21] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 15:32:21] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 15:32:21] local.INFO: Profile items data {"user":1,"page":"sell","items_count":10} 
+[2025-01-20 15:33:46] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 15:33:46] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 15:33:46] local.INFO: Profile items data {"user":1,"page":"sell","items_count":10} 
+[2025-01-20 15:34:04] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 15:34:04] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 15:34:04] local.INFO: Profile items data {"user":1,"page":"sell","items_count":10} 
+[2025-01-20 15:36:43] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 15:36:43] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 15:36:43] local.INFO: Profile items data {"user":1,"page":"sell","items_count":10} 
+[2025-01-20 15:41:01] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 15:41:01] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 15:41:01] local.INFO: Profile items data {"user":1,"page":"sell","items_count":10} 
+[2025-01-20 15:41:23] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 15:41:23] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 15:41:23] local.INFO: Profile items data {"user":1,"page":"sell","items_count":10} 
+[2025-01-20 15:42:58] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 15:42:58] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 15:42:58] local.INFO: Profile items data {"user":1,"page":"sell","items_count":10} 
+[2025-01-20 15:44:15] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 15:44:15] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 15:44:15] local.INFO: Profile items data {"user":1,"page":"sell","items_count":10} 
+[2025-01-20 15:44:33] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 15:44:33] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 15:44:33] local.INFO: Profile items data {"user":1,"page":"sell","items_count":10} 
+[2025-01-20 15:52:12] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 15:52:12] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 15:52:12] local.INFO: Profile items data {"user":1,"page":"sell","items_count":10} 
+[2025-01-20 15:53:02] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 15:53:02] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 15:53:02] local.INFO: Profile items data {"user":1,"page":"sell","items_count":10} 
+[2025-01-20 15:53:21] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 15:53:21] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 15:53:21] local.INFO: Profile items data {"user":1,"page":"sell","items_count":10} 
+[2025-01-20 15:54:05] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 15:54:05] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 15:54:05] local.INFO: Profile items data {"user":1,"page":"sell","items_count":10} 
+[2025-01-20 15:55:54] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 15:55:54] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 15:55:54] local.INFO: Profile items data {"user":1,"page":"sell","items_count":10} 
+[2025-01-20 15:56:35] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 15:56:35] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 15:56:35] local.INFO: Profile items data {"user":1,"page":"sell","items_count":10} 
+[2025-01-20 15:56:42] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 15:56:42] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 15:56:42] local.INFO: Profile items data {"user":1,"page":"sell","items_count":10} 
+[2025-01-20 15:57:00] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 15:57:00] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 15:57:00] local.INFO: Profile items data {"user":1,"page":"sell","items_count":10} 
+[2025-01-20 15:57:39] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 15:57:39] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 15:57:39] local.INFO: Profile items data {"user":1,"page":"sell","items_count":10} 
+[2025-01-20 15:58:15] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 15:58:15] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 15:58:15] local.INFO: Profile items data {"user":1,"page":"sell","items_count":10} 
+[2025-01-20 16:06:18] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 16:06:18] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 16:06:18] local.INFO: Profile items data {"user":1,"page":"sell","items_count":10} 
+[2025-01-20 16:07:08] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 16:07:08] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 16:07:08] local.INFO: Profile items data {"user":1,"page":"sell","items_count":10} 
+[2025-01-20 16:08:20] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 16:08:20] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 16:08:20] local.INFO: Profile items data {"user":1,"page":"sell","items_count":10} 
+[2025-01-20 16:13:31] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 16:13:31] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 16:13:31] local.INFO: Profile items data {"user":1,"page":"sell","items_count":10} 
+[2025-01-20 16:13:32] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 16:13:32] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 16:13:32] local.INFO: Profile items data {"user":1,"page":"sell","items_count":10} 
+[2025-01-20 16:13:43] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 16:13:43] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 16:13:43] local.INFO: Profile items data {"user":1,"page":"sell","items_count":10} 
+[2025-01-20 16:14:13] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 16:14:13] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 16:14:13] local.INFO: Profile items data {"user":1,"page":"sell","items_count":10} 
+[2025-01-20 16:15:41] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 16:15:41] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 16:15:41] local.INFO: Profile items data {"user":1,"page":"sell","items_count":10} 
+[2025-01-20 16:17:22] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 16:17:22] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 16:17:22] local.INFO: Profile items data {"user":1,"page":"sell","items_count":10} 
+[2025-01-20 16:17:36] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 16:17:36] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 16:17:36] local.INFO: Profile items data {"user":1,"page":"sell","items_count":10} 
+[2025-01-20 16:17:48] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 16:17:48] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 16:17:48] local.INFO: Profile items data {"user":1,"page":"sell","items_count":10} 
+[2025-01-20 16:20:09] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 16:20:09] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 16:20:09] local.INFO: Profile items data {"user":1,"page":"sell","items_count":10} 
+[2025-01-20 16:20:22] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 16:20:22] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 16:20:22] local.INFO: Profile items data {"user":1,"page":"sell","items_count":10} 
+[2025-01-20 16:20:32] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 16:20:32] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 16:20:32] local.INFO: Profile items data {"user":1,"page":"sell","items_count":10} 
+[2025-01-20 16:21:09] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 16:21:09] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 16:21:09] local.INFO: Profile items data {"user":1,"page":"sell","items_count":10} 
+[2025-01-20 16:21:50] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 16:21:50] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 16:21:50] local.INFO: Profile items data {"user":1,"page":"sell","items_count":10} 
+[2025-01-20 16:22:54] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 16:22:54] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 16:22:54] local.INFO: Profile items data {"user":1,"page":"sell","items_count":10} 
+[2025-01-20 16:23:23] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 16:23:23] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 16:23:23] local.INFO: Profile items data {"user":1,"page":"sell","items_count":10} 
+[2025-01-20 16:23:42] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 16:23:42] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 16:23:42] local.INFO: Profile items data {"user":1,"page":"sell","items_count":10} 
+[2025-01-20 16:25:23] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 16:25:23] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 16:25:23] local.INFO: Profile items data {"user":1,"page":"sell","items_count":10} 
+[2025-01-20 16:28:28] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 16:28:28] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 16:28:28] local.INFO: Profile items data {"user":1,"page":"sell","items_count":10} 
+[2025-01-20 16:33:50] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 16:33:50] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 16:33:50] local.INFO: Profile items data {"user":1,"page":"sell","items_count":10} 
+[2025-01-20 16:35:08] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 16:35:08] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 16:35:08] local.INFO: Profile items data {"user":1,"page":"sell","items_count":10} 
+[2025-01-20 16:36:03] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 16:36:03] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 16:36:03] local.INFO: Profile items data {"user":1,"page":"sell","items_count":10} 
+[2025-01-20 16:37:23] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 16:37:23] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 16:37:23] local.INFO: Profile items data {"user":1,"page":"sell","items_count":10} 
+[2025-01-20 16:42:30] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 16:42:30] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 16:42:30] local.INFO: Profile items data {"user":1,"page":"buy","items_count":0} 
+[2025-01-20 16:42:32] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 16:42:32] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 16:42:32] local.INFO: Profile items data {"user":1,"page":"sell","items_count":10} 
+[2025-01-20 16:42:34] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 16:42:34] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 16:42:34] local.INFO: Profile items data {"user":1,"page":"buy","items_count":0} 
+[2025-01-20 16:42:39] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 16:42:39] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 16:42:39] local.INFO: Profile items data {"user":1,"page":"sell","items_count":10} 
+[2025-01-20 16:44:44] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 16:44:44] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 16:44:44] local.INFO: Profile items data {"user":1,"page":"sell","items_count":10} 
+[2025-01-20 16:45:04] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 16:45:04] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 16:45:04] local.INFO: Profile items data {"user":1,"page":"sell","items_count":10} 
+[2025-01-20 16:45:52] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 16:45:52] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 16:45:52] local.INFO: Profile items data {"user":1,"page":"sell","items_count":10} 
+[2025-01-20 16:46:18] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 16:46:18] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 16:46:18] local.INFO: Profile items data {"user":1,"page":"sell","items_count":10} 
+[2025-01-20 16:47:39] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 16:47:39] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 16:47:39] local.INFO: Profile items data {"user":1,"page":"sell","items_count":10} 
+[2025-01-20 16:48:03] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 16:48:03] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 16:48:03] local.INFO: Profile items data {"user":1,"page":"sell","items_count":10} 
+[2025-01-20 16:48:39] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 16:48:39] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 16:48:39] local.INFO: Profile items data {"user":1,"page":"sell","items_count":10} 
+[2025-01-20 16:50:53] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 16:50:53] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 16:50:53] local.INFO: Profile items data {"user":1,"page":"sell","items_count":10} 
+[2025-01-20 17:04:24] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 17:04:24] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 17:04:24] local.INFO: Profile items data {"user":1,"page":"buy","items_count":0} 
+[2025-01-20 17:04:26] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 17:04:26] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 17:04:26] local.INFO: Profile items data {"user":1,"page":"sell","items_count":10} 
+[2025-01-20 17:06:47] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 17:06:47] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 17:06:47] local.INFO: Profile items data {"user":1,"page":"sell","items_count":10} 
+[2025-01-20 17:07:42] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 17:07:42] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 17:07:42] local.INFO: Profile items data {"user":1,"page":"sell","items_count":10} 
+[2025-01-20 17:08:41] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 17:08:41] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 17:08:41] local.INFO: Profile items data {"user":1,"page":"sell","items_count":10} 
+[2025-01-20 17:09:11] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 17:09:11] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 17:09:11] local.INFO: Profile items data {"user":1,"page":"sell","items_count":10} 
+[2025-01-20 17:10:31] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 17:10:31] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 17:10:31] local.INFO: Profile items data {"user":1,"page":"sell","items_count":10} 
+[2025-01-20 17:11:05] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 17:11:05] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 17:11:05] local.INFO: Profile items data {"user":1,"page":"sell","items_count":10} 
+[2025-01-20 17:11:30] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 17:11:30] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 17:11:30] local.INFO: Profile items data {"user":1,"page":"sell","items_count":10} 
+[2025-01-20 17:12:26] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 17:12:26] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 17:12:26] local.INFO: Profile items data {"user":1,"page":"sell","items_count":10} 
+[2025-01-20 17:12:44] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 17:12:44] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 17:12:44] local.INFO: Profile items data {"user":1,"page":"sell","items_count":10} 
+[2025-01-20 17:13:00] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 17:13:00] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 17:13:00] local.INFO: Profile items data {"user":1,"page":"sell","items_count":10} 
+[2025-01-20 17:13:54] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 17:13:54] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 17:13:54] local.INFO: Profile items data {"user":1,"page":"sell","items_count":10} 
+[2025-01-20 17:15:02] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 17:15:02] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 17:15:02] local.INFO: Profile items data {"user":1,"page":"sell","items_count":10} 
+[2025-01-20 17:15:25] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 17:15:25] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 17:15:25] local.INFO: Profile items data {"user":1,"page":"sell","items_count":10} 
+[2025-01-20 17:15:37] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 17:15:37] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 17:15:37] local.INFO: Profile items data {"user":1,"page":"sell","items_count":10} 
+[2025-01-20 17:27:10] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 17:27:10] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 17:27:10] local.INFO: Profile items data {"user":1,"page":"sell","items_count":10} 
+[2025-01-20 17:27:46] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"mypage","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"123-4567","address":"東京都渋谷区1-3"}} 
+[2025-01-20 17:27:46] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-20 17:27:46] local.INFO: Profile items data {"user":1,"page":"sell","items_count":10} 

@@ -34,7 +34,7 @@ class ProfileRequest extends FormRequest
         \Log::info('ProfileRequest Messages Triggered', ['data' => $this->all()]);
 
         return [
-            'profile_image.mimes' => 'jpegまたはpng形式でアップロードしてください',
+            'profile_image.mimes' => 'jpegまたはpng形式で登録してください',
         ];
     }
 

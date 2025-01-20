@@ -8,14 +8,15 @@
 <div class="profile-container">
     <div class="profile-header">
         <div class="profile-image">
-            <img src="<?php echo e(asset('images/default-profile.png')); ?>" alt="プロフィール画像">
-
+            <img src="<?php echo e(session('profile_image_temp') ?: (auth()->user()->profile_image ? asset('storage/' . auth()->user()->profile_image) : '')); ?>" alt="プロフィール画像">
         </div>
 
         <div class="profile-info">
             <h2><?php echo e($user->name); ?></h2>
-            <a href="<?php echo e(route('mypage.profile')); ?>" class="btn">プロフィールを編集</a>
         </div>
+        <div class="profile-btn">
+            <a href="<?php echo e(route('mypage.profile')); ?>" class="btn">プロフィールを編集</a>
+            </div>
     </div>
 
     <div class="tabs">

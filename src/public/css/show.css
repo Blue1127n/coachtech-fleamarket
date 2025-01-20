@@ -1,6 +1,6 @@
 body {
     background-color: rgba(255, 255, 255, 1);
-    font-family: Arial, sans-serif;
+    font-family: Inter;
 }
 
 .profile-container {
@@ -16,16 +16,20 @@ body {
 .profile-header {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     margin-bottom: 20px;
+    gap: 20px;
+    width: 100%;
 }
 
 .profile-image {
-    width: 100px;
-    height: 100px;
+    width: 150px;
+    height: 150px;
     border-radius: 50%;
     overflow: hidden;
     margin-right: 20px;
+    margin-left: 250px;
+    flex-shrink: 0;/* サイズ固定 */
 }
 
 .profile-image img {
@@ -35,50 +39,74 @@ body {
 }
 
 .profile-info {
+    flex: 1;
     text-align: left;
 }
 
 .profile-info h2 {
-    font-size: 24px;
-    color: #333;
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 43.57px;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+    color: rgba(0, 0, 0, 1);
     margin-bottom: 5px;
+    margin-left: 50px;
+    text-align: left;
 }
 
-.profile-info .btn {
+.profile-btn .btn {
     display: inline-block;
-    padding: 8px 16px;
-    color: #fff;
-    background-color: #f05a5a;
-    border: none;
-    border-radius: 5px;
+    width: 310px;
+    height: 59px;
+    padding: 10px 20px;
+    color: rgba(255, 85, 85, 1);
+    background-color: rgba(255, 255, 255, 1);
+    border: 2px solid rgba(255, 85, 85, 1);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s;
+    gap: 0px;
+    font-size: 26px;
+    font-weight: 700;
+    text-align: center;
+    line-height: 31.47px;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
     text-decoration: none;
-    font-size: 14px;
-    margin-top: 10px;
+    margin-right: 180px;
 }
 
-.profile-info .btn:hover {
-    background-color: #d14949;
+.profile-btn .btn:hover {
+    background-color: rgba(255, 85, 85, 1);
+    color: rgba(255, 255, 255, 1);
 }
 
 .tabs {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
+    margin-top: 60px;
     margin-bottom: 20px;
+    margin-left: 100px;
 }
 
 .tabs a {
     padding: 10px 20px;
-    color: #333;
+    color: rgba(95, 95, 95, 1);
     text-decoration: none;
     border-bottom: 2px solid transparent;
-    font-size: 16px;
-    margin: 0 10px;
-    font-weight: bold;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 29.05px;
+    text-align: right;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+    margin: 0 30px;
 }
 
 .tabs a.active {
     border-bottom: 2px solid #f05a5a;
-    color: #f05a5a;
+    color: rgba(255, 0, 0, 1);
 }
 
 .items {
