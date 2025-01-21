@@ -15,16 +15,43 @@
         <p>ブランド: {{ $item->brand }}</p>
         <p>価格: ¥{{ number_format($item->price) }}</p>
 
-        <!-- いいねアイコンとコメントアイコン -->
         <div class="item-actions">
-            <button class="like-btn" data-item-id="{{ $item->id }}">
-                <i class="fa {{ $item->liked_by_user ? 'fa-heart' : 'fa-heart-o' }}"></i>
-                <span>{{ $item->likes_count }}</span>
-            </button>
-            <span class="comment-count">
-                <i class="fa fa-comment"></i>
-                <span>{{ $item->comments_count }}</span>
-            </span>
+            <!-- いいねボタン -->
+            @php
+                $liked = session('liked', $isLiked);
+                $likeCount = session('likeCount', $item->likes_count);
+            @endphp
+            <form id="like-form" action="{{ route('item.like', ['item_id' => $item->id]) }}" method="POST">
+                @csrf
+                <button type="submit" id="like-button">
+                    <span id="like-icon">{{ $liked ? '★' : '' }}</span>
+                    <span id="like-count">{{ $likeCount }}</span>
+                </button>
+            </form>
+
+            <!-- コメント投稿フォーム -->
+            @auth
+            <form id="comment-form" action="{{ route('item.comment', ['item_id' => $item->id]) }}" method="POST">
+                @csrf
+                <textarea name="content" id="comment-content" placeholder="コメントを入力してください" required></textarea>
+                <button type="submit">送信</button>
+            </form>
+            @endauth
+
+            @guest
+            <p>コメントを投稿するには <a href="{{ route('login') }}">ログイン</a> が必要です。</p>
+            @endguest
+        </div>
+
+        <!-- コメント一覧 -->
+        <div id="comments-section">
+            @foreach ($item->comments as $comment)
+                <div class="comment">
+                    <strong>{{ $comment->user->name }}</strong>
+                    <p>{{ $comment->content }}</p>
+                    <span>{{ $comment->created_at->format('Y-m-d H:i') }}</span>
+                </div>
+            @endforeach
         </div>
 
         <!-- 購入ボタン -->
@@ -40,39 +67,12 @@
     <!-- 商品情報 -->
     <div class="item-info">
         <h2>商品情報</h2>
-        <p>カテゴリ: 
+        <p>カテゴリ:
             @foreach($item->categories as $category)
                 <span>{{ $category->name }}</span>
             @endforeach
         </p>
         <p>商品の状態: {{ $item->condition->condition }}</p>
-    </div>
-
-    <!-- コメントセクション -->
-    <div class="comments-section">
-        <h2>コメント ({{ $item->comments_count }})</h2>
-        <ul class="comments-list">
-            @foreach ($item->comments as $comment)
-                <li>
-                    <strong>{{ $comment->user->name }}</strong>
-                    <p>{{ $comment->content }}</p>
-                    <span>{{ $comment->created_at->format('Y-m-d H:i') }}</span>
-                </li>
-            @endforeach
-        </ul>
-
-        @auth
-        <!-- コメント投稿フォーム -->
-        <form action="{{ route('item.comment', ['item_id' => $item->id]) }}" method="POST">
-            @csrf
-            <textarea name="content" placeholder="商品へのコメントを入力してください" required maxlength="255"></textarea>
-            <button type="submit" class="comment-submit-btn">コメントを送信する</button>
-        </form>
-        @endauth
-
-        @guest
-        <p>コメントを投稿するには <a href="{{ route('login') }}">ログイン</a> が必要です。</p>
-        @endguest
     </div>
 </div>
 @endsection

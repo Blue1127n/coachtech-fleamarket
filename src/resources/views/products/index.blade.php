@@ -33,6 +33,7 @@
                         @endif
                     </div>
                     <div class="product-name">{{ $product->name }}</div>
+                    </a>
                 </div>
             @endforeach
         @endif

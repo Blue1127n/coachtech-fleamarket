@@ -23,6 +23,7 @@
         <?php else: ?>
             <?php $__currentLoopData = $products; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $product): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                 <div class="product-card">
+                <a href="<?php echo e(route('item.show', ['item_id' => $product->id])); ?>"> <!-- 商品詳細へのリンク -->
                     <div class="product-image">
                         <img src="<?php echo e('storage/' . $product->image); ?>" alt="商品画像">
                         <?php if($product->status_id !== 1): ?> 
@@ -30,6 +31,7 @@
                         <?php endif; ?>
                     </div>
                     <div class="product-name"><?php echo e($product->name); ?></div>
+                    </a>
                 </div>
             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         <?php endif; ?>

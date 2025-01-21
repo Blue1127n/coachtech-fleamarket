@@ -114,3 +114,12 @@ body {
     padding-left: 5px;
     margin: 0;
 }
+
+a {
+    text-decoration: none; /* リンクの下線を削除 */
+    color: inherit; /* 親要素の色を継承 */
+}
+
+a:hover {
+    text-decoration: underline; /* 必要に応じてホバー時の効果を指定 */
+}

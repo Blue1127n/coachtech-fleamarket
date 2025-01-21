@@ -91,8 +91,61 @@ class ItemController extends Controller
     // 商品詳細の表示
     public function show($item_id)
     {
-        $item = Item::with(['categories', 'condition', 'user'])->findOrFail($item_id);
+        $item = Item::with(['categories', 'condition', 'user', 'likes'])->findOrFail($item_id);
 
-        return view('item.show', compact('item'));
+        $isLiked = false;
+
+        // ログインしている場合、いいね済みかどうか確認
+        if (Auth::check()) {
+            $isLiked = Auth::user()->likes()->where('item_id', $item->id)->exists();
+        }
+
+        return view('item.detail', [
+            'item' => $item,
+            'isLiked' => $isLiked,
+        ]);
+    }
+
+    public function like(Request $request, $item_id)
+    {
+        $item = Item::findOrFail($item_id);
+        $user = Auth::user();
+
+        // ユーザーが既にいいねしているか確認
+        $isLiked = $user->likes()->where('item_id', $item->id)->exists();
+
+        if ($isLiked) {
+            $user->likes()->detach($item->id); // いいねを解除
+            $liked = false;
+        } else {
+            $user->likes()->attach($item->id); // いいねを追加
+            $liked = true;
+        }
+
+        // いいねの合計数を取得
+        $likeCount = $item->likes()->count();
+
+        // セッションにフラッシュデータとして保存
+        return redirect()->back()->with([
+            'liked' => $liked,
+            'likeCount' => $likeCount,
+        ]);
+    }
+
+    public function comment(Request $request, $item_id)
+    {
+        $request->validate([
+            'content' => 'required|max:255',
+        ]);
+
+        $item = Item::findOrFail($item_id);
+
+        $item->comments()->create([
+            'user_id' => Auth::id(),
+            'content' => $request->input('content'),
+        ]);
+
+        // コメント数と一覧を更新するためリダイレクト
+        return redirect()->back();
     }
 }

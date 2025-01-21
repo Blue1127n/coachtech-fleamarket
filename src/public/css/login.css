@@ -107,30 +107,29 @@ body {
     text-decoration: underline;
 }
 
-/* PC（1400px以上） */
-@media screen and (min-width: 1400px) {
+@media screen and (max-width: 1540px) {
     .login-container {
-        max-width: 800px; /* 幅を広く */
-        padding: 40px;
+        margin: 50px auto;
     }
-    .btn-submit {
-        height: 70px;
-        font-size: 28px;
-    }
-}
 
-/* タブレット（768px～1400px） */
-@media screen and (min-width: 768px) and (max-width: 1400px) {
-    .login-container {
-        max-width: 680px; /* タブレットに合わせて少し狭く */
-        padding: 20px;
-    }
-    .form-group label {
-        font-size: 20px; /* ラベルを少し小さく */
-    }
     .btn-submit {
         font-size: 22px;
         height: 60px;
+    }
+}
+
+@media screen and (max-width: 850px) {
+    .login-container h2 {
+        font-size: 30px;
+    }
+
+    .form-group label {
+        font-size: 20px;
+    }
+
+    .input-text,
+    .btn-submit {
+        width: 100%;
     }
 }
 
