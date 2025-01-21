@@ -30,6 +30,7 @@ body {
     margin-right: 20px;
     margin-left: 250px;
     flex-shrink: 0;/* サイズ固定 */
+    background-color: rgba(217, 217, 217, 1);
 }
 
 .profile-image img {

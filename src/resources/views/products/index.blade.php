@@ -25,6 +25,7 @@
         @else
             @foreach ($products as $product)
                 <div class="product-card">
+                <a href="{{ route('item.show', ['item_id' => $product->id]) }}"> <!-- 商品詳細へのリンク -->
                     <div class="product-image">
                         <img src="{{ 'storage/' . $product->image }}" alt="商品画像">
                         @if($product->status_id !== 1) {{-- status_id 1以外はSOLD --}}

@@ -21,6 +21,31 @@
     padding: 22px 25px 0px 0px;
 }
 
+/* PC（1400px以上） */
+@media screen and (min-width: 1400px) {
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+}
+
+/* タブレット（768px～1400px） */
+@media screen and (min-width: 768px) and (max-width: 1400px) {
+    .container {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 15px;
+    }
+}
+
+/* スマホ（768px以下） */
+@media screen and (max-width: 768px) {
+    .container {
+        max-width: 100%;
+        padding: 10px;
+    }
+}
 
 
 

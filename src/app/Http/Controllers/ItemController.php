@@ -87,4 +87,12 @@ class ItemController extends Controller
         }
         return $query;
     }
+
+    // 商品詳細の表示
+    public function show($item_id)
+    {
+        $item = Item::with(['categories', 'condition', 'user'])->findOrFail($item_id);
+
+        return view('item.show', compact('item'));
+    }
 }

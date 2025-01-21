@@ -8,7 +8,7 @@
 <div class="profile-container">
     <div class="profile-header">
         <div class="profile-image">
-            <img src="<?php echo e(session('profile_image_temp') ?: (auth()->user()->profile_image ? asset('storage/' . auth()->user()->profile_image) : '')); ?>" alt="プロフィール画像">
+            <img src="<?php echo e(session('profile_image_temp') ?: (auth()->user()->profile_image ? asset('storage/' . auth()->user()->profile_image) : '')); ?>" alt="">
         </div>
 
         <div class="profile-info">

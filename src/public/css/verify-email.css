@@ -48,16 +48,22 @@ body {
     background-color: #0056b3;
 }
 
-@media screen and (max-width: 768px) {
+/* PC（1400px以上） */
+@media screen and (min-width: 1400px) {
     .verify-email-container {
-        padding: 15px;
-    }
-
-    .verify-email-container h1 {
-        font-size: 20px;
-    }
-
-    .verify-email-container p {
-        font-size: 14px;
+        max-width: 700px; /* 幅を広げる */
+        padding: 40px;
     }
 }
+
+/* タブレット（768px～1400px） */
+@media screen and (min-width: 768px) and (max-width: 1400px) {
+    .verify-email-container {
+        max-width: 600px;
+        padding: 20px;
+    }
+    .resend-button {
+        font-size: 18px; /* ボタンのフォントサイズを調整 */
+    }
+}
+

@@ -60,7 +60,7 @@
         <img 
         id="preview" 
         src="{{ session('profile_image_temp') ?: (auth()->user()->profile_image ? asset('storage/' . auth()->user()->profile_image) : '') }}" 
-        alt="プロフィール画像" 
+        alt="" 
         class="{{ session('profile_image_temp') || auth()->user()->profile_image ? 'show' : '' }}">
         @if (!auth()->user()->profile_image && !session('profile_image_temp'))
             <div id="placeholder" class="placeholder"></div>
