@@ -1,89 +1,107 @@
 body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f9f9f9;
     margin: 0;
     padding: 0;
-    font-family: Arial, sans-serif;
-    background-color: #f9f9f9;
 }
 
 .item-detail-container {
     display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    padding: 20px;
-    gap: 20px;
     max-width: 1200px;
     margin: 0 auto;
-    background: white;
+    padding: 20px;
+    background-color: #ffffff;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    gap: 20px;
 }
 
-.item-detail img {
-    max-width: 400px;
+.item-detail-left {
+    flex: 1;
+    text-align: center;
+    padding-right: 20px;
+}
+
+.item-image img {
+    max-width: 100%;
+    max-height: 400px;
     border-radius: 8px;
+    object-fit: cover;
+}
+
+.item-detail-right {
+    flex: 2;
+    padding-left: 20px;
+    display: flex;
+    flex-direction: column;
 }
 
 .item-detail h1 {
-    font-size: 24px;
+    font-size: 28px;
     font-weight: bold;
     margin-bottom: 10px;
+    color: #333;
 }
 
 .item-detail p {
-    margin: 5px 0;
     font-size: 16px;
+    margin: 5px 0;
+    color: #555;
 }
 
 .item-actions {
     display: flex;
     align-items: center;
+    margin: 20px 0;
     gap: 10px;
-    margin-top: 15px;
-}
-
-.item-actions form {
-    margin: 0;
 }
 
 #like-button {
-    background: none;
-    border: none;
-    font-size: 20px;
-    cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 5px;
+    background-color: transparent;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
 }
 
-#like-button span {
-    font-size: 18px;
-    color: #ff5a5f;
+#like-button:hover {
+    background-color: #f8f8f8;
+}
+
+#like-icon {
+    color: #ff9900;
+    margin-right: 5px;
 }
 
 .purchase-btn {
     display: inline-block;
-    background-color: #ff3d00;
-    color: white;
     padding: 10px 20px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #ff0000;
     text-decoration: none;
-    border-radius: 5px;
+    border-radius: 8px;
     font-weight: bold;
     text-align: center;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s;
 }
 
 .purchase-btn:hover {
-    background-color: #e53900;
+    background-color: #cc0000;
 }
 
-.item-description,
-.item-info {
-    margin-top: 20px;
+.item-description, .item-info {
+    margin: 20px 0;
 }
 
-.item-description h2,
-.item-info h2 {
+.item-description h2, .item-info h2 {
     font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
     border-bottom: 2px solid #ddd;
     padding-bottom: 5px;
 }
@@ -93,32 +111,75 @@ body {
 }
 
 .comments-section h2 {
-    font-size: 18px;
-    margin-bottom: 15px;
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
 }
 
-.comment {
-    margin-bottom: 15px;
-    border-bottom: 1px solid #ddd;
-    padding-bottom: 10px;
+.comments-section ul {
+    list-style: none;
+    padding: 0;
 }
 
-.comment strong {
-    display: block;
-    margin-bottom: 5px;
+.comments-section .comment {
+    background-color: #f8f8f8;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.comments-section .comment strong {
+    font-size: 14px;
+    color: #333;
+}
+
+.comments-section .comment p {
+    margin: 5px 0;
+    font-size: 14px;
+    color: #555;
+}
+
+textarea[name="content"] {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    resize: none;
 }
 
 .comment-submit-btn {
-    background-color: #ff3d00;
-    color: white;
     padding: 10px 20px;
+    font-size: 14px;
+    color: #fff;
+    background-color: #ff0000;
     border: none;
-    border-radius: 5px;
-    font-size: 16px;
+    border-radius: 8px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s;
 }
 
 .comment-submit-btn:hover {
-    background-color: #e53900;
+    background-color: #cc0000;
+}
+
+@media (max-width: 768px) {
+    .item-detail-container {
+        flex-direction: column;
+        padding: 10px;
+    }
+
+    .item-detail-left {
+        border-right: none;
+        padding-right: 0;
+    }
+
+    .item-detail-right {
+        padding-left: 0;
+    }
+
+    .item-actions {
+        flex-direction: column;
+    }
 }
