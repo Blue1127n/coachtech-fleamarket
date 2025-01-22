@@ -32,7 +32,7 @@ class Item extends Model
 
     public function condition()
     {
-        return $this->belongsTo(Status::class);
+        return $this->belongsTo(Condition::class);
     }
 
     public function categories()

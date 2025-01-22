@@ -26,11 +26,17 @@
         <div class="item-actions">
             <form id="like-form" action="{{ route('item.like', ['item_id' => $item->id]) }}" method="POST">
                 @csrf
-                <button type="submit" id="like-button">
+                <div class="like-section">
                     <span id="like-icon">{{ session('liked', $isLiked) ? '★' : '☆' }}</span>
-                    <span id="like-count">{{ session('likeCount', $item->likes_count) }}</span>
-                </button>
+                    <span id="like-count">{{ session('likeCount', 0) }}</span>
+                </div>
             </form>
+
+            <!-- コメント数アイコン -->
+            <div class="comment-section">
+                <span id="comment-icon">💬</span>
+                <span id="comment-count">{{ $item->comments_count ?? 0 }}</span>
+            </div>
         </div>
 
         <!-- 購入ボタン -->
@@ -47,15 +53,16 @@
             <h2>商品情報</h2>
             <p>カテゴリ:
                 @foreach($item->categories as $category)
-                    <span>{{ $category->name }}</span>
+                    <span class="category-badge">{{ $category->name }}</span>
                 @endforeach
             </p>
-            <p>商品の状態: {{ $item->condition->condition }}</p>
+            <p>商品の状態: {{ $item->condition->condition ?? '未設定' }}</p>
         </div>
 
         <!-- コメントセクション -->
         <div class="comments-section">
-            <h2>コメント ({{ $item->comments_count }})</h2>
+            <h2>コメント ({{ $item->comments_count ?? 0 }})</h2>
+            @if($item->comments->isNotEmpty())
             <ul>
                 @foreach ($item->comments as $comment)
                     <li class="comment">
@@ -65,6 +72,10 @@
                     </li>
                 @endforeach
             </ul>
+        @else
+            <p>コメントはまだありません。</p>
+         @endif
+    </div>
 
             @auth
             <!-- コメント投稿フォーム -->
@@ -76,7 +87,7 @@
             @endauth
 
             @guest
-            <p>コメントを投稿するには <a href="{{ route('login') }}">ログイン</a> が必要です。</p>
+            <p>コメントを投稿するには <a href="{{ route('login') }}">ログイン</a> が必要です</p>
             @endguest
         </div>
     </div>
