@@ -17,28 +17,33 @@
     <div class="item-detail-right">
         <div class="item-detail">
             <h1><?php echo e($item->name); ?></h1>
-            <p>ブランド: <?php echo e($item->brand); ?></p>
-            <p>価格: ¥<?php echo e(number_format($item->price)); ?></p>
+            <p class="item-brand">ブランド：<?php echo e($item->brand); ?></p>
+            <p class="item-price">
+                <span class="item-price-symbol">¥</span>
+                <span class="item-price-value"><?php echo e(number_format($item->price)); ?></span>
+                <span class="item-price-tax">（税込）</span>
+            </p>
 
-        <!-- いいねボタン -->
-        <div class="item-actions">
-            <form id="like-form" action="<?php echo e(route('item.like', ['item_id' => $item->id])); ?>" method="POST">
-                <?php echo csrf_field(); ?>
-                <div class="like-section">
-                    <span id="like-icon"><?php echo e(session('liked', $isLiked) ? '★' : '☆'); ?></span>
-                    <span id="like-count"><?php echo e(session('likeCount', 0)); ?></span>
+            <!-- いいねボタン -->
+            <div class="item-actions">
+                <form id="like-form" action="<?php echo e(route('item.like', ['item_id' => $item->id])); ?>" method="POST">
+                    <?php echo csrf_field(); ?>
+                    <div class="like-section">
+                        <span id="like-icon"><?php echo e(session('liked', $isLiked) ? '★' : '☆'); ?></span>
+                        <span id="like-count"><?php echo e(session('likeCount', 0)); ?></span>
+                    </div>
+                </form>
+
+                <!-- コメント数アイコン -->
+                <div class="comment-section">
+                    <img id="comment-icon" src="<?php echo e(asset('storage/items/ふきだしのアイコン.jpg')); ?>" alt="コメントアイコン">
+                    <span id="comment-count"><?php echo e($item->comments_count ?? 0); ?></span>
                 </div>
-            </form>
-
-            <!-- コメント数アイコン -->
-            <div class="comment-section">
-                <span id="comment-icon">💬</span>
-                <span id="comment-count"><?php echo e($item->comments_count ?? 0); ?></span>
             </div>
-        </div>
 
-        <!-- 購入ボタン -->
-        <a href="<?php echo e(route('item.purchase', ['item_id' => $item->id])); ?>" class="purchase-btn">購入手続きへ</a>
+            <!-- 購入ボタン -->
+            <a href="<?php echo e(route('item.purchase', ['item_id' => $item->id])); ?>" class="purchase-btn">購入手続きへ</a>
+        </div>
 
         <!-- 商品説明 -->
         <div class="item-description">
@@ -60,20 +65,20 @@
         <!-- コメントセクション -->
         <div class="comments-section">
             <h2>コメント (<?php echo e($item->comments_count ?? 0); ?>)</h2>
-            <?php if($item->comments->isNotEmpty()): ?>
-            <ul>
-                <?php $__currentLoopData = $item->comments; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $comment): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                    <li class="comment">
-                        <strong><?php echo e($comment->user->name); ?></strong>
-                        <p><?php echo e($comment->content); ?></p>
-                        <span><?php echo e($comment->created_at->format('Y-m-d H:i')); ?></span>
-                    </li>
-                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-            </ul>
-        <?php else: ?>
-            <p>コメントはまだありません。</p>
-         <?php endif; ?>
-    </div>
+                <?php if($item->comments->isNotEmpty()): ?>
+                <ul>
+                    <?php $__currentLoopData = $item->comments; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $comment): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <li class="comment">
+                            <strong><?php echo e($comment->user->name); ?></strong>
+                            <p><?php echo e($comment->content); ?></p>
+                            <span><?php echo e($comment->created_at->format('Y-m-d H:i')); ?></span>
+                        </li>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                </ul>
+            <?php else: ?>
+                <p>コメントはまだありません。</p>
+            <?php endif; ?>
+        </div>
 
             <?php if(auth()->guard()->check()): ?>
             <!-- コメント投稿フォーム -->
@@ -89,7 +94,6 @@
             <?php endif; ?>
         </div>
     </div>
-</div>
 <?php $__env->stopSection(); ?>
 
 <?php echo $__env->make('layouts.main', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /var/www/resources/views/item/detail.blade.php ENDPATH**/ ?>

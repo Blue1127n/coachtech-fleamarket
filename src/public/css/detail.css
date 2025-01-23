@@ -1,5 +1,5 @@
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: Inter;
     background-color: rgba(255, 255, 255, 1);
     margin: 0;
     padding: 0;
@@ -8,46 +8,66 @@ body {
 .item-detail-container {
     display: flex;
     max-width: 1512px;
-    margin: 0 auto;
     background-color: rgba(255, 255, 255, 1);
-    border-radius: 8px;
-    gap: 20px;
+    gap: 65px;
 }
 
 .item-detail-left {
     flex: 1;
     text-align: center;
-    padding: 20px;
+    max-width: 690px;
+    margin-top: 40px;
 }
 
 .item-image img {
     max-width: 600px;
     max-height: 600px;
+    margin-top: 36px;
     border-radius: 4px;
+    gap: 0px;
     object-fit: cover;
 }
 
 .item-detail-right {
     flex: 1.5;
-    padding: 20px;
     display: flex;
     flex-direction: column;
+    max-width: 690px;
+    margin-top: 30px;
 }
 
 .item-detail {
-    margin-bottom: 20px;
+    color: rgba(0, 0, 0, 1);
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
 }
 
 .item-detail h1 {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 10px;
-    color: #333;
+    font-size: 45px;
+    font-weight: 700;
+    line-height: 54.46px;
 }
 
-.item-detail p {
-    font-size: 16px;
-    margin: 5px 0;
+.item-brand {
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 24.2px;
+    margin-top: 15px;
+}
+
+.item-price {
+    font-weight: 400;
+}
+
+.item-price-symbol,
+.item-price-tax {
+    font-size: 30px;
+    line-height: 36.31px;
+}
+
+.item-price-value {
+    font-size: 45px;
+    line-height: 54.46px;
 }
 
 .item-actions {
@@ -58,7 +78,6 @@ body {
 }
 
 .like-section, .comment-section {
-    text-align: center;
     display: flex;
     flex-direction: column;
     align-items: center;
