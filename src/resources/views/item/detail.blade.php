@@ -31,14 +31,14 @@
                 <form id="like-form" action="{{ route('item.like', ['item_id' => $item->id]) }}" method="POST">
                     @csrf
                     <div class="like-section">
-                        <span id="like-icon">{{ session('liked', $isLiked) ? '★' : '☆' }}</span>
+                        <img src="{{ asset('storage/items/star-icon.png') }}" alt="いいねアイコン" class="like-icon {{ session('liked', $isLiked) ? 'liked' : '' }}">
                         <span id="like-count">{{ session('likeCount', 0) }}</span>
                     </div>
                 </form>
 
                 <!-- コメント数アイコン -->
                 <div class="comment-section">
-                    <img id="comment-icon" src="{{ asset('storage/items/ふきだしのアイコン.jpg') }}" alt="コメントアイコン">
+                    <img id="comment-icon" src="{{ asset('storage/items/ふきだしのアイコン.png') }}" alt="コメントアイコン">
                     <span id="comment-count">{{ $item->comments_count ?? 0 }}</span>
                 </div>
             </div>
@@ -97,3 +97,47 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+    const likeForm = document.getElementById('like-form');
+    console.log('likeForm:', likeForm);
+
+    if (likeForm) {
+        likeForm.addEventListener('submit', function (event) {
+            event.preventDefault();
+            console.log('フォーム送信イベントがトリガーされました');
+
+            // サーバーへのリクエストを送信
+            fetch(likeForm.action, {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({}),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('サーバーからのレスポンス:', data);
+
+                    // アイコンの状態を切り替え
+                    const likeIcon = likeForm.querySelector('.like-icon');
+                    if (data.liked) {
+                        likeIcon.classList.add('liked');
+                    } else {
+                        likeIcon.classList.remove('liked');
+                    }
+
+                    // カウントを更新
+                    document.getElementById('like-count').textContent = data.likeCount;
+                })
+                .catch(error => console.error('エラー:', error));
+        });
+    } else {
+        console.error('like-form が見つかりません');
+    }
+});
+</script>
+@endpush

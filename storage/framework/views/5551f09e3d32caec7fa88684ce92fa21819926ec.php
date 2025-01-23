@@ -29,14 +29,14 @@
                 <form id="like-form" action="<?php echo e(route('item.like', ['item_id' => $item->id])); ?>" method="POST">
                     <?php echo csrf_field(); ?>
                     <div class="like-section">
-                        <span id="like-icon"><?php echo e(session('liked', $isLiked) ? '★' : '☆'); ?></span>
+                        <img src="<?php echo e(asset('storage/items/star-icon.png')); ?>" alt="いいねアイコン" class="like-icon <?php echo e(session('liked', $isLiked) ? 'liked' : ''); ?>">
                         <span id="like-count"><?php echo e(session('likeCount', 0)); ?></span>
                     </div>
                 </form>
 
                 <!-- コメント数アイコン -->
                 <div class="comment-section">
-                    <img id="comment-icon" src="<?php echo e(asset('storage/items/ふきだしのアイコン.jpg')); ?>" alt="コメントアイコン">
+                    <img id="comment-icon" src="<?php echo e(asset('storage/items/ふきだしのアイコン.png')); ?>" alt="コメントアイコン">
                     <span id="comment-count"><?php echo e($item->comments_count ?? 0); ?></span>
                 </div>
             </div>
@@ -95,5 +95,43 @@
         </div>
     </div>
 <?php $__env->stopSection(); ?>
+
+<?php $__env->startPush('scripts'); ?>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    const likeForm = document.getElementById('like-form');
+    const likeIcon = likeForm.querySelector('.like-icon');
+
+    likeForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        // サーバーサイドにリクエストを送信
+        fetch(likeForm.action, {
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({})
+        })
+        .then(response => response.json())
+        .then(data => {
+            // アイコンの状態を切り替える
+            if (data.liked) {
+                likeIcon.classList.add('liked');
+            } else {
+                likeIcon.classList.remove('liked');
+            }
+
+            // カウントを更新
+            document.getElementById('like-count').textContent = data.likeCount;
+        })
+        .catch(error => {
+            console.error('エラー:', error);
+        });
+    });
+});
+</script>
+<?php $__env->stopPush(); ?>
 
 <?php echo $__env->make('layouts.main', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /var/www/resources/views/item/detail.blade.php ENDPATH**/ ?>

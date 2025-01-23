@@ -126,7 +126,7 @@ class ItemController extends Controller
         $likeCount = $item->likes()->count();
 
         // セッションにフラッシュデータとして保存
-        return redirect()->back()->with([
+        return response()->json([
             'liked' => $liked,
             'likeCount' => $likeCount,
         ]);
