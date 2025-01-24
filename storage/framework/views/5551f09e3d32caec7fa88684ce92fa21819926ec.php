@@ -26,13 +26,24 @@
 
             <!-- いいねボタン -->
             <div class="item-actions">
+                <?php if(auth()->check()): ?>
+                <!-- ログイン済みのユーザー -->
                 <form id="like-form" action="<?php echo e(route('item.like', ['item_id' => $item->id])); ?>" method="POST">
-                    <?php echo csrf_field(); ?>
-                    <div class="like-section">
-                        <img src="<?php echo e(asset('storage/items/star-icon.png')); ?>" alt="いいねアイコン" class="like-icon <?php echo e(session('liked', $isLiked) ? 'liked' : ''); ?>">
-                        <span id="like-count"><?php echo e(session('likeCount', 0)); ?></span>
-                    </div>
-                </form>
+                        <?php echo csrf_field(); ?>
+                        <div class="like-section">
+                            <button type="submit" class="like-button">
+                                <img src="<?php echo e(asset('storage/items/star-icon.png')); ?>" alt="いいねアイコン" class="like-icon <?php echo e(session('liked', $isLiked) ? 'liked' : ''); ?>">
+                            </button>
+                            <span id="like-count"><?php echo e($item->likes->count()); ?></span>
+                        </div>
+                    </form>
+                <?php else: ?>
+                    <!-- 未認証ユーザー -->
+                    <a href="<?php echo e(route('login')); ?>" class="like-section">
+                        <img src="<?php echo e(asset('storage/items/star-icon.png')); ?>" alt="いいねアイコン" class="like-icon">
+                        <span id="like-count"><?php echo e($item->likes->count()); ?></span>
+                    </a>
+                <?php endif; ?>
 
                 <!-- コメント数アイコン -->
                 <div class="comment-section">
@@ -92,42 +103,58 @@
             <?php if(auth()->guard()->guest()): ?>
             <p>コメントを投稿するには <a href="<?php echo e(route('login')); ?>">ログイン</a> が必要です</p>
             <?php endif; ?>
-        </div>
     </div>
+</div>
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startPush('scripts'); ?>
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
     const likeForm = document.getElementById('like-form');
-    const likeIcon = likeForm.querySelector('.like-icon');
 
-    likeForm.addEventListener('submit', function(event) {
-        event.preventDefault();
+    if (!likeForm) {
+        console.error('like-form が見つかりません');
+        return;
+    }
 
-        // サーバーサイドにリクエストを送信
+    likeForm.addEventListener('submit', function (event) {
+        event.preventDefault(); // デフォルトのフォーム送信を防止
+
         fetch(likeForm.action, {
             method: 'POST',
             headers: {
                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({})
+            body: JSON.stringify({}),
         })
-        .then(response => response.json())
-        .then(data => {
-            // アイコンの状態を切り替える
-            if (data.liked) {
-                likeIcon.classList.add('liked');
+        .then(response => {
+            if (response.redirected) {
+                // ログイン画面へのリダイレクトが発生した場合
+                window.location.href = response.url;
             } else {
-                likeIcon.classList.remove('liked');
+                return response.json();
             }
+        })
+        .then(data => {
+            if (data) {
+                console.log('サーバーからのレスポンス:', data);
 
-            // カウントを更新
-            document.getElementById('like-count').textContent = data.likeCount;
+                // アイコンの状態を切り替え
+                const likeIcon = likeForm.querySelector('.like-icon');
+                if (data.liked) {
+                    likeIcon.classList.add('liked');
+                } else {
+                    likeIcon.classList.remove('liked');
+                }
+
+                // カウントを更新
+                document.getElementById('like-count').textContent = data.likeCount;
+            }
         })
         .catch(error => {
-            console.error('エラー:', error);
+            console.error('Fetchエラー:', error);
+            alert('いいねに失敗しました。再度お試しください。');
         });
     });
 });

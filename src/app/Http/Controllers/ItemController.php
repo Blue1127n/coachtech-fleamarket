@@ -108,6 +108,16 @@ class ItemController extends Controller
 
     public function like(Request $request, $item_id)
     {
+        \Log::info('Likeメソッドが呼び出されました', [
+            'item_id' => $item_id,
+            'user_id' => Auth::id(),
+        ]);
+
+        if (!Auth::check()) {
+            \Log::info('未認証のためリクエストを拒否');
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
+
         $item = Item::findOrFail($item_id);
         $user = Auth::user();
 
