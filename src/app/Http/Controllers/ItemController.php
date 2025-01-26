@@ -108,13 +108,8 @@ class ItemController extends Controller
 
     public function like(Request $request, $item_id)
     {
-        \Log::info('Likeメソッドが呼び出されました', [
-            'item_id' => $item_id,
-            'user_id' => Auth::id(),
-        ]);
 
         if (!Auth::check()) {
-            \Log::info('未認証のためリクエストを拒否');
             return response()->json(['error' => 'Unauthorized'], 401);
         }
 
@@ -144,18 +139,28 @@ class ItemController extends Controller
 
     public function comment(Request $request, $item_id)
     {
+        if (!Auth::check()) {
+            return response()->json(['success' => false, 'message' => 'Unauthorized'], 401);
+        }
+
         $request->validate([
             'content' => 'required|max:255',
         ]);
 
         $item = Item::findOrFail($item_id);
 
-        $item->comments()->create([
+        $comment = $item->comments()->create([
             'user_id' => Auth::id(),
-            'content' => $request->input('content'),
+            'content' => $request->content,
         ]);
 
-        // コメント数と一覧を更新するためリダイレクト
-        return redirect()->back();
+        return response()->json([
+            'success' => true,
+            'comment' => [
+                'user' => ['name' => Auth::user()->name],
+                'content' => $comment->content,
+                'created_at' => $comment->created_at->format('Y-m-d H:i'),
+            ],
+        ]);
     }
 }
