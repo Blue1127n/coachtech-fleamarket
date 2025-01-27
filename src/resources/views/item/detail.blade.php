@@ -34,7 +34,7 @@
                         @csrf
                         <div class="like-section">
                             <button type="submit" class="like-button">
-                                <img src="{{ asset('storage/items/star-icon.png') }}" alt="いいねアイコン" class="like-icon {{ session('liked', $isLiked) ? 'liked' : '' }}">
+                                <img src="{{ asset('storage/items/star-icon.png') }}" alt="いいねアイコン" class="like-icon {{ $isLiked ? 'liked' : '' }}">
                             </button>
                             <span id="like-count">{{ $item->likes->count() }}</span>
                         </div>
@@ -80,140 +80,137 @@
         <!-- コメントセクション -->
         <div class="comments-section">
             <h2>コメント ({{ $item->comments_count ?? 0 }})</h2>
-            @if($item->comments->isNotEmpty())
             <ul>
+            @if($item->comments->isNotEmpty())
                 @foreach ($item->comments as $comment)
                     <li class="comment">
-                        <img src="{{ $comment->user->profile_image_url }}" alt="{{ $comment->user->name }}" class="user-profile-image">
+                        @if ($comment->user->profile_image_url)
+                            <img src="{{ $comment->user->profile_image_url }}" alt="{{ $comment->user->name }}" class="user-profile-image">
+                        @else
+                            <div class="user-profile-placeholder"></div>
+                        @endif
                         <strong>{{ $comment->user->name }}</strong>
                         <p>{{ $comment->content }}</p>
                     </li>
                 @endforeach
-            </ul>
             @else
-            <p>コメントはまだありません。</p>
+            <p>コメントはまだありません</p>
             @endif
-        </div>
+            </ul>
 
         <!-- コメント投稿フォーム -->
-        <form action="{{ route('item.comment', ['item_id' => $item->id]) }}" method="POST">
+        <form id="comment-form" action="{{ route('item.comment', ['item_id' => $item->id]) }}" method="POST">
             @csrf
             <p>商品へのコメント</p>
-            <textarea name="content" required maxlength="255"></textarea>
+            <textarea name="content" required></textarea>
             <button type="submit" class="comment-submit-btn">コメントを送信する</button>
         </form>
     </div>
+</div>
 </div>
 @endsection
 
 @push('scripts')
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-    const likeForm = document.getElementById('like-form');
-
-    if (!likeForm) {
-        likeForm.addEventListener('submit', function (event) {
-            event.preventDefault(); // デフォルトのフォーム送信を防止
-
-            fetch(likeForm.action, {
-                method: 'POST',
-                headers: {
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({}),
-            })
-            .then(response => {
-                if (response.redirected) {
-                    // ログイン画面へのリダイレクトが発生した場合
-                    window.location.href = response.url;
-                } else {
-                    return response.json();
-                }
-            })
-            .then(data => {
-                if (data) {
-                    console.log('サーバーからのレスポンス:', data);
-
-                    // アイコンの状態を切り替え
-                    const likeIcon = likeForm.querySelector('.like-icon');
-                    if (data.liked) {
-                        likeIcon.classList.add('liked');
-                    } else {
-                        likeIcon.classList.remove('liked');
-                    }
-
-                   // カウントを更新
-                    document.getElementById('like-count').textContent = data.likeCount;
-                }
-            })
-            .catch(error => {
-                console.error('Fetchエラー:', error);
-                alert('いいねに失敗しました。再度お試しください。');
-            });
-        });
-    } else {
-            console.error('like-form が見つかりません');
-        }
-
+        const likeForm = document.getElementById('like-form');
         const commentForm = document.getElementById('comment-form');
 
-    if (commentForm) {
-        commentForm.addEventListener('submit', function (event) {
-            @guest
-           // ログインしていない場合、フォーム送信を防止してリダイレクト
-            event.preventDefault();
-            alert('コメントを投稿するにはログインが必要です。ログイン画面に移動します。');
-            window.location.href = "{{ route('login') }}";
-            @endguest
+        // いいねフォームの処理
+        if (likeForm) {
+            likeForm.addEventListener('submit', function (event) {
+                event.preventDefault();
 
-           // ログイン済みの場合
-            @auth
-            event.preventDefault(); // デフォルトのフォーム送信を防止
-
-            // コメント投稿リクエストを送信
-            fetch(commentForm.action, {
-                method: 'POST',
-                headers: {
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    content: commentForm.content.value,
-                }),
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    console.log('コメント送信成功:', data);
-
-                    // コメントリストを更新する例 (必要に応じてカスタマイズ)
-                    const commentsSection = document.querySelector('.comments-section ul');
-                    const newComment = document.createElement('li');
-                    newComment.classList.add('comment');
-                    newComment.innerHTML = `
-                        <strong>${data.comment.user.name}</strong>
-                        <p>${data.comment.content}</p>
-                        <span>${data.comment.created_at}</span>
-                    `;
-                    commentsSection.appendChild(newComment);
-
-                    // フォームをクリア
-                    commentForm.reset();
-                } else {
-                    console.error('コメント送信失敗:', data);
-                    alert('コメント送信に失敗しました。再度お試しください。');
-                }
-            })
-            .catch(error => {
-                console.error('Fetchエラー:', error);
-                alert('コメント送信に失敗しました。再度お試しください。');
+                fetch(likeForm.action, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({}),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data) {
+                        const likeIcon = likeForm.querySelector('.like-icon');
+                        if (data.liked) {
+                            likeIcon.classList.add('liked');
+                        } else {
+                            likeIcon.classList.remove('liked');
+                        }
+                        document.getElementById('like-count').textContent = data.likeCount;
+                    }
+                })
+                .catch(error => console.error('いいね処理エラー:', error));
             });
-            @endauth
-        });
-    } else {
-        console.error('comment-form が見つかりません');
-    }
-});
+        }
+
+        // コメントフォームの処理
+        if (commentForm) {
+            commentForm.addEventListener('submit', function (event) {
+                event.preventDefault();
+
+                fetch(commentForm.action, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        content: commentForm.content.value,
+                    }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        const commentsSection = document.querySelector('.comments-section ul');
+                        if (!commentsSection) {
+                            console.error('コメントリストが見つかりません');
+                            return;
+                        }
+
+                        // プロフィール画像の処理
+                        const profileImage = data.comment.user.profile_image_url || '';
+                        const profileImageHTML = profileImage
+                            ? `<img src="${profileImage}" alt="${data.comment.user.name}" class="user-profile-image">`
+                            : `<div class="user-profile-placeholder"></div>`;
+
+                        // 新しいコメントを作成して追加
+                        const newCommentHTML = `
+                            ${profileImageHTML}
+                            <strong>${data.comment.user.name}</strong>
+                            <p>${data.comment.content}</p>
+                        `;
+                        const newComment = document.createElement('li');
+                        newComment.classList.add('comment');
+                        newComment.innerHTML = newCommentHTML;
+                        commentsSection.appendChild(newComment);
+
+                        // コメント数を更新 (見出しの更新)
+                        const commentsCountElement = document.querySelector('.comments-section h2');
+                        if (commentsCountElement) {
+                            commentsCountElement.textContent = `コメント (${data.comments_count})`;
+                        }
+
+                        // コメントアイコンの下の数を更新
+                        const commentIconCount = document.getElementById('comment-count');
+                        if (commentIconCount) {
+                            commentIconCount.textContent = data.comments_count;
+                        }
+
+                        // フォームをリセット
+                        commentForm.reset();
+                    } else {
+                        console.error('コメント送信失敗:', data);
+                        alert('コメントの送信に失敗しました。');
+                    }
+                })
+                .catch(error => {
+                    console.error('コメント処理エラー:', error);
+                    alert('通信エラーが発生しました。');
+                });
+            });
+        }
+    });
 </script>
 @endpush

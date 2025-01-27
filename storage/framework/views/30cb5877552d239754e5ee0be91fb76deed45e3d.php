@@ -25,8 +25,8 @@
                 <div class="product-card">
                 <a href="<?php echo e(route('item.show', ['item_id' => $product->id])); ?>"> <!-- 商品詳細へのリンク -->
                     <div class="product-image">
-                        <img src="<?php echo e('storage/' . $product->image); ?>" alt="商品画像">
-                        <?php if($product->status_id !== 1): ?> 
+                        <img src="<?php echo e(asset('storage/' . $product->image)); ?>" alt="商品画像">
+                        <?php if($product->status_id == 5): ?>
                             <div class="sold-badge">SOLD</div>
                         <?php endif; ?>
                     </div>

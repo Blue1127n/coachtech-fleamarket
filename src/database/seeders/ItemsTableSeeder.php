@@ -66,7 +66,7 @@ class ItemsTableSeeder extends Seeder
                 'image' => 'items/Living+Room+Laptop.jpg',
                 'brand' => 'Dell',
                 'user_id' => 1,
-                'status_id' => 1,
+                'status_id' => 5,
             ],
             [
                 'name' => 'マイク',
@@ -75,7 +75,7 @@ class ItemsTableSeeder extends Seeder
                 'condition_id' => $conditions['目立った傷や汚れなし'],
                 'image' => 'items/Music+Mic+4632231.jpg',
                 'brand' => null,
-                'user_id' => 1,
+                'user_id' => 2,
                 'status_id' => 1,
             ],
             [
@@ -85,7 +85,7 @@ class ItemsTableSeeder extends Seeder
                 'condition_id' => $conditions['やや傷や汚れあり'],
                 'image' => 'items/Purse+fashion+pocket.jpg',
                 'brand' => null,
-                'user_id' => 1,
+                'user_id' => 2,
                 'status_id' => 1,
             ],
             [
@@ -95,8 +95,8 @@ class ItemsTableSeeder extends Seeder
                 'condition_id' => $conditions['状態が悪い'],
                 'image' => 'items/Tumbler+souvenir.jpg',
                 'brand' => null,
-                'user_id' => 1,
-                'status_id' => 1,
+                'user_id' => 2,
+                'status_id' => 5,
             ],
             [
                 'name' => 'コーヒーミル',
@@ -105,7 +105,7 @@ class ItemsTableSeeder extends Seeder
                 'condition_id' => $conditions['良好'],
                 'image' => 'items/Waitress+with+Coffee+Grinder.jpg',
                 'brand' => null,
-                'user_id' => 1,
+                'user_id' => 2,
                 'status_id' => 1,
             ],
             [
@@ -115,8 +115,8 @@ class ItemsTableSeeder extends Seeder
                 'condition_id' => $conditions['目立った傷や汚れなし'],
                 'image' => 'items/外出メイクアップセット.jpg',
                 'brand' => null,
-                'user_id' => 1,
-                'status_id' => 1,
+                'user_id' => 2,
+                'status_id' => 5,
             ],
         ];
 

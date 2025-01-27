@@ -18,19 +18,13 @@ class ItemController extends Controller
         // 検索条件を適用
         $query = $this->applySearchFilter($query, $search);
 
-        // 販売中の商品を取得
+        // 全商品を取得（ログイン後は自分の商品を除外）
         $products = $query->with('status') // ステータスのリレーションをロード
-                            ->where('status_id', 1) // 販売中の商品
+                            ->when(auth()->check(), function ($query) {
+                            $query->where('user_id', '!=', auth()->id()); // 自分の商品を除外
+                            })
                             ->orderBy('created_at', 'desc')
                             ->get();
-
-        // デバッグ用ログ
-        \Log::info('Products fetched for index:', ['products' => $products]);
-
-        // 画像パスをURLに変換
-        foreach ($products as $product) {
-            $product->image_url = asset('storage/' . $product->image);
-        }
 
         return view('products.index', [
             'products' => $products,
@@ -56,20 +50,14 @@ class ItemController extends Controller
         // ログインしている場合は「いいね」した商品を取得
         $products = auth()->user()
                             ->likes()
-                            ->with('item.status') // ステータス情報もロード
-                            ->get()
-                            ->pluck('item'); // アイテム情報だけ取得
+                            ->with('status') // ステータスをロード
+                            ->get();
 
         // 検索条件の適用（コレクションに対するフィルタリング）
         if ($search) {
             $products = $products->filter(function ($product) use ($search) {
                 return stripos($product->name, $search) !== false;
             });
-        }
-
-        // 画像パスをURLに変換
-        foreach ($products as $product) {
-            $product->image_url = asset('storage/' . $product->image); // 'image'を使用してURLを生成
         }
 
         return view('products.index', [
@@ -130,6 +118,10 @@ class ItemController extends Controller
         // いいねの合計数を取得
         $likeCount = $item->likes()->count();
 
+        // デバッグ用ログ
+        \Log::info('Like Count:', ['likeCount' => $likeCount]);
+        \Log::info('Liked State:', ['liked' => $liked]);
+
         // セッションにフラッシュデータとして保存
         return response()->json([
             'liked' => $liked,
@@ -139,28 +131,50 @@ class ItemController extends Controller
 
     public function comment(Request $request, $item_id)
     {
+        // ユーザーが認証されているか確認
         if (!Auth::check()) {
             return response()->json(['success' => false, 'message' => 'Unauthorized'], 401);
         }
 
+        // バリデーションの実行
         $request->validate([
             'content' => 'required|max:255',
         ]);
 
+        // 該当の商品を取得
         $item = Item::findOrFail($item_id);
 
+        // コメントを作成
         $comment = $item->comments()->create([
             'user_id' => Auth::id(),
             'content' => $request->content,
         ]);
 
+        // コメント数を計算
+        $comments_count = $item->comments()->count();
+
+        // JSONレスポンスを返す
         return response()->json([
             'success' => true,
             'comment' => [
-                'user' => ['name' => Auth::user()->name],
+                'user' => [
+                'name' => Auth::user()->name,
+                'profile_image_url' => Auth::user()->profile_image_url, // ユーザーのプロファイル画像URL
+                ],
                 'content' => $comment->content,
-                'created_at' => $comment->created_at->format('Y-m-d H:i'),
+                'created_at' => $comment->created_at->format('Y-m-d H:i'), // 日付のフォーマット
             ],
+            'comments_count' => $comments_count, // コメントの合計数を返す
         ]);
+    }
+
+    public function purchase($item_id)
+    {
+        // 商品を取得
+        $item = Item::findOrFail($item_id);
+        $user = auth()->user();
+
+        // ロジックを書く (例: 購入画面を表示する、購入確認処理を行うなど)
+        return view('item.purchase', compact('item', 'user'));
     }
 }

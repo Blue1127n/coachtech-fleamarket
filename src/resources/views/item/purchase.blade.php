@@ -10,12 +10,16 @@
 <div class="purchase-container">
     <div class="purchase-details">
         <div class="item-info">
-            <img src="{{ asset('storage/items/' . $item->image) }}" alt="商品画像" class="item-image">
+            <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->name }}" class="item-image">
             <div class="item-details">
                 <h1 class="item-name">{{ $item->name }}</h1>
-                <p class="item-price">¥ {{ number_format($item->price) }}</p>
+                <p class="item-price">
+                    <span class="item-price-symbol">¥</span>
+                    <span class="item-price-value">{{ number_format($item->price) }}</span>
+                </p>
             </div>
         </div>
+
         <div class="payment-method">
             <h2>支払い方法</h2>
             <form action="{{ route('item.purchase', ['item_id' => $item->id]) }}" method="POST">
@@ -30,9 +34,13 @@
         </div>
         <div class="shipping-address">
             <h2>配送先</h2>
-            <p>〒 {{ $user->postal_code }}</p>
-            <p>{{ $user->address }}</p>
-            <p>{{ $user->building }}</p>
+            @if(auth()->check())
+                <p>〒 {{ auth()->user()->postal_code ?? '未登録' }}</p>
+                <p>{{ auth()->user()->address ?? '未登録' }}</p>
+                <p>{{ auth()->user()->building ?? '未登録' }}</p>
+            @else
+                <p>配送先情報がありません。</p>
+            @endif
             <a href="{{ route('item.changeAddress', ['item_id' => $item->id]) }}" class="change-address-link">変更する</a>
         </div>
     </div>
