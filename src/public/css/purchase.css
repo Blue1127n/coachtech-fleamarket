@@ -69,39 +69,51 @@ body {
 }
 
 .payment-method {
-    margin-top: 30px;
+    margin-top: 50px;
+    color: rgba(0, 0, 0, 1);
+    border-bottom: 1px solid rgba(0, 0, 0, 1);
 }
 
 .payment-method h2 {
     font-size: 20px;
     font-weight: 700;
     line-height: 24.2px;
+    margin-bottom: 30px;
 }
 
 .payment-select {
-    width: 100%;
-    padding: 10px;
+    width: 265px;
+    height: 31px;
+    border-radius: 4px;
     font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-.purchase-btn {
-    margin-top: 20px;
-    background-color: #f00;
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+    font-weight: 700;
+    line-height: 19.36px;
+    text-align: left;
+    border: 1px solid rgba(95, 95, 95, 1);
+    color: rgba(95, 95, 95, 1);
+    margin-left: 60px;
+    margin-bottom: 50px;
 }
 
 .shipping-address {
     margin-top: 30px;
+    color: rgba(0, 0, 0, 1);
+}
+
+.shipping-address h2 {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 24.2px;
+    text-align: left;
+    margin-bottom: 20px;
 }
 
 .shipping-address p {
-    margin: 5px 0;
+    margin-left: 50px;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 24.2px;
+    text-align: left;
 }
 
 .change-address-link {

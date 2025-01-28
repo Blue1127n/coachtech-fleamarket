@@ -131,41 +131,48 @@ class ItemController extends Controller
     }
 
     public function comment(CommentRequest $request, $item_id)
-    {
-        // ユーザーが認証されているか確認
-        if (!Auth::check()) {
-            return response()->json([
-                'success' => false,
-                'redirect' => route('login'), // ログイン画面のURLを返す
-            ], 401);
-        }
-
-        // 該当の商品を取得
-        $item = Item::findOrFail($item_id);
-
-        // コメントを作成
-        $comment = $item->comments()->create([
-            'user_id' => Auth::id(),
-            'content' => $request->content,
-        ]);
-
-        // コメント数を計算
-        $comments_count = $item->comments()->count();
-
-        // JSONレスポンスを返す
+{
+    if (!Auth::check()) {
         return response()->json([
-            'success' => true,
-            'comment' => [
-                'user' => [
-                'name' => Auth::user()->name,
-                'profile_image_url' => Auth::user()->profile_image_url ?: null, // ユーザーのプロファイル画像URL
-                ],
-                'content' => $comment->content,
-                'created_at' => $comment->created_at->format('Y-m-d H:i'), // 日付のフォーマット
-            ],
-            'comments_count' => $comments_count, // コメントの合計数を返す
-        ]);
+            'success' => false,
+            'redirect' => route('login'),
+        ], 401);
     }
+
+    $validator = \Validator::make($request->all(), [
+        'content' => 'required|max:255',
+    ]);
+
+    if ($validator->fails()) {
+        return response()->json([
+            'success' => false,
+            'errors' => $validator->errors(),
+        ], 422);
+    }
+
+    $item = Item::findOrFail($item_id);
+    $comment = $item->comments()->create([
+        'user_id' => Auth::id(),
+        'content' => $request->content,
+    ]);
+
+    $comments_count = $item->comments()->count();
+
+    return response()->json([
+        'success' => true,
+        'comment' => [
+            'user' => [
+                'name' => Auth::user()->name,
+                'profile_image_url' => Auth::user()->profile_image_url ?: null,
+            ],
+            'content' => $comment->content,
+            'created_at' => $comment->created_at->format('Y-m-d H:i'),
+        ],
+        'comments_count' => $comments_count,
+    ]);
+}
+
+
 
     public function purchase($item_id)
     {

@@ -216,13 +216,9 @@ button.like-button,.like-section {
     color: rgba(95, 95, 95, 1);
 }
 
-.comments-section ul {
+.comments-list {
     list-style: none;
     padding: 0;
-}
-
-.comments-section ul:empty {
-    display: none; /* 空の場合に非表示にする */
 }
 
 .comments-section .comment {

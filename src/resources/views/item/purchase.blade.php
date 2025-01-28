@@ -29,7 +29,6 @@
                     <option value="コンビニ払い">コンビニ払い</option>
                     <option value="カード払い">カード払い</option>
                 </select>
-                <button type="submit" class="purchase-btn">購入する</button>
             </form>
         </div>
         <div class="shipping-address">
@@ -45,7 +44,6 @@
         </div>
     </div>
     <div class="summary">
-        <h2>購入内容</h2>
         <div class="summary-box">
             <p>商品代金</p>
             <p>¥ {{ number_format($item->price) }}</p>
