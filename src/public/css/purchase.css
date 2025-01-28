@@ -72,6 +72,12 @@ body {
     margin-top: 30px;
 }
 
+.payment-method h2 {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 24.2px;
+}
+
 .payment-select {
     width: 100%;
     padding: 10px;

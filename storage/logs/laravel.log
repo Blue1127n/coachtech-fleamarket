@@ -1221,3 +1221,335 @@
 [2025-01-28 08:42:09] local.INFO: Middleware passed successfully {"user_id":2} 
 [2025-01-28 08:42:22] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"item.purchase","user_authenticated":true,"user":{"id":2,"name":"テストユーザー2","email":"test2@example.com","postal_code":"2345678","address":"大阪府大阪市2-4"}} 
 [2025-01-28 08:42:22] local.INFO: Middleware passed successfully {"user_id":2} 
+[2025-01-28 13:52:58] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"login","user_authenticated":false,"user":null} 
+[2025-01-28 13:52:58] local.INFO: User not authenticated, skipping middleware  
+[2025-01-28 13:52:58] local.INFO: Rendering login form.  
+[2025-01-28 13:53:01] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"products.index","user_authenticated":false,"user":null} 
+[2025-01-28 13:53:01] local.INFO: User not authenticated, skipping middleware  
+[2025-01-28 13:53:03] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"item.show","user_authenticated":false,"user":null} 
+[2025-01-28 13:53:03] local.INFO: User not authenticated, skipping middleware  
+[2025-01-28 13:53:33] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"item.show","user_authenticated":false,"user":null} 
+[2025-01-28 13:53:33] local.INFO: User not authenticated, skipping middleware  
+[2025-01-28 13:53:40] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"item.show","user_authenticated":false,"user":null} 
+[2025-01-28 13:53:40] local.INFO: User not authenticated, skipping middleware  
+[2025-01-28 13:54:36] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"login","user_authenticated":false,"user":null} 
+[2025-01-28 13:54:36] local.INFO: User not authenticated, skipping middleware  
+[2025-01-28 13:54:36] local.INFO: Rendering login form.  
+[2025-01-28 13:54:56] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":null,"user_authenticated":false,"user":null} 
+[2025-01-28 13:54:56] local.INFO: User not authenticated, skipping middleware  
+[2025-01-28 13:54:56] local.INFO: Login request received {"_token":"w4A3pbGikLuvss6lfhzjsLJIPjFqMPlxUs1mvs2q","email":"test2@example.com","password":"oassword"} 
+[2025-01-28 13:54:56] local.INFO: Attempting login with credentials {"email":"test2@example.com","password":"oassword"} 
+[2025-01-28 13:54:56] local.INFO: Login by email: {"result":false} 
+[2025-01-28 13:54:56] local.INFO: Login by name: {"result":false} 
+[2025-01-28 13:54:56] local.ERROR: Login failed: Invalid credentials {"email":"test2@example.com"} 
+[2025-01-28 13:54:56] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"login","user_authenticated":false,"user":null} 
+[2025-01-28 13:54:56] local.INFO: User not authenticated, skipping middleware  
+[2025-01-28 13:54:56] local.INFO: Rendering login form.  
+[2025-01-28 13:55:05] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":null,"user_authenticated":false,"user":null} 
+[2025-01-28 13:55:05] local.INFO: User not authenticated, skipping middleware  
+[2025-01-28 13:55:05] local.INFO: Login request received {"_token":"w4A3pbGikLuvss6lfhzjsLJIPjFqMPlxUs1mvs2q","email":"test2@example.com","password":"password"} 
+[2025-01-28 13:55:05] local.INFO: Attempting login with credentials {"email":"test2@example.com","password":"password"} 
+[2025-01-28 13:55:05] local.INFO: Login by email: {"result":true} 
+[2025-01-28 13:55:05] local.INFO: Login by name: {"result":false} 
+[2025-01-28 13:55:05] local.INFO: Login successful for user {"user":2} 
+[2025-01-28 13:55:05] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"products.index","user_authenticated":true,"user":{"id":2,"name":"テストユーザー2","email":"test2@example.com","postal_code":"2345678","address":"大阪府大阪市2-4"}} 
+[2025-01-28 13:55:05] local.INFO: Middleware passed successfully {"user_id":2} 
+[2025-01-28 13:55:09] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"item.show","user_authenticated":true,"user":{"id":2,"name":"テストユーザー2","email":"test2@example.com","postal_code":"2345678","address":"大阪府大阪市2-4"}} 
+[2025-01-28 13:55:09] local.INFO: Middleware passed successfully {"user_id":2} 
+[2025-01-28 13:58:53] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"item.purchase","user_authenticated":true,"user":{"id":2,"name":"テストユーザー2","email":"test2@example.com","postal_code":"2345678","address":"大阪府大阪市2-4"}} 
+[2025-01-28 13:58:53] local.INFO: Middleware passed successfully {"user_id":2} 
+[2025-01-28 14:03:10] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"item.purchase","user_authenticated":true,"user":{"id":2,"name":"テストユーザー2","email":"test2@example.com","postal_code":"2345678","address":"大阪府大阪市2-4"}} 
+[2025-01-28 14:03:10] local.INFO: Middleware passed successfully {"user_id":2} 
+[2025-01-28 14:13:57] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"logout","user_authenticated":true,"user":{"id":2,"name":"テストユーザー2","email":"test2@example.com","postal_code":"2345678","address":"大阪府大阪市2-4"}} 
+[2025-01-28 14:13:57] local.INFO: Middleware passed successfully {"user_id":2} 
+[2025-01-28 14:13:57] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"products.index","user_authenticated":false,"user":null} 
+[2025-01-28 14:13:57] local.INFO: User not authenticated, skipping middleware  
+[2025-01-28 14:13:59] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"item.show","user_authenticated":false,"user":null} 
+[2025-01-28 14:13:59] local.INFO: User not authenticated, skipping middleware  
+[2025-01-28 14:14:05] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"item.show","user_authenticated":false,"user":null} 
+[2025-01-28 14:14:05] local.INFO: User not authenticated, skipping middleware  
+[2025-01-28 14:14:08] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"item.show","user_authenticated":false,"user":null} 
+[2025-01-28 14:14:08] local.INFO: User not authenticated, skipping middleware  
+[2025-01-28 14:14:16] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"login","user_authenticated":false,"user":null} 
+[2025-01-28 14:14:16] local.INFO: User not authenticated, skipping middleware  
+[2025-01-28 14:14:16] local.INFO: Rendering login form.  
+[2025-01-28 14:14:24] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"products.index","user_authenticated":false,"user":null} 
+[2025-01-28 14:14:24] local.INFO: User not authenticated, skipping middleware  
+[2025-01-28 14:14:31] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"item.show","user_authenticated":false,"user":null} 
+[2025-01-28 14:14:31] local.INFO: User not authenticated, skipping middleware  
+[2025-01-28 14:29:34] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"item.purchase","user_authenticated":false,"user":null} 
+[2025-01-28 14:29:34] local.INFO: User not authenticated, skipping middleware  
+[2025-01-28 14:30:41] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"item.show","user_authenticated":false,"user":null} 
+[2025-01-28 14:30:41] local.INFO: User not authenticated, skipping middleware  
+[2025-01-28 14:31:06] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"login","user_authenticated":false,"user":null} 
+[2025-01-28 14:31:06] local.INFO: User not authenticated, skipping middleware  
+[2025-01-28 14:31:06] local.INFO: Rendering login form.  
+[2025-01-28 14:34:27] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"item.purchase","user_authenticated":false,"user":null} 
+[2025-01-28 14:34:27] local.INFO: User not authenticated, skipping middleware  
+[2025-01-28 14:45:16] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"products.index","user_authenticated":false,"user":null} 
+[2025-01-28 14:45:16] local.INFO: User not authenticated, skipping middleware  
+[2025-01-28 14:45:18] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"products.index","user_authenticated":false,"user":null} 
+[2025-01-28 14:45:18] local.INFO: User not authenticated, skipping middleware  
+[2025-01-28 14:45:20] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"item.show","user_authenticated":false,"user":null} 
+[2025-01-28 14:45:20] local.INFO: User not authenticated, skipping middleware  
+[2025-01-28 14:45:27] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"item.show","user_authenticated":false,"user":null} 
+[2025-01-28 14:45:27] local.INFO: User not authenticated, skipping middleware  
+[2025-01-28 14:45:40] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"login","user_authenticated":false,"user":null} 
+[2025-01-28 14:45:40] local.INFO: User not authenticated, skipping middleware  
+[2025-01-28 14:45:40] local.INFO: Rendering login form.  
+[2025-01-28 14:45:48] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"products.index","user_authenticated":false,"user":null} 
+[2025-01-28 14:45:48] local.INFO: User not authenticated, skipping middleware  
+[2025-01-28 14:46:06] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"login","user_authenticated":false,"user":null} 
+[2025-01-28 14:46:06] local.INFO: User not authenticated, skipping middleware  
+[2025-01-28 14:46:06] local.INFO: Rendering login form.  
+[2025-01-28 14:46:12] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":null,"user_authenticated":false,"user":null} 
+[2025-01-28 14:46:12] local.INFO: User not authenticated, skipping middleware  
+[2025-01-28 14:46:12] local.INFO: Login request received {"_token":"hsj7JQO24WpzvedKGJNbOTB8VvMA4MnuFQxUqTVl","email":"test@example.com","password":"password"} 
+[2025-01-28 14:46:12] local.INFO: Attempting login with credentials {"email":"test@example.com","password":"password"} 
+[2025-01-28 14:46:12] local.INFO: Login by email: {"result":true} 
+[2025-01-28 14:46:12] local.INFO: Login by name: {"result":false} 
+[2025-01-28 14:46:12] local.INFO: Login successful for user {"user":1} 
+[2025-01-28 14:46:12] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"item.show","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"1234567","address":"東京都渋谷区1-3"}} 
+[2025-01-28 14:46:12] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-28 14:46:32] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"products.index","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"1234567","address":"東京都渋谷区1-3"}} 
+[2025-01-28 14:46:32] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-28 14:46:40] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"products.mylist","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"1234567","address":"東京都渋谷区1-3"}} 
+[2025-01-28 14:46:40] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-28 14:46:41] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"products.index","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"1234567","address":"東京都渋谷区1-3"}} 
+[2025-01-28 14:46:41] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-28 14:46:44] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"item.show","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"1234567","address":"東京都渋谷区1-3"}} 
+[2025-01-28 14:46:44] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-28 14:47:04] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"item.comment","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"1234567","address":"東京都渋谷区1-3"}} 
+[2025-01-28 14:47:04] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-28 14:48:44] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"login","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"1234567","address":"東京都渋谷区1-3"}} 
+[2025-01-28 14:48:44] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-28 14:48:44] local.INFO: Rendering login form.  
+[2025-01-28 14:48:48] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"products.index","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"1234567","address":"東京都渋谷区1-3"}} 
+[2025-01-28 14:48:48] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-28 14:48:52] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"logout","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"1234567","address":"東京都渋谷区1-3"}} 
+[2025-01-28 14:48:52] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-28 14:48:52] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"products.index","user_authenticated":false,"user":null} 
+[2025-01-28 14:48:52] local.INFO: User not authenticated, skipping middleware  
+[2025-01-28 14:48:55] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"item.show","user_authenticated":false,"user":null} 
+[2025-01-28 14:48:55] local.INFO: User not authenticated, skipping middleware  
+[2025-01-28 14:48:57] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"item.purchase","user_authenticated":false,"user":null} 
+[2025-01-28 14:48:57] local.INFO: User not authenticated, skipping middleware  
+[2025-01-28 14:51:35] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"products.index","user_authenticated":false,"user":null} 
+[2025-01-28 14:51:35] local.INFO: User not authenticated, skipping middleware  
+[2025-01-28 14:51:37] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"products.index","user_authenticated":false,"user":null} 
+[2025-01-28 14:51:37] local.INFO: User not authenticated, skipping middleware  
+[2025-01-28 14:51:39] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"item.show","user_authenticated":false,"user":null} 
+[2025-01-28 14:51:39] local.INFO: User not authenticated, skipping middleware  
+[2025-01-28 14:52:00] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"login","user_authenticated":false,"user":null} 
+[2025-01-28 14:52:00] local.INFO: User not authenticated, skipping middleware  
+[2025-01-28 14:52:00] local.INFO: Rendering login form.  
+[2025-01-28 14:52:08] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"login","user_authenticated":false,"user":null} 
+[2025-01-28 14:52:08] local.INFO: User not authenticated, skipping middleware  
+[2025-01-28 14:52:08] local.INFO: Rendering login form.  
+[2025-01-28 14:52:16] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"login","user_authenticated":false,"user":null} 
+[2025-01-28 14:52:16] local.INFO: User not authenticated, skipping middleware  
+[2025-01-28 14:52:16] local.INFO: Rendering login form.  
+[2025-01-28 14:53:24] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"products.index","user_authenticated":false,"user":null} 
+[2025-01-28 14:53:24] local.INFO: User not authenticated, skipping middleware  
+[2025-01-28 14:53:26] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"products.index","user_authenticated":false,"user":null} 
+[2025-01-28 14:53:26] local.INFO: User not authenticated, skipping middleware  
+[2025-01-28 14:53:29] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"item.show","user_authenticated":false,"user":null} 
+[2025-01-28 14:53:29] local.INFO: User not authenticated, skipping middleware  
+[2025-01-28 14:53:32] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"item.purchase","user_authenticated":false,"user":null} 
+[2025-01-28 14:53:32] local.INFO: User not authenticated, skipping middleware  
+[2025-01-28 14:53:46] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"login","user_authenticated":false,"user":null} 
+[2025-01-28 14:53:46] local.INFO: User not authenticated, skipping middleware  
+[2025-01-28 14:53:46] local.INFO: Rendering login form.  
+[2025-01-28 14:55:18] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"products.index","user_authenticated":false,"user":null} 
+[2025-01-28 14:55:18] local.INFO: User not authenticated, skipping middleware  
+[2025-01-28 14:55:19] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"products.index","user_authenticated":false,"user":null} 
+[2025-01-28 14:55:19] local.INFO: User not authenticated, skipping middleware  
+[2025-01-28 14:55:21] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"item.show","user_authenticated":false,"user":null} 
+[2025-01-28 14:55:21] local.INFO: User not authenticated, skipping middleware  
+[2025-01-28 14:55:46] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"login","user_authenticated":false,"user":null} 
+[2025-01-28 14:55:46] local.INFO: User not authenticated, skipping middleware  
+[2025-01-28 14:55:46] local.INFO: Rendering login form.  
+[2025-01-28 15:00:31] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"products.index","user_authenticated":false,"user":null} 
+[2025-01-28 15:00:31] local.INFO: User not authenticated, skipping middleware  
+[2025-01-28 15:00:33] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"item.show","user_authenticated":false,"user":null} 
+[2025-01-28 15:00:33] local.INFO: User not authenticated, skipping middleware  
+[2025-01-28 15:00:45] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"item.show","user_authenticated":false,"user":null} 
+[2025-01-28 15:00:45] local.INFO: User not authenticated, skipping middleware  
+[2025-01-28 15:05:29] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"products.index","user_authenticated":false,"user":null} 
+[2025-01-28 15:05:29] local.INFO: User not authenticated, skipping middleware  
+[2025-01-28 15:05:31] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"products.index","user_authenticated":false,"user":null} 
+[2025-01-28 15:05:31] local.INFO: User not authenticated, skipping middleware  
+[2025-01-28 15:05:33] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"item.show","user_authenticated":false,"user":null} 
+[2025-01-28 15:05:33] local.INFO: User not authenticated, skipping middleware  
+[2025-01-28 15:05:35] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"login","user_authenticated":false,"user":null} 
+[2025-01-28 15:05:35] local.INFO: User not authenticated, skipping middleware  
+[2025-01-28 15:05:35] local.INFO: Rendering login form.  
+[2025-01-28 15:05:44] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"products.index","user_authenticated":false,"user":null} 
+[2025-01-28 15:05:44] local.INFO: User not authenticated, skipping middleware  
+[2025-01-28 15:05:46] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"item.show","user_authenticated":false,"user":null} 
+[2025-01-28 15:05:46] local.INFO: User not authenticated, skipping middleware  
+[2025-01-28 15:06:06] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"login","user_authenticated":false,"user":null} 
+[2025-01-28 15:06:06] local.INFO: User not authenticated, skipping middleware  
+[2025-01-28 15:06:06] local.INFO: Rendering login form.  
+[2025-01-28 15:07:19] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"products.index","user_authenticated":false,"user":null} 
+[2025-01-28 15:07:19] local.INFO: User not authenticated, skipping middleware  
+[2025-01-28 15:07:23] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"products.index","user_authenticated":false,"user":null} 
+[2025-01-28 15:07:23] local.INFO: User not authenticated, skipping middleware  
+[2025-01-28 15:07:37] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"login","user_authenticated":false,"user":null} 
+[2025-01-28 15:07:37] local.INFO: User not authenticated, skipping middleware  
+[2025-01-28 15:07:37] local.INFO: Rendering login form.  
+[2025-01-28 15:07:44] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":null,"user_authenticated":false,"user":null} 
+[2025-01-28 15:07:44] local.INFO: User not authenticated, skipping middleware  
+[2025-01-28 15:07:44] local.INFO: Login request received {"_token":"MtQE4reDX5H0KyxkbaaB19OzjKf49ldOjl7xifBs","email":"test@example.com","password":"password"} 
+[2025-01-28 15:07:44] local.INFO: Attempting login with credentials {"email":"test@example.com","password":"password"} 
+[2025-01-28 15:07:44] local.INFO: Login by email: {"result":true} 
+[2025-01-28 15:07:44] local.INFO: Login by name: {"result":false} 
+[2025-01-28 15:07:44] local.INFO: Login successful for user {"user":1} 
+[2025-01-28 15:07:44] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"item.show","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"1234567","address":"東京都渋谷区1-3"}} 
+[2025-01-28 15:07:44] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-28 15:07:47] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"item.like","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"1234567","address":"東京都渋谷区1-3"}} 
+[2025-01-28 15:07:47] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-28 15:07:47] local.INFO: Like Count: {"likeCount":1} 
+[2025-01-28 15:07:47] local.INFO: Liked State: {"liked":true} 
+[2025-01-28 15:07:49] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"item.like","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"1234567","address":"東京都渋谷区1-3"}} 
+[2025-01-28 15:07:49] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-28 15:07:49] local.INFO: Like Count: {"likeCount":0} 
+[2025-01-28 15:07:49] local.INFO: Liked State: {"liked":false} 
+[2025-01-28 15:08:11] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"item.comment","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"1234567","address":"東京都渋谷区1-3"}} 
+[2025-01-28 15:08:11] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-28 15:12:20] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"products.index","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"1234567","address":"東京都渋谷区1-3"}} 
+[2025-01-28 15:12:20] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-28 15:12:23] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"logout","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"1234567","address":"東京都渋谷区1-3"}} 
+[2025-01-28 15:12:23] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-28 15:12:23] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"products.index","user_authenticated":false,"user":null} 
+[2025-01-28 15:12:23] local.INFO: User not authenticated, skipping middleware  
+[2025-01-28 15:12:24] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"item.show","user_authenticated":false,"user":null} 
+[2025-01-28 15:12:24] local.INFO: User not authenticated, skipping middleware  
+[2025-01-28 15:12:38] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"item.show","user_authenticated":false,"user":null} 
+[2025-01-28 15:12:38] local.INFO: User not authenticated, skipping middleware  
+[2025-01-28 15:15:48] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"login","user_authenticated":false,"user":null} 
+[2025-01-28 15:15:48] local.INFO: User not authenticated, skipping middleware  
+[2025-01-28 15:15:48] local.INFO: Rendering login form.  
+[2025-01-28 15:15:54] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"item.show","user_authenticated":false,"user":null} 
+[2025-01-28 15:15:54] local.INFO: User not authenticated, skipping middleware  
+[2025-01-28 15:16:30] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"login","user_authenticated":false,"user":null} 
+[2025-01-28 15:16:30] local.INFO: User not authenticated, skipping middleware  
+[2025-01-28 15:16:30] local.INFO: Rendering login form.  
+[2025-01-28 15:16:43] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"products.index","user_authenticated":false,"user":null} 
+[2025-01-28 15:16:43] local.INFO: User not authenticated, skipping middleware  
+[2025-01-28 15:16:48] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"item.show","user_authenticated":false,"user":null} 
+[2025-01-28 15:16:48] local.INFO: User not authenticated, skipping middleware  
+[2025-01-28 15:18:13] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"login","user_authenticated":false,"user":null} 
+[2025-01-28 15:18:13] local.INFO: User not authenticated, skipping middleware  
+[2025-01-28 15:18:13] local.INFO: Rendering login form.  
+[2025-01-28 15:18:59] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"products.index","user_authenticated":false,"user":null} 
+[2025-01-28 15:18:59] local.INFO: User not authenticated, skipping middleware  
+[2025-01-28 15:19:03] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"products.mylist","user_authenticated":false,"user":null} 
+[2025-01-28 15:19:03] local.INFO: User not authenticated, skipping middleware  
+[2025-01-28 15:19:04] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"products.index","user_authenticated":false,"user":null} 
+[2025-01-28 15:19:04] local.INFO: User not authenticated, skipping middleware  
+[2025-01-28 15:19:05] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"item.show","user_authenticated":false,"user":null} 
+[2025-01-28 15:19:05] local.INFO: User not authenticated, skipping middleware  
+[2025-01-28 15:19:12] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"item.show","user_authenticated":false,"user":null} 
+[2025-01-28 15:19:12] local.INFO: User not authenticated, skipping middleware  
+[2025-01-28 15:22:31] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"item.show","user_authenticated":false,"user":null} 
+[2025-01-28 15:22:31] local.INFO: User not authenticated, skipping middleware  
+[2025-01-28 15:22:52] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"login","user_authenticated":false,"user":null} 
+[2025-01-28 15:22:52] local.INFO: User not authenticated, skipping middleware  
+[2025-01-28 15:22:52] local.INFO: Rendering login form.  
+[2025-01-28 15:23:04] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":null,"user_authenticated":false,"user":null} 
+[2025-01-28 15:23:04] local.INFO: User not authenticated, skipping middleware  
+[2025-01-28 15:23:04] local.INFO: Login request received {"_token":"YgoJQnAZYtschC19yjpgNZJ5BQttR1BR4EzPqFRF","email":"test@example.com","password":"password"} 
+[2025-01-28 15:23:04] local.INFO: Attempting login with credentials {"email":"test@example.com","password":"password"} 
+[2025-01-28 15:23:05] local.INFO: Login by email: {"result":true} 
+[2025-01-28 15:23:05] local.INFO: Login by name: {"result":false} 
+[2025-01-28 15:23:05] local.INFO: Login successful for user {"user":1} 
+[2025-01-28 15:23:05] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"item.show","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"1234567","address":"東京都渋谷区1-3"}} 
+[2025-01-28 15:23:05] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-28 15:23:07] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"item.like","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"1234567","address":"東京都渋谷区1-3"}} 
+[2025-01-28 15:23:07] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-28 15:23:07] local.INFO: Like Count: {"likeCount":1} 
+[2025-01-28 15:23:07] local.INFO: Liked State: {"liked":true} 
+[2025-01-28 15:23:08] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"item.like","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"1234567","address":"東京都渋谷区1-3"}} 
+[2025-01-28 15:23:08] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-28 15:23:08] local.INFO: Like Count: {"likeCount":0} 
+[2025-01-28 15:23:08] local.INFO: Liked State: {"liked":false} 
+[2025-01-28 15:23:34] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"item.comment","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"1234567","address":"東京都渋谷区1-3"}} 
+[2025-01-28 15:23:34] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-28 15:24:06] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"login","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"1234567","address":"東京都渋谷区1-3"}} 
+[2025-01-28 15:24:06] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-28 15:24:06] local.INFO: Rendering login form.  
+[2025-01-28 15:24:13] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":null,"user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"1234567","address":"東京都渋谷区1-3"}} 
+[2025-01-28 15:24:13] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-28 15:24:13] local.INFO: User is authenticated. Redirecting to home.  
+[2025-01-28 15:24:13] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"products.index","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"1234567","address":"東京都渋谷区1-3"}} 
+[2025-01-28 15:24:13] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-28 15:24:17] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"item.show","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"1234567","address":"東京都渋谷区1-3"}} 
+[2025-01-28 15:24:17] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-28 15:29:57] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"item.show","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"1234567","address":"東京都渋谷区1-3"}} 
+[2025-01-28 15:29:57] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-28 15:42:52] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"item.comment","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"1234567","address":"東京都渋谷区1-3"}} 
+[2025-01-28 15:42:52] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-28 15:42:59] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"item.show","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"1234567","address":"東京都渋谷区1-3"}} 
+[2025-01-28 15:42:59] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-28 15:43:24] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"products.index","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"1234567","address":"東京都渋谷区1-3"}} 
+[2025-01-28 15:43:24] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-28 15:43:27] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"item.show","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"1234567","address":"東京都渋谷区1-3"}} 
+[2025-01-28 15:43:27] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-28 15:43:38] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"item.show","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"1234567","address":"東京都渋谷区1-3"}} 
+[2025-01-28 15:43:38] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-28 15:43:48] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"logout","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"1234567","address":"東京都渋谷区1-3"}} 
+[2025-01-28 15:43:48] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-28 15:43:48] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"products.index","user_authenticated":false,"user":null} 
+[2025-01-28 15:43:48] local.INFO: User not authenticated, skipping middleware  
+[2025-01-28 15:43:49] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"item.show","user_authenticated":false,"user":null} 
+[2025-01-28 15:43:49] local.INFO: User not authenticated, skipping middleware  
+[2025-01-28 15:43:52] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"login","user_authenticated":false,"user":null} 
+[2025-01-28 15:43:52] local.INFO: User not authenticated, skipping middleware  
+[2025-01-28 15:43:52] local.INFO: Rendering login form.  
+[2025-01-28 16:06:05] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"item.show","user_authenticated":false,"user":null} 
+[2025-01-28 16:06:05] local.INFO: User not authenticated, skipping middleware  
+[2025-01-28 16:06:21] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"login","user_authenticated":false,"user":null} 
+[2025-01-28 16:06:21] local.INFO: User not authenticated, skipping middleware  
+[2025-01-28 16:06:21] local.INFO: Rendering login form.  
+[2025-01-28 16:06:30] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":null,"user_authenticated":false,"user":null} 
+[2025-01-28 16:06:30] local.INFO: User not authenticated, skipping middleware  
+[2025-01-28 16:06:30] local.INFO: Login request received {"_token":"qXluAKAvz0x3aG6a0jyfLZ2341ZYsmjgqMOrgPOd","email":"test@example.com","password":"password"} 
+[2025-01-28 16:06:30] local.INFO: Attempting login with credentials {"email":"test@example.com","password":"password"} 
+[2025-01-28 16:06:30] local.INFO: Login by email: {"result":true} 
+[2025-01-28 16:06:30] local.INFO: Login by name: {"result":false} 
+[2025-01-28 16:06:30] local.INFO: Login successful for user {"user":1} 
+[2025-01-28 16:06:30] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"products.index","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"1234567","address":"東京都渋谷区1-3"}} 
+[2025-01-28 16:06:30] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-28 16:06:33] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"item.show","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"1234567","address":"東京都渋谷区1-3"}} 
+[2025-01-28 16:06:33] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-28 16:12:41] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"item.show","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"1234567","address":"東京都渋谷区1-3"}} 
+[2025-01-28 16:12:41] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-28 17:04:08] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"item.show","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"1234567","address":"東京都渋谷区1-3"}} 
+[2025-01-28 17:04:08] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-28 17:05:12] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"item.show","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"1234567","address":"東京都渋谷区1-3"}} 
+[2025-01-28 17:05:12] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-28 17:56:45] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"products.index","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"1234567","address":"東京都渋谷区1-3"}} 
+[2025-01-28 17:56:45] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-28 17:56:47] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"item.show","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"1234567","address":"東京都渋谷区1-3"}} 
+[2025-01-28 17:56:47] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-28 17:56:49] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"item.like","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"1234567","address":"東京都渋谷区1-3"}} 
+[2025-01-28 17:56:49] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-28 17:56:49] local.INFO: Like Count: {"likeCount":1} 
+[2025-01-28 17:56:49] local.INFO: Liked State: {"liked":true} 
+[2025-01-28 17:57:51] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"products.index","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"1234567","address":"東京都渋谷区1-3"}} 
+[2025-01-28 17:57:51] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-28 17:57:52] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"item.show","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"1234567","address":"東京都渋谷区1-3"}} 
+[2025-01-28 17:57:52] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-28 17:57:54] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"item.like","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"1234567","address":"東京都渋谷区1-3"}} 
+[2025-01-28 17:57:54] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-28 17:57:54] local.INFO: Like Count: {"likeCount":0} 
+[2025-01-28 17:57:54] local.INFO: Liked State: {"liked":false} 
+[2025-01-28 17:57:55] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"item.like","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"1234567","address":"東京都渋谷区1-3"}} 
+[2025-01-28 17:57:55] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-28 17:57:55] local.INFO: Like Count: {"likeCount":1} 
+[2025-01-28 17:57:55] local.INFO: Liked State: {"liked":true} 
+[2025-01-28 17:57:56] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"item.like","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"1234567","address":"東京都渋谷区1-3"}} 
+[2025-01-28 17:57:56] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-28 17:57:56] local.INFO: Like Count: {"likeCount":0} 
+[2025-01-28 17:57:56] local.INFO: Liked State: {"liked":false} 

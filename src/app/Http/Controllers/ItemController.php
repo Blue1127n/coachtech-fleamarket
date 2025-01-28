@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\CommentRequest;
 use App\Models\Item;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
@@ -129,17 +130,15 @@ class ItemController extends Controller
         ]);
     }
 
-    public function comment(Request $request, $item_id)
+    public function comment(CommentRequest $request, $item_id)
     {
         // ユーザーが認証されているか確認
         if (!Auth::check()) {
-            return response()->json(['success' => false, 'message' => 'Unauthorized'], 401);
+            return response()->json([
+                'success' => false,
+                'redirect' => route('login'), // ログイン画面のURLを返す
+            ], 401);
         }
-
-        // バリデーションの実行
-        $request->validate([
-            'content' => 'required|max:255',
-        ]);
 
         // 該当の商品を取得
         $item = Item::findOrFail($item_id);
@@ -159,7 +158,7 @@ class ItemController extends Controller
             'comment' => [
                 'user' => [
                 'name' => Auth::user()->name,
-                'profile_image_url' => Auth::user()->profile_image_url, // ユーザーのプロファイル画像URL
+                'profile_image_url' => Auth::user()->profile_image_url ?: null, // ユーザーのプロファイル画像URL
                 ],
                 'content' => $comment->content,
                 'created_at' => $comment->created_at->format('Y-m-d H:i'), // 日付のフォーマット
