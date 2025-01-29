@@ -98,7 +98,7 @@
         <form id="comment-form" action="{{ route('item.comment', ['item_id' => $item->id]) }}" method="POST">
             @csrf
             <p>商品へのコメント</p>
-            <textarea name="content" id="comment-content" required>{{ old('content') }}</textarea>
+            <textarea name="content" id="comment-content">{{ old('content') }}</textarea>
             @if ($errors->has('content'))
         <p class="error-message" style="color: red;">{{ $errors->first('content') }}</p>
     @endif
@@ -145,7 +145,6 @@
                     document.getElementById('like-count').textContent = data.likeCount;
                 }
             })
-            .catch(error => console.error('いいね処理エラー:', error));
         });
     }
 
@@ -154,7 +153,7 @@
         commentForm.addEventListener('submit', function (event) {
             event.preventDefault();
 
-            // **未入力チェック**
+            // **未入力チェック（ここでバリデーションを行う）**
             if (!commentContent.value.trim()) {
                 displayErrorMessage('コメントを入力してください');
                 return;
@@ -173,7 +172,7 @@
             .then(response => {
                 if (response.status === 401) {
                     return response.json().then(data => {
-                        window.location.href = data.redirect; // 未ログインならログイン画面へ遷移
+                        window.location.href = data.redirect; 
                     });
                 }
                 if (response.status === 422) {
@@ -207,8 +206,6 @@
                 }
             })
             .catch(errors => {
-                console.error('バリデーションエラー:', errors);
-
                 let errorMessage = 'コメントの投稿に失敗しました';
                 if (errors.content) {
                     errorMessage = errors.content[0];

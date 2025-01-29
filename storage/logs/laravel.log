@@ -2079,3 +2079,82 @@
 [2025-01-28 22:14:31] local.INFO: Middleware passed successfully {"user_id":1} 
 [2025-01-28 22:14:45] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"item.comment","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"1234567","address":"東京都渋谷区1-3"}} 
 [2025-01-28 22:14:45] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-29 09:22:17] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"login","user_authenticated":false,"user":null} 
+[2025-01-29 09:22:17] local.INFO: User not authenticated, skipping middleware  
+[2025-01-29 09:22:17] local.INFO: Rendering login form.  
+[2025-01-29 09:22:20] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"products.index","user_authenticated":false,"user":null} 
+[2025-01-29 09:22:20] local.INFO: User not authenticated, skipping middleware  
+[2025-01-29 09:22:22] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"item.show","user_authenticated":false,"user":null} 
+[2025-01-29 09:22:22] local.INFO: User not authenticated, skipping middleware  
+[2025-01-29 09:22:26] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"item.show","user_authenticated":false,"user":null} 
+[2025-01-29 09:22:26] local.INFO: User not authenticated, skipping middleware  
+[2025-01-29 09:22:27] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"login","user_authenticated":false,"user":null} 
+[2025-01-29 09:22:27] local.INFO: User not authenticated, skipping middleware  
+[2025-01-29 09:22:27] local.INFO: Rendering login form.  
+[2025-01-29 09:22:48] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":null,"user_authenticated":false,"user":null} 
+[2025-01-29 09:22:48] local.INFO: User not authenticated, skipping middleware  
+[2025-01-29 09:22:48] local.INFO: Login request received {"_token":"jfoOERIs5mWVuHkX9mtBvApa0SnTY1xw7ZLfYOmN","email":"test@example.com","password":"password"} 
+[2025-01-29 09:22:48] local.INFO: Attempting login with credentials {"email":"test@example.com","password":"password"} 
+[2025-01-29 09:22:48] local.INFO: Login by email: {"result":true} 
+[2025-01-29 09:22:48] local.INFO: Login by name: {"result":false} 
+[2025-01-29 09:22:48] local.INFO: Login successful for user {"user":1} 
+[2025-01-29 09:22:48] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"products.index","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"1234567","address":"東京都渋谷区1-3"}} 
+[2025-01-29 09:22:48] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-29 09:23:17] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"item.show","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"1234567","address":"東京都渋谷区1-3"}} 
+[2025-01-29 09:23:17] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-29 09:23:19] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"item.like","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"1234567","address":"東京都渋谷区1-3"}} 
+[2025-01-29 09:23:19] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-29 09:23:19] local.INFO: Like Count: {"likeCount":1} 
+[2025-01-29 09:23:19] local.INFO: Liked State: {"liked":true} 
+[2025-01-29 09:23:20] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"item.like","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"1234567","address":"東京都渋谷区1-3"}} 
+[2025-01-29 09:23:20] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-29 09:23:20] local.INFO: Like Count: {"likeCount":0} 
+[2025-01-29 09:23:20] local.INFO: Liked State: {"liked":false} 
+[2025-01-29 09:23:27] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"item.show","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"1234567","address":"東京都渋谷区1-3"}} 
+[2025-01-29 09:23:27] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-29 09:23:28] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"item.like","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"1234567","address":"東京都渋谷区1-3"}} 
+[2025-01-29 09:23:28] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-29 09:23:28] local.INFO: Like Count: {"likeCount":1} 
+[2025-01-29 09:23:28] local.INFO: Liked State: {"liked":true} 
+[2025-01-29 09:23:29] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"item.like","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"1234567","address":"東京都渋谷区1-3"}} 
+[2025-01-29 09:23:29] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-29 09:23:29] local.INFO: Like Count: {"likeCount":0} 
+[2025-01-29 09:23:29] local.INFO: Liked State: {"liked":false} 
+[2025-01-29 09:23:58] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"item.comment","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"1234567","address":"東京都渋谷区1-3"}} 
+[2025-01-29 09:23:58] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-29 09:24:28] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"item.comment","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"1234567","address":"東京都渋谷区1-3"}} 
+[2025-01-29 09:24:28] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-29 09:34:00] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"item.show","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"1234567","address":"東京都渋谷区1-3"}} 
+[2025-01-29 09:34:00] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-29 09:34:05] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"logout","user_authenticated":true,"user":{"id":1,"name":"テストユーザー","email":"test@example.com","postal_code":"1234567","address":"東京都渋谷区1-3"}} 
+[2025-01-29 09:34:05] local.INFO: Middleware passed successfully {"user_id":1} 
+[2025-01-29 09:34:05] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"products.index","user_authenticated":false,"user":null} 
+[2025-01-29 09:34:05] local.INFO: User not authenticated, skipping middleware  
+[2025-01-29 09:34:13] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"login","user_authenticated":false,"user":null} 
+[2025-01-29 09:34:13] local.INFO: User not authenticated, skipping middleware  
+[2025-01-29 09:34:13] local.INFO: Rendering login form.  
+[2025-01-29 09:34:19] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":null,"user_authenticated":false,"user":null} 
+[2025-01-29 09:34:19] local.INFO: User not authenticated, skipping middleware  
+[2025-01-29 09:34:19] local.INFO: Login request received {"_token":"PCt1gxFAzlIPzrxD9FEOVI0rA0rrFx3KhZxXuRto","email":"test2@example.com","password":"password"} 
+[2025-01-29 09:34:19] local.INFO: Attempting login with credentials {"email":"test2@example.com","password":"password"} 
+[2025-01-29 09:34:19] local.INFO: Login by email: {"result":true} 
+[2025-01-29 09:34:19] local.INFO: Login by name: {"result":false} 
+[2025-01-29 09:34:19] local.INFO: Login successful for user {"user":2} 
+[2025-01-29 09:34:19] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"products.index","user_authenticated":true,"user":{"id":2,"name":"テストユーザー2","email":"test2@example.com","postal_code":"2345678","address":"大阪府大阪市2-4"}} 
+[2025-01-29 09:34:19] local.INFO: Middleware passed successfully {"user_id":2} 
+[2025-01-29 09:34:22] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"item.show","user_authenticated":true,"user":{"id":2,"name":"テストユーザー2","email":"test2@example.com","postal_code":"2345678","address":"大阪府大阪市2-4"}} 
+[2025-01-29 09:34:22] local.INFO: Middleware passed successfully {"user_id":2} 
+[2025-01-29 09:34:24] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"item.like","user_authenticated":true,"user":{"id":2,"name":"テストユーザー2","email":"test2@example.com","postal_code":"2345678","address":"大阪府大阪市2-4"}} 
+[2025-01-29 09:34:24] local.INFO: Middleware passed successfully {"user_id":2} 
+[2025-01-29 09:34:24] local.INFO: Like Count: {"likeCount":1} 
+[2025-01-29 09:34:24] local.INFO: Liked State: {"liked":true} 
+[2025-01-29 09:34:24] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"item.like","user_authenticated":true,"user":{"id":2,"name":"テストユーザー2","email":"test2@example.com","postal_code":"2345678","address":"大阪府大阪市2-4"}} 
+[2025-01-29 09:34:24] local.INFO: Middleware passed successfully {"user_id":2} 
+[2025-01-29 09:34:24] local.INFO: Like Count: {"likeCount":0} 
+[2025-01-29 09:34:24] local.INFO: Liked State: {"liked":false} 
+[2025-01-29 09:34:34] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"item.show","user_authenticated":true,"user":{"id":2,"name":"テストユーザー2","email":"test2@example.com","postal_code":"2345678","address":"大阪府大阪市2-4"}} 
+[2025-01-29 09:34:34] local.INFO: Middleware passed successfully {"user_id":2} 
+[2025-01-29 09:34:59] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"item.comment","user_authenticated":true,"user":{"id":2,"name":"テストユーザー2","email":"test2@example.com","postal_code":"2345678","address":"大阪府大阪市2-4"}} 
+[2025-01-29 09:34:59] local.INFO: Middleware passed successfully {"user_id":2} 
+[2025-01-29 09:35:11] local.INFO: Middleware started: RedirectIfProfileIncomplete {"route_name":"item.comment","user_authenticated":true,"user":{"id":2,"name":"テストユーザー2","email":"test2@example.com","postal_code":"2345678","address":"大阪府大阪市2-4"}} 
+[2025-01-29 09:35:11] local.INFO: Middleware passed successfully {"user_id":2} 

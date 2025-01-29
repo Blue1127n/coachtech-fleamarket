@@ -96,7 +96,7 @@
         <form id="comment-form" action="<?php echo e(route('item.comment', ['item_id' => $item->id])); ?>" method="POST">
             <?php echo csrf_field(); ?>
             <p>商品へのコメント</p>
-            <textarea name="content" id="comment-content" required><?php echo e(old('content')); ?></textarea>
+            <textarea name="content" id="comment-content"><?php echo e(old('content')); ?></textarea>
             <?php if($errors->has('content')): ?>
         <p class="error-message" style="color: red;"><?php echo e($errors->first('content')); ?></p>
     <?php endif; ?>
@@ -152,7 +152,7 @@
         commentForm.addEventListener('submit', function (event) {
             event.preventDefault();
 
-            // **未入力チェック**
+            // **未入力チェック（ここでバリデーションを行う）**
             if (!commentContent.value.trim()) {
                 displayErrorMessage('コメントを入力してください');
                 return;
@@ -171,7 +171,7 @@
             .then(response => {
                 if (response.status === 401) {
                     return response.json().then(data => {
-                        window.location.href = data.redirect; // 未ログインならログイン画面へ遷移
+                        window.location.href = data.redirect; 
                     });
                 }
                 if (response.status === 422) {
