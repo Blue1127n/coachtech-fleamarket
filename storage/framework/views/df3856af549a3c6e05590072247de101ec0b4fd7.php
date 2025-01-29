@@ -31,6 +31,8 @@
         </div>
         <div class="shipping-address">
             <h2>配送先</h2>
+            <div class="shipping-content">
+            <div class="shipping-info">
             <?php if(auth()->check()): ?>
                 <p>〒 <?php echo e(auth()->user()->postal_code ?? '未登録'); ?></p>
                 <p><?php echo e(auth()->user()->address ?? '未登録'); ?></p>
@@ -38,7 +40,9 @@
             <?php else: ?>
                 <p>配送先情報がありません。</p>
             <?php endif; ?>
-            <a href="<?php echo e(route('item.changeAddress', ['item_id' => $item->id])); ?>" class="change-address-link">変更する</a>
+            </div>
+                <a href="<?php echo e(route('item.changeAddress', ['item_id' => $item->id])); ?>" class="change-address-link">変更する</a>
+            </div>
         </div>
     </div>
     <div class="summary">

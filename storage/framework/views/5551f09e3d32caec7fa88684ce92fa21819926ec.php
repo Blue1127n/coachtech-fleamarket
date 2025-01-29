@@ -143,7 +143,6 @@
                     document.getElementById('like-count').textContent = data.likeCount;
                 }
             })
-            .catch(error => console.error('いいね処理エラー:', error));
         });
     }
 
@@ -205,8 +204,6 @@
                 }
             })
             .catch(errors => {
-                console.error('バリデーションエラー:', errors);
-
                 let errorMessage = 'コメントの投稿に失敗しました';
                 if (errors.content) {
                     errorMessage = errors.content[0];

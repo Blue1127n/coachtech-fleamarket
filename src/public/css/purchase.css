@@ -69,7 +69,7 @@ body {
 }
 
 .payment-method {
-    margin-top: 50px;
+    margin-top: 40px;
     color: rgba(0, 0, 0, 1);
     border-bottom: 1px solid rgba(0, 0, 0, 1);
 }
@@ -79,6 +79,7 @@ body {
     font-weight: 700;
     line-height: 24.2px;
     margin-bottom: 30px;
+    margin-left: 20px;
 }
 
 .payment-select {
@@ -91,11 +92,12 @@ body {
     text-align: left;
     border: 1px solid rgba(95, 95, 95, 1);
     color: rgba(95, 95, 95, 1);
-    margin-left: 60px;
+    margin-left: 80px;
     margin-bottom: 50px;
 }
 
 .shipping-address {
+    display: block;
     margin-top: 30px;
     color: rgba(0, 0, 0, 1);
 }
@@ -105,21 +107,40 @@ body {
     font-weight: 700;
     line-height: 24.2px;
     text-align: left;
-    margin-bottom: 20px;
+    margin-left: 20px;
+    margin-bottom: 10px;
 }
 
-.shipping-address p {
-    margin-left: 50px;
+.shipping-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.shipping-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.shipping-info p {
+    margin-left: 60px;
     font-size: 20px;
     font-weight: 600;
     line-height: 24.2px;
     text-align: left;
+    margin-bottom: 5px;
 }
 
 .change-address-link {
-    color: #007bff;
+    white-space: nowrap;
+    color: rgba(0, 115, 204, 1);
     text-decoration: none;
-    font-size: 14px;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 24.2px;
+    text-align: left;
+    margin-right: 60px;
+    margin-bottom: 220px;
 }
 
 .change-address-link:hover {
