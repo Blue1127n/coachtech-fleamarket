@@ -173,14 +173,46 @@ class ItemController extends Controller
 }
 
 
-
-    public function purchase($item_id)
+        public function purchase(Request $request, $item_id)
     {
         // 商品を取得
         $item = Item::findOrFail($item_id);
         $user = auth()->user();
 
-        // ロジックを書く (例: 購入画面を表示する、購入確認処理を行うなど)
+        // セッションに選択された支払い方法を保存（リダイレクトせずに処理する）
+        if ($request->has('payment_method')) {
+            session(['selected_payment_method' => $request->payment_method]);
+        }
+
+        // そのままビューを返す（リダイレクトしない）
         return view('item.purchase', compact('item', 'user'));
     }
+
+    public function changeAddress($item_id)
+{
+    $item = Item::findOrFail($item_id);
+    $user = auth()->user();
+
+    return view('item.address_change', compact('item', 'user'));
+}
+
+    public function updateAddress(Request $request, $item_id)
+{
+    $request->validate([
+        'postal_code' => 'required|string|max:10',
+        'address' => 'required|string|max:255',
+        'building' => 'nullable|string|max:255',
+    ]);
+
+    $user = auth()->user();
+    $user->update([
+        'postal_code' => $request->postal_code,
+        'address' => $request->address,
+        'building' => $request->building,
+    ]);
+
+    return redirect()->route('item.purchase', ['item_id' => $item_id])->with('success', '住所が更新されました');
+}
+
+
 }

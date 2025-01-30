@@ -56,6 +56,7 @@ Route::post('/item/{item_id}/like', [ItemController::class, 'like'])->middleware
 Route::post('/item/{item_id}/comment', [ItemController::class, 'comment'])->middleware('auth')->name('item.comment');// コメントのルート
 Route::get('/purchase/{item_id}', [ItemController::class, 'purchase'])->name('item.purchase'); // 商品購入
 Route::get('/purchase/address/{item_id}', [ItemController::class, 'changeAddress'])->name('item.changeAddress'); // 住所変更
+Route::post('/purchase/address/{item_id}', [ItemController::class, 'updateAddress'])->name('item.updateAddress');
 Route::get('/sell', [ItemController::class, 'create'])->name('item.create'); // 商品出品
 
 // プロフィール関連

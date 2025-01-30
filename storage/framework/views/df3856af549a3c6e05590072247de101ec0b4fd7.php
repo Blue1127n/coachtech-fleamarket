@@ -22,7 +22,7 @@
             <h2>支払い方法</h2>
             <form action="<?php echo e(route('item.purchase', ['item_id' => $item->id])); ?>" method="POST">
                 <?php echo csrf_field(); ?>
-                <select name="payment_method" id="payment_method" class="payment-select">
+                <select name="payment_method" id="payment_method" class="payment-select" style="background-image: url('<?php echo e(asset('storage/items/triangle.svg')); ?>');">
                     <option value="" class="default-option" disabled selected hidden>選択してください</option>
                     <option value="コンビニ払い" class="convenience-option">コンビニ払い</option>
                     <option value="カード払い" class="card-option">カード払い</option>
@@ -52,7 +52,10 @@
             <table class="summary-table">
                 <tr>
                     <td>商品代金</td>
-                    <td>¥ <?php echo e(number_format($item->price)); ?></td>
+                    <td class="price">
+                        <span class="price-symbol">¥</span>
+                        <span class="price-value"><?php echo e(number_format($item->price)); ?></span>
+                    </td>
                 </tr>
                 <tr>
                     <td>支払い方法</td>
@@ -71,6 +74,7 @@
 <script>
     document.addEventListener("DOMContentLoaded", function () {
     const select = document.getElementById("payment_method");
+    const selectedMethod = document.getElementById("selected-method");
 
     select.addEventListener("change", function () {
         // 選択されたオプションに✓をつける（プルダウンを開いた時のみ）
@@ -88,9 +92,21 @@
                 option.textContent = option.value;
             }
         }, 100);
-    });
-});
 
+        // **支払い方法を即時反映**
+        selectedMethod.textContent = select.value;
+
+        // **ローカルストレージを使って支払い方法を保存**
+        localStorage.setItem('selectedPaymentMethod', select.value);
+        });
+
+        // **ページをリロードしても選択した支払い方法を復元**
+        const savedPaymentMethod = localStorage.getItem('selectedPaymentMethod');
+        if (savedPaymentMethod) {
+            select.value = savedPaymentMethod;
+            selectedMethod.textContent = savedPaymentMethod;
+        }
+    });
 </script>
 <?php $__env->stopPush(); ?>
 

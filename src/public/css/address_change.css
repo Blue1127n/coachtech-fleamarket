@@ -1,0 +1,54 @@
+/* ページ全体のレイアウト */
+.address-change-container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    text-align: center;
+}
+
+/* タイトル */
+.page-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 30px;
+}
+
+/* 入力フォーム全体 */
+.form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+/* ラベル */
+.form-group label {
+    display: block;
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+/* 入力フィールド */
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* 更新ボタン */
+.update-btn {
+    width: 100%;
+    background-color: #ff5a5a;
+    color: white;
+    padding: 12px;
+    font-size: 18px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.update-btn:hover {
+    background-color: #ff3a3a;
+}
