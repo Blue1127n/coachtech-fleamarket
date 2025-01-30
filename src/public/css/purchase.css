@@ -17,6 +17,7 @@ body {
 
 .purchase-details {
     flex: 2;
+    max-width: 900px;
 }
 
 .item-info {
@@ -86,20 +87,47 @@ body {
     width: 265px;
     height: 31px;
     border-radius: 4px;
+    text-align: left;
+    border: 1px solid rgba(95, 95, 95, 1);
+    margin-left: 80px;
+    margin-bottom: 50px;
+    padding-left: 10px;
+    cursor: pointer;
+}
+
+.default-option {
     font-size: 16px;
     font-weight: 700;
     line-height: 19.36px;
-    text-align: left;
-    border: 1px solid rgba(95, 95, 95, 1);
     color: rgba(95, 95, 95, 1);
-    margin-left: 80px;
-    margin-bottom: 50px;
+}
+
+.payment-select option {
+    background: rgba(99, 103, 105, 1);
+    border: 1.5px solid rgba(177, 177, 177, 1);
+    padding-left: 25px;
+}
+
+.payment-select:focus {
+    border-color: #007bff;
+}
+
+.payment-select option:hover {
+    content: "✓ ";
+}
+
+.convenience-option,.card-option {
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 14.52px;
+    color: rgba(234, 234, 234, 1);
 }
 
 .shipping-address {
     display: block;
     margin-top: 30px;
     color: rgba(0, 0, 0, 1);
+    border-bottom: 1px solid rgba(0, 0, 0, 1);
 }
 
 .shipping-address h2 {
@@ -114,7 +142,7 @@ body {
 .shipping-content {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
 }
 
 .shipping-info {
@@ -128,7 +156,6 @@ body {
     font-weight: 600;
     line-height: 24.2px;
     text-align: left;
-    margin-bottom: 5px;
 }
 
 .change-address-link {
@@ -140,25 +167,46 @@ body {
     line-height: 24.2px;
     text-align: left;
     margin-right: 60px;
-    margin-bottom: 220px;
+    margin-bottom: 0;
+    margin-top: -20px;
 }
 
 .change-address-link:hover {
     text-decoration: underline;
 }
 
-.summary {
-    flex: 1;
-    background: #fff;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    padding: 20px;
+.summary-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 612px;
 }
 
-.summary-box {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 10px;
+.summary {
+    flex: 1;
+    width: 100%;
+    background: #f9f9f9;
+    border: 1px solid rgba(0, 0, 0, 1);
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.summary-table {
+    width: 440px;
+    gap: 0px;
+    border-collapse: collapse;
+}
+
+
+
+.summary-table td {
+    height: 115px;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+.summary-table tr:last-child td {
+    border-bottom: none;
 }
 
 .purchase-summary-btn {
@@ -174,3 +222,4 @@ body {
 .purchase-summary-btn:hover {
     background-color: #d00;
 }
+
