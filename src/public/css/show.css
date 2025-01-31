@@ -174,5 +174,28 @@ body {
     margin: 0;
 }
 
+.sold-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: rgba(255, 0, 0, 1);
+    color: rgba(255, 255, 255, 1);
+    padding: 5px 10px;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 4px;
+}
 
+.product-image {
+    position: relative; /* SOLDバッジを画像内で適切に配置する */
+    display: block; /* inline-block ではなく block にする */
+    width: 100%; /* 画像が親要素の幅いっぱいになるように */
+    height: auto; /* 高さを自動調整 */
+}
 
+.product-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* 画像のアスペクト比を維持しながら親要素にフィット */
+    border-radius: 4px;
+}

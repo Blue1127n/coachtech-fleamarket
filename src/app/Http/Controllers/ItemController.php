@@ -173,7 +173,6 @@ class ItemController extends Controller
     ]);
 }
 
-
         public function purchase(Request $request, $item_id)
     {
         // 商品を取得
@@ -203,15 +202,66 @@ class ItemController extends Controller
     return view('item.address_change', compact('item', 'user', 'postalCode'));
 }
 
-    public function updateAddress(AddressChangeRequest $request, $item_id)
+public function updateAddress(AddressChangeRequest $request, $item_id)
 {
     $user = auth()->user();
-    $user->update([
-        'postal_code' => $request->postal_code,
-        'address' => $request->address,
-        'building' => $request->building,
+
+    // **購入情報（transactions テーブル）を取得 or 作成**
+    $transaction = \App\Models\Transaction::firstOrCreate(
+        ['item_id' => $item_id, 'buyer_id' => $user->id], // 条件（既にレコードがあれば取得、なければ作成）
+        [
+            'status_id' => 1, // 例: "購入処理中"
+            'payment_method' => '未設定',// 変更済みのテーブルに合わせる
+            'shipping_postal_code' => $request->postal_code,
+            'shipping_address' => $request->address,
+            'shipping_building' => $request->filled('building') ? $request->building : null, // 空の場合は `null`
+        ]
+    );
+
+    // すでに `transactions` にデータがある場合は更新
+    $transaction->update([
+        'shipping_postal_code' => $request->postal_code,
+        'shipping_address' => $request->address,
+        'shipping_building' => $request->filled('building') ? $request->building : null, // `filled` を使ってチェック
     ]);
 
     return redirect()->route('item.purchase', ['item_id' => $item_id])->with('success', '住所が更新されました');
 }
+
+public function confirmPurchase(Request $request, $item_id)
+{
+    $user = auth()->user();
+    $item = Item::findOrFail($item_id);
+
+    // すでに売り切れている場合はエラーを返す
+    if ($item->status_id == 5) { // 5 = 売り切れ
+        return redirect()->route('item.purchase', ['item_id' => $item_id])
+            ->with('error', 'この商品はすでに購入されています。');
+    }
+
+    // 取引情報を取得、なければ作成
+    $transaction = \App\Models\Transaction::firstOrCreate(
+        ['item_id' => $item_id, 'buyer_id' => $user->id],
+        [
+            'status_id' => 1, // 1 = 購入処理中
+            'payment_method' => $request->payment_method,
+            'shipping_postal_code' => $user->postal_code,
+            'shipping_address' => $user->address,
+            'shipping_building' => $user->building,
+        ]
+    );
+
+    // すでに `transactions` にデータがある場合は支払い方法とステータスを更新
+    $transaction->update([
+        'payment_method' => $request->payment_method,
+        'status_id' => 2, // 2 = 購入完了
+    ]);
+
+    // 商品の状態を「売り切れ」に更新
+    $item->update(['status_id' => 5]); // 5 = 売り切れ
+
+    return redirect()->route('products.index')
+        ->with('success', '購入が確定しました');
+}
+
 }

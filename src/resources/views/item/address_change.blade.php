@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('title', '住所の変更')
+@section('title', '送付先住所の変更')
 
 @push('styles')
 <link rel="stylesheet" href="{{ asset('css/address_change.css') }}">

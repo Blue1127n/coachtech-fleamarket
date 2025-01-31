@@ -57,6 +57,8 @@ Route::post('/item/{item_id}/comment', [ItemController::class, 'comment'])->midd
 Route::get('/purchase/{item_id}', [ItemController::class, 'purchase'])->name('item.purchase'); // 商品購入
 Route::get('/purchase/address/{item_id}', [ItemController::class, 'changeAddress'])->name('item.changeAddress'); // 住所変更
 Route::post('/purchase/address/{item_id}', [ItemController::class, 'updateAddress'])->name('item.updateAddress');
+Route::post('/purchase/{item_id}/confirm', [ItemController::class, 'confirmPurchase'])->name('item.confirmPurchase');
+Route::get('/profile/purchases', [UserProfileController::class, 'purchasedItems'])->name('profile.purchases');
 Route::get('/sell', [ItemController::class, 'create'])->name('item.create'); // 商品出品
 
 // プロフィール関連

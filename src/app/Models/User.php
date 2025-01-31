@@ -103,5 +103,12 @@ class User extends Authenticatable implements MustVerifyEmail
         }
     );
 }
+
+public function purchasedItems()
+{
+    return $this->hasManyThrough(Item::class, Transaction::class, 'buyer_id', 'id', 'id', 'item_id')
+    ->where('transactions.status_id', 2) // 購入完了
+    ->with('status'); // status_id を取得
+}
 }
 

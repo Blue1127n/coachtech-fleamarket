@@ -18,7 +18,7 @@
         </div>
         <div class="profile-btn">
             <a href="{{ route('mypage.profile') }}" class="btn">プロフィールを編集</a>
-            </div>
+        </div>
     </div>
 
     <div class="tabs">
@@ -30,12 +30,17 @@
         @if($items->isNotEmpty())
             @foreach($items as $item)
                 <div class="item">
-                    <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->name }}">
+                    <div class="product-image">
+                        <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->name }}">
+                        @if($item->status_id == 5) <!-- 5 = 売り切れ -->
+                            <div class="sold-badge">SOLD</div>
+                        @endif
+                    </div>
                     <p>{{ $item->name }}</p>
                 </div>
             @endforeach
         @else
-            <p>表示する商品がありません</p>
+            <p>{{ $page === 'sell' ? '出品した商品がありません' : '購入した商品がありません' }}</p>
         @endif
     </div>
 </div>

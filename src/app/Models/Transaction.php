@@ -14,7 +14,9 @@ class Transaction extends Model
         'buyer_id',
         'status_id',
         'payment_method',
+        'shipping_postal_code',
         'shipping_address',
+        'shipping_building',
     ];
 
     public function item()

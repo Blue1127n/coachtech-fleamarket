@@ -19,15 +19,19 @@ class TransactionsTableSeeder extends Seeder
                 'item_id' => 1,
                 'buyer_id' => 1,
                 'status_id' => 4,
-                'payment_method' => 'Credit Card',
-                'shipping_address' => '123 Test St, Tokyo',
+                'payment_method' => 'カード支払い',
+                'shipping_postal_code' => '532-1122',
+                'shipping_address' => '大阪府大阪市東成区中央1-7',
+                'shipping_building' => '太陽マンション201',
             ],
             [
                 'item_id' => 2,
                 'buyer_id' => 2,
                 'status_id' => 5,
-                'payment_method' => 'PayPal',
-                'shipping_address' => '456 Another St, Osaka',
+                'payment_method' => 'コンビニ払い',
+                'shipping_postal_code' => '100-0001',
+                'shipping_address' => '東京都千代田区千代田1-1',
+                'shipping_building' => NULL,
             ],
         ];
 

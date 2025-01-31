@@ -1,120 +1,118 @@
-@extends('layouts.main')
+<?php $__env->startSection('title', $item->name); ?>
 
-@section('title', $item->name)
+<?php $__env->startPush('styles'); ?>
+<link rel="stylesheet" href="<?php echo e(asset('css/detail.css')); ?>">
+<?php $__env->stopPush(); ?>
 
-@push('styles')
-<link rel="stylesheet" href="{{ asset('css/detail.css') }}">
-@endpush
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 <div class="item-detail-container">
     <!-- 商品画像 -->
     <div class="item-detail-left">
         <div class="item-image">
-            <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->name }}">
+            <img src="<?php echo e(asset('storage/' . $item->image)); ?>" alt="<?php echo e($item->name); ?>">
         </div>
     </div>
 
     <!-- 商品詳細 -->
     <div class="item-detail-right">
         <div class="item-detail">
-            <h1>{{ $item->name }}</h1>
-            <p class="item-brand">ブランド: {{ $item->brand }}</p>
+            <h1><?php echo e($item->name); ?></h1>
+            <p class="item-brand">ブランド: <?php echo e($item->brand); ?></p>
             <p class="item-price">
                 <span class="item-price-symbol">¥</span>
-                <span class="item-price-value">{{ number_format($item->price) }}</span>
+                <span class="item-price-value"><?php echo e(number_format($item->price)); ?></span>
                 <span class="item-price-tax">（税込）</span>
             </p>
 
             <!-- いいねボタン -->
             <div class="item-actions">
-                @if(auth()->check())
+                <?php if(auth()->check()): ?>
                 <!-- ログイン済みのユーザー -->
-                <form id="like-form" action="{{ route('item.like', ['item_id' => $item->id]) }}" method="POST">
-                        @csrf
+                <form id="like-form" action="<?php echo e(route('item.like', ['item_id' => $item->id])); ?>" method="POST">
+                        <?php echo csrf_field(); ?>
                         <div class="like-section">
                             <button type="submit" class="like-button">
-                                <img src="{{ asset('storage/items/star-icon.png') }}" alt="いいねアイコン" class="like-icon {{ $isLiked ? 'liked' : '' }}">
+                                <img src="<?php echo e(asset('storage/items/star-icon.png')); ?>" alt="いいねアイコン" class="like-icon <?php echo e($isLiked ? 'liked' : ''); ?>">
                             </button>
-                            <span id="like-count">{{ $item->likes->count() }}</span>
+                            <span id="like-count"><?php echo e($item->likes->count()); ?></span>
                         </div>
                     </form>
-                @else
+                <?php else: ?>
                     <!-- 未認証ユーザー -->
-                    <a href="{{ route('login') }}" class="like-section">
-                        <img src="{{ asset('storage/items/star-icon.png') }}" alt="いいねアイコン" class="like-icon">
-                        <span id="like-count">{{ $item->likes->count() }}</span>
+                    <a href="<?php echo e(route('login')); ?>" class="like-section">
+                        <img src="<?php echo e(asset('storage/items/star-icon.png')); ?>" alt="いいねアイコン" class="like-icon">
+                        <span id="like-count"><?php echo e($item->likes->count()); ?></span>
                     </a>
-                @endif
+                <?php endif; ?>
 
                 <!-- コメント数アイコン -->
                 <div class="comment-section">
-                    <img id="comment-icon" src="{{ asset('storage/items/ふきだしのアイコン.png') }}" alt="コメントアイコン">
-                    <span id="comment-count">{{ $item->comments()->count() }}</span>
+                    <img id="comment-icon" src="<?php echo e(asset('storage/items/ふきだしのアイコン.png')); ?>" alt="コメントアイコン">
+                    <span id="comment-count"><?php echo e($item->comments()->count()); ?></span>
                 </div>
             </div>
 
             <!-- 購入ボタン -->
-            @if(auth()->check())
-                <a href="{{ route('item.purchase', ['item_id' => $item->id]) }}" class="purchase-btn">購入手続きへ</a>
-            @else
-                <a href="{{ route('login') }}" class="purchase-btn">購入手続きへ</a>
-            @endif
+            <?php if(auth()->check()): ?>
+                <a href="<?php echo e(route('item.purchase', ['item_id' => $item->id])); ?>" class="purchase-btn">購入手続きへ</a>
+            <?php else: ?>
+                <a href="<?php echo e(route('login')); ?>" class="purchase-btn">購入手続きへ</a>
+            <?php endif; ?>
         </div>
 
         <!-- 商品説明 -->
         <div class="item-description">
             <h2>商品説明</h2>
-            <p>{{ $item->description }}</p>
+            <p><?php echo e($item->description); ?></p>
         </div>
 
         <!-- 商品情報 -->
         <div class="item-info">
             <h2>商品情報</h2>
             <p class="categories-section">カテゴリ
-                @foreach($item->categories as $category)
-                    <span class="category-badge">{{ $category->name }}</span>
-                @endforeach
+                <?php $__currentLoopData = $item->categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <span class="category-badge"><?php echo e($category->name); ?></span>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             </p>
             <p class="condition-section">商品の状態
-                <span class="condition-text">{{ $item->condition->condition ?? '未設定' }}</span>
+                <span class="condition-text"><?php echo e($item->condition->condition ?? '未設定'); ?></span>
             </p>
         </div>
 
         <!-- コメントセクション -->
         <div class="comments-section">
-            <h2>コメント ({{ $item->comments()->count() }})</h2>
+            <h2>コメント (<?php echo e($item->comments()->count()); ?>)</h2>
             <ul class="comments-list">
-    @foreach ($item->comments as $comment)
+    <?php $__currentLoopData = $item->comments; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $comment): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
         <li class="comment">
-            @if ($comment->user->profile_image_url)
-                <img src="{{ $comment->user->profile_image_url }}" alt="{{ $comment->user->name }}" class="user-profile-image">
-            @else
+            <?php if($comment->user->profile_image_url): ?>
+                <img src="<?php echo e($comment->user->profile_image_url); ?>" alt="<?php echo e($comment->user->name); ?>" class="user-profile-image">
+            <?php else: ?>
                 <div class="user-profile-placeholder"></div>
-            @endif
-            <strong>{{ $comment->user->name }}</strong>
-            <p>{{ $comment->content }}</p>
+            <?php endif; ?>
+            <strong><?php echo e($comment->user->name); ?></strong>
+            <p><?php echo e($comment->content); ?></p>
         </li>
-    @endforeach
+    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 </ul>
 
         <!-- コメント投稿フォーム -->
-        <form id="comment-form" action="{{ route('item.comment', ['item_id' => $item->id]) }}" method="POST">
-            @csrf
+        <form id="comment-form" action="<?php echo e(route('item.comment', ['item_id' => $item->id])); ?>" method="POST">
+            <?php echo csrf_field(); ?>
             <p>商品へのコメント</p>
-            <textarea name="content" id="comment-content">{{ old('content') }}</textarea>
-            @if ($errors->has('content'))
-        <p class="error-message" style="color: red;">{{ $errors->first('content') }}</p>
-    @endif
+            <textarea name="content" id="comment-content"><?php echo e(old('content')); ?></textarea>
+            <?php if($errors->has('content')): ?>
+        <p class="error-message" style="color: red;"><?php echo e($errors->first('content')); ?></p>
+    <?php endif; ?>
 
             <button type="submit" class="comment-submit-btn">コメントを送信する</button>
         </form>
     </div>
 </div>
 </div>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@push('scripts')
+<?php $__env->startPush('scripts'); ?>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
     const likeForm = document.getElementById('like-form');
@@ -232,4 +230,6 @@
     }
 });
 </script>
-@endpush
+<?php $__env->stopPush(); ?>
+
+<?php echo $__env->make('layouts.main', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /var/www/resources/views/item/detail.blade.php ENDPATH**/ ?>

@@ -112,10 +112,12 @@ class UserProfileController extends Controller
 
     // 購入した商品一覧
     public function purchasedItems()
-    {
-        $items = Auth::user()->transactions()->with('item')->get(); // ユーザーの購入した商品を取得
-        return view('profile.purchased', compact('items')); // 購入商品一覧ビュー
-    }
+{
+    $user = Auth::user();
+    $items = $user->purchasedItems()->get();
+
+    return view('profile.purchased', compact('items'));
+}
 
     // 出品した商品一覧
     public function soldItems()

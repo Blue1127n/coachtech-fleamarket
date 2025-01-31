@@ -76,6 +76,6 @@ body {
 
 .error-message {
     color: rgba(255, 85, 85, 1);
-    font-size: 14px;
-    margin-top: 5px;
+    font-size: 16px;
+    margin-top: 2px;
 }

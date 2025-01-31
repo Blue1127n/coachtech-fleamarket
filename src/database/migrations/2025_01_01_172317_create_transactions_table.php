@@ -18,8 +18,10 @@ class CreateTransactionsTable extends Migration
             $table->unsignedBigInteger('item_id')->unique();
             $table->unsignedBigInteger('buyer_id');
             $table->unsignedBigInteger('status_id');
-            $table->string('payment_method', 50);
+            $table->string('payment_method', 50)->nullable();
+            $table->string('shipping_postal_code', 8);
             $table->text('shipping_address');
+            $table->string('shipping_building')->nullable();
             $table->timestamps();
 
             $table->foreign('buyer_id')->references('id')->on('users')->onDelete('cascade');
