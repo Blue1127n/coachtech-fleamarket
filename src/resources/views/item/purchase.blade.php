@@ -37,7 +37,7 @@
             <div class="shipping-content">
                 <div class="shipping-info">
                     @if(auth()->check())
-                        <p>〒 {{ auth()->user()->postal_code ?? '未登録' }}</p>
+                        <p>〒 {{ $postalCode ?? '未登録' }}</p>
                         <p>{{ auth()->user()->address ?? '未登録' }}</p>
                         <p>{{ auth()->user()->building ?? '未登録' }}</p>
                     @else

@@ -1,54 +1,81 @@
-/* ページ全体のレイアウト */
+body {
+    margin: 0;
+    padding: 0;
+    background: rgba(255, 255, 255, 1);
+    max-width: 1512px;
+}
+
 .address-change-container {
-    max-width: 600px;
-    margin: 50px auto;
+    max-width: 680px;
     padding: 20px;
+    margin: 0 auto;
+    text-align: center;
+    background: rgba(255, 255, 255, 1);
+    font-family: Inter;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+}
+
+.page-title {
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 43.57px;
+    margin-bottom: 70px;
     text-align: center;
 }
 
-/* タイトル */
-.page-title {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 30px;
-}
-
-/* 入力フォーム全体 */
 .form-group {
-    margin-bottom: 20px;
-    text-align: left;
+    margin-bottom: 60px;
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 43.57px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 }
 
-/* ラベル */
 .form-group label {
-    display: block;
-    font-size: 16px;
-    font-weight: bold;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 29.05px;
     margin-bottom: 5px;
+    color: rgba(0, 0, 0, 1);
 }
 
-/* 入力フィールド */
 .form-group input {
-    width: 100%;
+    width: 680px;
+    height: 45px;
+    gap: 0px;
+    border-radius: 4px;
     padding: 10px;
     font-size: 16px;
-    border: 1px solid #ccc;
+    border: 1px solid rgba(95, 95, 95, 1);
     border-radius: 5px;
 }
 
-/* 更新ボタン */
 .update-btn {
-    width: 100%;
-    background-color: #ff5a5a;
-    color: white;
+    background-color: rgba(255, 85, 85, 1);
+    color: rgba(255, 255, 255, 1);
     padding: 12px;
     font-size: 18px;
     font-weight: bold;
     border: none;
+    width: 680px;
+    height: 60px;
     border-radius: 5px;
     cursor: pointer;
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 31.47px;
+    text-align: center;
 }
 
 .update-btn:hover {
-    background-color: #ff3a3a;
+    background-color: rgba(255, 85, 85, 1);
+}
+
+.error-message {
+    color: rgba(255, 85, 85, 1);
+    font-size: 14px;
+    margin-top: 5px;
 }

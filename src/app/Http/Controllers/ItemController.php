@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\CommentRequest;
+use App\Http\Requests\AddressChangeRequest;
 use App\Models\Item;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
@@ -184,8 +185,11 @@ class ItemController extends Controller
             session(['selected_payment_method' => $request->payment_method]);
         }
 
+        // 郵便番号をハイフン付きに整形
+        $postalCode = $user->postal_code ? preg_replace('/(\d{3})(\d{4})/', '$1-$2', $user->postal_code) : '';
+
         // そのままビューを返す（リダイレクトしない）
-        return view('item.purchase', compact('item', 'user'));
+        return view('item.purchase', compact('item', 'user', 'postalCode'));
     }
 
     public function changeAddress($item_id)
@@ -193,17 +197,14 @@ class ItemController extends Controller
     $item = Item::findOrFail($item_id);
     $user = auth()->user();
 
-    return view('item.address_change', compact('item', 'user'));
+    // 郵便番号をハイフン付きで整形
+    $postalCode = $user->postal_code ? preg_replace('/(\d{3})(\d{4})/', '$1-$2', $user->postal_code) : '';
+
+    return view('item.address_change', compact('item', 'user', 'postalCode'));
 }
 
-    public function updateAddress(Request $request, $item_id)
+    public function updateAddress(AddressChangeRequest $request, $item_id)
 {
-    $request->validate([
-        'postal_code' => 'required|string|max:10',
-        'address' => 'required|string|max:255',
-        'building' => 'nullable|string|max:255',
-    ]);
-
     $user = auth()->user();
     $user->update([
         'postal_code' => $request->postal_code,
@@ -213,6 +214,4 @@ class ItemController extends Controller
 
     return redirect()->route('item.purchase', ['item_id' => $item_id])->with('success', '住所が更新されました');
 }
-
-
 }
