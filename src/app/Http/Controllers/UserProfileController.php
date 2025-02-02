@@ -14,23 +14,15 @@ class UserProfileController extends Controller
 {
     // プロフィール画面を表示
     public function show(Request $request)
-    {
-        $user = Auth::user();
-        $page = $request->get('page', 'sell'); // デフォルトは出品した商品
-        $items = $page === 'sell' ? $user->items : $user->purchasedItems;
+{
+    $user = Auth::user();
+    $page = $request->get('page', 'sell'); // デフォルトは出品した商品
 
-        // items が null の場合は空のコレクションを返す
-        $items = $items ?? collect();
+    // 購入した商品か出品した商品を取得
+    $items = $page === 'sell' ? $user->items : $user->purchasedItems;
 
-        \Log::info('Profile items data', [
-            'user' => $user->id,
-            'page' => $page,
-            'items_count' => $items->count(),
-        ]);
-
-
-        return view('profile.show', compact('user', 'items', 'page'));
-    }
+    return view('profile.show', compact('user', 'items', 'page'));
+}
 
     // プロフィール編集画面（初回ログイン時含む）を表示
     public function edit()

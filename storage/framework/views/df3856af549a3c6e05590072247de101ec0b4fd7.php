@@ -1,44 +1,39 @@
-@extends('layouts.main')
+<?php $__env->startSection('title', '商品購入'); ?>
 
-@section('title', '商品購入')
+<?php $__env->startPush('styles'); ?>
+<link rel="stylesheet" href="<?php echo e(asset('css/purchase.css')); ?>">
+<?php $__env->stopPush(); ?>
 
-@push('styles')
-<link rel="stylesheet" href="{{ asset('css/purchase.css') }}">
-@endpush
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 <div class="purchase-container">
     <div class="purchase-details">
         <div class="item-info">
-            <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->name }}" class="item-image">
+            <img src="<?php echo e(asset('storage/' . $item->image)); ?>" alt="<?php echo e($item->name); ?>" class="item-image">
                 <div class="item-details">
-                    <h1 class="item-name">{{ $item->name }}</h1>
+                    <h1 class="item-name"><?php echo e($item->name); ?></h1>
                     <p class="item-price">
                         <span class="item-price-symbol">¥</span>
-                        <span class="item-price-value">{{ number_format($item->price) }}</span>
+                        <span class="item-price-value"><?php echo e(number_format($item->price)); ?></span>
                     </p>
                 </div>
         </div>
 
         <div class="payment-method">
             <h2>支払い方法</h2>
-            <form action="{{ route('item.purchase', ['item_id' => $item->id]) }}" method="POST">
-                @csrf
-                <select name="payment_method" id="payment_method" class="payment-select" style="background-image: url('{{ asset('storage/items/triangle.svg') }}');">
+            <form action="<?php echo e(route('item.purchase', ['item_id' => $item->id])); ?>" method="POST">
+                <?php echo csrf_field(); ?>
+                <select name="payment_method" id="payment_method" class="payment-select" style="background-image: url('<?php echo e(asset('storage/items/triangle.svg')); ?>');">
                     <option value="" class="default-option" disabled hidden selected>選択してください</option>
                     <option value="コンビニ払い" class="convenience-option">コンビニ払い</option>
                     <option value="カード支払い" class="card-option">カード支払い</option>
                 </select>
-                @error('payment_method')
-                    <p class="error-message">{{ $message }}</p>
-                @enderror
             </form>
         </div>
 
         <div class="shipping-address">
             <h2>配送先</h2>
             <div class="shipping-content">
-                @php
+                <?php
                     // 取引情報を取得（なければ users テーブルのデータを使う）
                     $transaction = \App\Models\Transaction::where('item_id', $item->id)
                                                             ->where('buyer_id', auth()->id())
@@ -47,16 +42,16 @@
                     $postalCode = $transaction->shipping_postal_code ?? auth()->user()->postal_code ?? '未登録';
                     $address = $transaction->shipping_address ?? auth()->user()->address ?? '未登録';
                     $building = $transaction ? $transaction->shipping_building : (auth()->user()->building ?? '未登録');
-                @endphp
+                ?>
 
                 <div class="shipping-info">
-                    <p>〒 {{ preg_replace('/(\d{3})(\d{4})/', '$1-$2', $postalCode) }}</p>
-                    <p>{{ $address }}</p>
-                    @if(!empty($building))
-                        <p>{{ $building }}</p>
-                    @endif
+                    <p>〒 <?php echo e(preg_replace('/(\d{3})(\d{4})/', '$1-$2', $postalCode)); ?></p>
+                    <p><?php echo e($address); ?></p>
+                    <?php if(!empty($building)): ?>
+                        <p><?php echo e($building); ?></p>
+                    <?php endif; ?>
                 </div>
-                <a href="{{ route('item.changeAddress', ['item_id' => $item->id]) }}" class="change-address-link">変更する</a>
+                <a href="<?php echo e(route('item.changeAddress', ['item_id' => $item->id])); ?>" class="change-address-link">変更する</a>
             </div>
         </div>
     </div>
@@ -68,7 +63,7 @@
                     <td>商品代金</td>
                     <td class="price">
                         <span class="price-symbol">¥</span>
-                        <span class="price-value">{{ number_format($item->price) }}</span>
+                        <span class="price-value"><?php echo e(number_format($item->price)); ?></span>
                     </td>
                 </tr>
                 <tr>
@@ -79,16 +74,16 @@
         </div>
 
         <div class="summary-button">
-            <form id="purchase-form" action="{{ route('payment.page', ['item_id' => $item->id]) }}" method="GET">
+            <form id="purchase-form" action="<?php echo e(route('payment.page', ['item_id' => $item->id])); ?>" method="GET">
                 <input type="hidden" name="payment_method" value="" id="selected-payment-method">
                 <button type="submit" class="purchase-summary-btn">購入する</button>
             </form>
         </div>
     </div>
 </div>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@push('scripts')
+<?php $__env->startPush('scripts'); ?>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
     const select = document.getElementById("payment_method");
@@ -128,6 +123,17 @@
             }
         }, 100);
     });
+
+    // **フォーム送信時のバリデーション**
+    purchaseForm.addEventListener("submit", function (event) {
+        if (!selectedPaymentMethod.value) {
+            alert("支払い方法を選択してください");
+            event.preventDefault();
+        }
+    });
 });
+
 </script>
-@endpush
+<?php $__env->stopPush(); ?>
+
+<?php echo $__env->make('layouts.main', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /var/www/resources/views/item/purchase.blade.php ENDPATH**/ ?>

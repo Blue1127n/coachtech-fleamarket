@@ -23,8 +23,6 @@ class AddressRequest extends FormRequest
      */
     public function rules()
     {
-        \Log::info('AddressRequest Validation Rules Triggered', ['data' => $this->all()]);
-
         return [
             'name' => ['required', 'string', 'max:255'],
             'postal_code' => ['required', 'regex:/^\d{3}-\d{4}$/'],
@@ -35,8 +33,6 @@ class AddressRequest extends FormRequest
 
     public function messages()
     {
-        \Log::info('AddressRequest Messages Triggered', ['data' => $this->all()]);
-
         return [
             'name.required' => 'お名前を入力してください',
             'postal_code.required' => '郵便番号を入力してください',
@@ -47,12 +43,10 @@ class AddressRequest extends FormRequest
 
     protected function prepareForValidation()
     {
-        \Log::info('Before prepareForValidation', ['postal_code' => $this->postal_code]);
         if ($this->has('postal_code')) {
             $this->merge([
                 'postal_code' => preg_replace('/^(\d{3})(\d{4})$/', '$1-$2', $this->postal_code),
             ]);
         }
-        \Log::info('After prepareForValidation', ['postal_code' => $this->postal_code]);
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\CommentRequest;
 use App\Http\Requests\AddressChangeRequest;
+use App\Http\Requests\PurchaseRequest;
 use App\Models\Item;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
@@ -173,7 +174,7 @@ class ItemController extends Controller
     ]);
 }
 
-        public function purchase(Request $request, $item_id)
+        public function purchase(PurchaseRequest $request, $item_id)
     {
         // 商品を取得
         $item = Item::findOrFail($item_id);
@@ -222,7 +223,7 @@ public function updateAddress(AddressChangeRequest $request, $item_id)
     $transaction->update([
         'shipping_postal_code' => $request->postal_code,
         'shipping_address' => $request->address,
-        'shipping_building' => $request->filled('building') ? $request->building : null, // `filled` を使ってチェック
+        'shipping_building' => $request->has('building') ? ($request->filled('building') ? $request->building : null) : null, 
     ]);
 
     return redirect()->route('item.purchase', ['item_id' => $item_id])->with('success', '住所が更新されました');

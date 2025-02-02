@@ -61,7 +61,7 @@ h1 {
     padding: 15px;
     border-radius: 5px;
     margin-bottom: 20px;
-    text-align: left;
+    text-align: center;
 }
 
 .shipping-info h3 {
@@ -82,7 +82,7 @@ h1 {
     padding: 15px;
     border-radius: 5px;
     margin-bottom: 20px;
-    text-align: left;
+    text-align: center;
 }
 
 .payment-method h3 {

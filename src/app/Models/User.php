@@ -104,11 +104,17 @@ class User extends Authenticatable implements MustVerifyEmail
     );
 }
 
+// ユーザーが購入した商品を取得
 public function purchasedItems()
 {
-    return $this->hasManyThrough(Item::class, Transaction::class, 'buyer_id', 'id', 'id', 'item_id')
-    ->where('transactions.status_id', 2) // 購入完了
-    ->with('status'); // status_id を取得
+    return $this->hasManyThrough(
+        Item::class,        // 取得するモデル (items テーブル)
+        Transaction::class, // 経由するモデル (transactions テーブル)
+        'buyer_id',         // transactions テーブルの外部キー (users テーブルの id を参照)
+        'id',               // items テーブルの主キー
+        'id',               // users テーブルの主キー
+        'item_id'           // transactions テーブルの items テーブル参照キー
+    )->whereIn('transactions.status_id', [3, 5]); // 取引完了 or 売り切れの商品を取得
 }
 }
 

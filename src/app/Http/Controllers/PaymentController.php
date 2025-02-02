@@ -27,15 +27,17 @@ class PaymentController extends Controller
         // **GETリクエストから支払い方法を取得**
         $payment_method = $request->query('payment_method', '未選択'); // デフォルト値を設定
 
-        // 配送先情報の取得（ユーザーのデフォルト住所 or 取引情報）
+        // `$user` が null でない場合のみ `id` を使う
         $transaction = Transaction::where('item_id', $item_id)
-                                    ->where('buyer_id', $user->id)
-                                    ->first();
+                            ->where('buyer_id', $user->id)
+                            ->orderBy('updated_at', 'desc') // 最新の更新日時を基準に取得
+                            ->first();
 
+        // **postal_code と address は必ず存在する**
         $shipping = [
-            'postal_code' => $transaction->shipping_postal_code ?? $user->postal_code,
-            'address' => $transaction->shipping_address ?? $user->address,
-            'building' => $transaction->shipping_building ?? $user->building,
+            'postal_code' => $transaction ? $transaction->shipping_postal_code : $user->postal_code,
+            'address' => $transaction ? $transaction->shipping_address : $user->address,
+            'building' => $transaction && isset($transaction->shipping_building) ? $transaction->shipping_building : '',
         ];
 
         return view('payment.payment', compact('item', 'shipping', 'payment_method'));
@@ -77,14 +79,16 @@ class PaymentController extends Controller
         // 取引情報を取得 or 作成
         $transaction = Transaction::firstOrCreate(
             ['item_id' => $item->id, 'buyer_id' => $user->id],
-            [
-                'status_id' => 2, // 2 = 取引保留中
-                'payment_method' => $request->input('payment_method'),
-                'shipping_postal_code' => $request->input('shipping_postal_code', $user->postal_code),
-                'shipping_address' => $request->input('shipping_address', $user->address),
-                'shipping_building' => $request->input('shipping_building', $user->building),
-            ]
+            ['status_id' => 2]
         );
+
+        // ここで `payment_method` を更新
+        $transaction->update([
+            'payment_method' => $request->input('payment_method'),
+            'shipping_postal_code' => $request->input('shipping_postal_code', $user->postal_code),
+            'shipping_address' => $request->input('shipping_address', $user->address),
+            'shipping_building' => $request->input('shipping_building', $user->building),
+        ]);
 
         // 支払い方法の取得
         $paymentMethod = $request->input('payment_method');
@@ -97,7 +101,6 @@ class PaymentController extends Controller
                     'currency' => 'jpy',
                     'product_data' => [
                         'name' => $item->name,
-                        'images' => [url('storage/' . $item->image)], // 商品画像
                     ],
                     'unit_amount' => $item->price,
                 ],
@@ -120,14 +123,34 @@ class PaymentController extends Controller
 
     // すでに購入済みの場合はスキップ
     if ($transaction->status_id == 3) { // 3 = 取引完了
-        return redirect()->route('mypage')->with('info', 'この取引はすでに完了しています。');
+        return redirect()->route('mypage')->with('info', 'この取引はすでに完了しています');
     }
 
+    // デバッグ用ログ出力（更新前）
+    \Log::info('Updating transaction status:', [
+        'transaction_id' => $transaction_id, 
+        'old_status' => $transaction->status_id, 
+        'old_payment_method' => $transaction->payment_method
+    ]);
+
+    // `payment_method` がリクエストに存在すれば更新、なければ既存の値を維持
+    $paymentMethod = $request->input('payment_method', $transaction->payment_method);
+
     // ステータスを購入完了に更新
-    $transaction->update(['status_id' => 3]); // 3 = 取引完了
+    $transaction->update([
+        'status_id' => 3,
+        'payment_method' => $paymentMethod
+    ]);
 
     // 商品の状態も売り切れに変更
     $transaction->item->update(['status_id' => 5]); // 5 = 売り切れ
+
+    // デバッグ用ログ出力（更新後）
+    \Log::info('Transaction updated:', [
+        'transaction_id' => $transaction_id, 
+        'new_status' => 3, 
+        'new_payment_method' => $paymentMethod
+    ]);
 
     return redirect()->route('mypage')->with('success', '購入が完了しました！');
 }
