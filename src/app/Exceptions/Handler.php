@@ -28,6 +28,18 @@ class Handler extends ExceptionHandler
     ];
 
     /**
+     * Laravel のエラーログを強化する
+     */
+    public function report(Throwable $exception)
+    {
+        \Log::error("Exception occurred: " . $exception->getMessage(), [
+            'exception' => $exception
+        ]);
+
+        parent::report($exception);
+    }
+
+    /**
      * Register the exception handling callbacks for the application.
      *
      * @return void

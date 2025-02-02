@@ -76,8 +76,7 @@
         </div>
 
         <div class="summary-button">
-            <form id="purchase-form" action="{{ route('item.confirmPurchase', ['item_id' => $item->id]) }}" method="POST">
-                @csrf
+            <form id="purchase-form" action="{{ route('payment.page', ['item_id' => $item->id]) }}" method="GET">
                 <input type="hidden" name="payment_method" value="" id="selected-payment-method">
                 <button type="submit" class="purchase-summary-btn">購入する</button>
             </form>

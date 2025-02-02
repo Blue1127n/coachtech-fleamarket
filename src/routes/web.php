@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\UserProfileController;
+use App\Http\Controllers\PaymentController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 
@@ -57,9 +58,16 @@ Route::post('/item/{item_id}/comment', [ItemController::class, 'comment'])->midd
 Route::get('/purchase/{item_id}', [ItemController::class, 'purchase'])->name('item.purchase'); // 商品購入
 Route::get('/purchase/address/{item_id}', [ItemController::class, 'changeAddress'])->name('item.changeAddress'); // 住所変更
 Route::post('/purchase/address/{item_id}', [ItemController::class, 'updateAddress'])->name('item.updateAddress');
-Route::post('/purchase/{item_id}/confirm', [ItemController::class, 'confirmPurchase'])->name('item.confirmPurchase');
 Route::get('/profile/purchases', [UserProfileController::class, 'purchasedItems'])->name('profile.purchases');
 Route::get('/sell', [ItemController::class, 'create'])->name('item.create'); // 商品出品
+
+// 決済関連 (追加)
+Route::middleware(['auth'])->group(function () {
+Route::get('/payment/{item_id}', [PaymentController::class, 'showPaymentPage'])->name('payment.page'); // 決済ページ表示
+Route::post('/payment/checkout/{item_id}', [PaymentController::class, 'checkout'])->name('payment.checkout'); // 決済処理
+Route::get('/payment/success/{transaction_id}', [PaymentController::class, 'success'])->name('payment.success'); // 成功時
+Route::get('/payment/cancel/{transaction_id}', [PaymentController::class, 'cancel'])->name('payment.cancel'); // キャンセル時
+});
 
 // プロフィール関連
 Route::middleware(['auth', 'verified', 'profile.complete'])->group(function () {

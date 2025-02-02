@@ -228,40 +228,5 @@ public function updateAddress(AddressChangeRequest $request, $item_id)
     return redirect()->route('item.purchase', ['item_id' => $item_id])->with('success', '住所が更新されました');
 }
 
-public function confirmPurchase(Request $request, $item_id)
-{
-    $user = auth()->user();
-    $item = Item::findOrFail($item_id);
-
-    // すでに売り切れている場合はエラーを返す
-    if ($item->status_id == 5) { // 5 = 売り切れ
-        return redirect()->route('item.purchase', ['item_id' => $item_id])
-            ->with('error', 'この商品はすでに購入されています。');
-    }
-
-    // 取引情報を取得、なければ作成
-    $transaction = \App\Models\Transaction::firstOrCreate(
-        ['item_id' => $item_id, 'buyer_id' => $user->id],
-        [
-            'status_id' => 1, // 1 = 購入処理中
-            'payment_method' => $request->payment_method,
-            'shipping_postal_code' => $user->postal_code,
-            'shipping_address' => $user->address,
-            'shipping_building' => $user->building,
-        ]
-    );
-
-    // すでに `transactions` にデータがある場合は支払い方法とステータスを更新
-    $transaction->update([
-        'payment_method' => $request->payment_method,
-        'status_id' => 2, // 2 = 購入完了
-    ]);
-
-    // 商品の状態を「売り切れ」に更新
-    $item->update(['status_id' => 5]); // 5 = 売り切れ
-
-    return redirect()->route('products.index')
-        ->with('success', '購入が確定しました');
-}
 
 }
