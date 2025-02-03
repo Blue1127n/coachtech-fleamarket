@@ -36,7 +36,7 @@ class UsersTableSeeder extends Seeder
                 'email_verified_at' => now(),
                 'password' => Hash::make('password'),
                 'postal_code' => '2345678',
-                'address' => '大阪府大阪市2-4',
+                'address' => '大阪府大阪市中央区2-4',
                 'building' => 'なんばパークス301',
                 'profile_image' => null,
             ],

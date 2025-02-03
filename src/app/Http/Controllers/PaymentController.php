@@ -24,21 +24,22 @@ class PaymentController extends Controller
         $item = Item::findOrFail($item_id);
         $user = Auth::user();
 
-        // **GETリクエストから支払い方法を取得**
-        $payment_method = $request->query('payment_method', '未選択'); // デフォルト値を設定
-
-        // `$user` が null でない場合のみ `id` を使う
+        // **transactions テーブルのデータを取得**
         $transaction = Transaction::where('item_id', $item_id)
                             ->where('buyer_id', $user->id)
                             ->orderBy('updated_at', 'desc') // 最新の更新日時を基準に取得
                             ->first();
 
-        // **postal_code と address は必ず存在する**
+        // **`transactions` のデータを優先する**
         $shipping = [
-            'postal_code' => $transaction ? $transaction->shipping_postal_code : $user->postal_code,
-            'address' => $transaction ? $transaction->shipping_address : $user->address,
-            'building' => $transaction && isset($transaction->shipping_building) ? $transaction->shipping_building : '',
+            'postal_code' => $transaction && !empty($transaction->shipping_postal_code) ? preg_replace('/(\d{3})(\d{4})/', '$1-$2', $transaction->shipping_postal_code) : preg_replace('/(\d{3})(\d{4})/', '$1-$2', $user->postal_code),
+            'address' => $transaction && !empty($transaction->shipping_address) ? $transaction->shipping_address : $user->address,
+            'building' => isset($transaction->shipping_building) ? $transaction->shipping_building : (isset($user->building) ? $user->building : ''),
         ];
+
+        // **GETリクエストから支払い方法を取得**
+        $payment_method = $transaction ? $transaction->payment_method : '未選択';
+
 
         return view('payment.payment', compact('item', 'shipping', 'payment_method'));
     }

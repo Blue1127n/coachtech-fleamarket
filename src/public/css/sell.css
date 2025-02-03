@@ -1,0 +1,61 @@
+.sell-container {
+    width: 50%;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.title {
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.image-label, .category-label, .condition-label, 
+.name-label, .description-label, .price-label {
+    font-size: 16px;
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.image-input, .name-input, .condition-select, 
+.price-input, .description-textarea {
+    width: 100%;
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.category-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.category-option {
+    background-color: #f8f8f8;
+    padding: 5px 10px;
+    border-radius: 10px;
+    font-size: 14px;
+}
+
+.submit-button {
+    width: 100%;
+    background-color: #ff6b6b;
+    color: white;
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.submit-button:hover {
+    background-color: #ff4f4f;
+}

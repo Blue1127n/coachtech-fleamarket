@@ -23,12 +23,15 @@ class PurchaseRequest extends FormRequest
      */
     public function rules()
     {
+        \Log::info('🔍 PurchaseRequest のバリデーション実行', $this->all());
+
+
         return [
-            'payment_method' => ['required', 'string', 'in:コンビニ払い,カード支払い'],
+            'payment_method' => ['required', 'in:コンビニ払い,カード支払い'],
         ];
     }
 
-    public function messages(): array
+    public function messages()
     {
         return [
             'payment_method.required' => '支払い方法を選択してください',

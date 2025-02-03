@@ -55,11 +55,13 @@ Route::get('/mylist', [ItemController::class, 'mylist'])->name('products.mylist'
 Route::get('/item/{item_id}', [ItemController::class, 'show'])->name('item.show'); // 商品詳細
 Route::post('/item/{item_id}/like', [ItemController::class, 'like'])->middleware('auth')->name('item.like');// いいねのルート
 Route::post('/item/{item_id}/comment', [ItemController::class, 'comment'])->middleware('auth')->name('item.comment');// コメントのルート
-Route::get('/purchase/{item_id}', [ItemController::class, 'purchase'])->name('item.purchase'); // 商品購入
+Route::get('/purchase/{item_id}', [ItemController::class, 'purchase'])->name('item.purchase'); // 商品購入（表示用）
+Route::post('/purchase/{item_id}', [ItemController::class, 'processPurchase'])->middleware('auth')->name('item.processPurchase'); // 購入処理
 Route::get('/purchase/address/{item_id}', [ItemController::class, 'changeAddress'])->name('item.changeAddress'); // 住所変更
 Route::post('/purchase/address/{item_id}', [ItemController::class, 'updateAddress'])->name('item.updateAddress');
 Route::get('/profile/purchases', [UserProfileController::class, 'purchasedItems'])->name('profile.purchases');
 Route::get('/sell', [ItemController::class, 'create'])->name('item.create'); // 商品出品
+Route::post('/sell', [ItemController::class, 'store'])->name('item.store');
 
 // 決済関連 (追加)
 Route::middleware(['auth'])->group(function () {

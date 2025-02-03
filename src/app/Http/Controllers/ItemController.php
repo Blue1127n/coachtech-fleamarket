@@ -174,23 +174,47 @@ class ItemController extends Controller
     ]);
 }
 
-        public function purchase(PurchaseRequest $request, $item_id)
+   // GETリクエスト: 購入画面表示（バリデーションなし）
+    public function purchase(Request $request, $item_id)
     {
         // 商品を取得
         $item = Item::findOrFail($item_id);
         $user = auth()->user();
 
-        // セッションに選択された支払い方法を保存（リダイレクトせずに処理する）
-        if ($request->has('payment_method')) {
-            session(['selected_payment_method' => $request->payment_method]);
-        }
+        // 以前に選択した支払い方法を取得（セッションから）
+        $selectedPaymentMethod = session('selected_payment_method', '');
 
         // 郵便番号をハイフン付きに整形
         $postalCode = $user->postal_code ? preg_replace('/(\d{3})(\d{4})/', '$1-$2', $user->postal_code) : '';
 
         // そのままビューを返す（リダイレクトしない）
-        return view('item.purchase', compact('item', 'user', 'postalCode'));
+        return view('item.purchase', compact('item', 'user', 'postalCode', 'selectedPaymentMethod'));
     }
+
+    // 購入処理 (POST) - フォームリクエスト適用
+    public function processPurchase(PurchaseRequest $request, $item_id)
+{
+    \Log::info('🚀 processPurchase が呼ばれた!', ['item_id' => $item_id, 'request' => $request->all()]);
+
+    // **バリデーションの適用**
+    $validated = $request->validated();
+    \Log::info('✅ バリデーション通過:', $validated);
+
+    // **transactions テーブルに保存 or 更新**
+    $transaction = \App\Models\Transaction::updateOrCreate(
+        ['item_id' => $item_id, 'buyer_id' => auth()->id()], // 既存レコードを検索
+        [
+            'status_id' => 1, // 初期ステータスを設定
+            'payment_method' => $validated['payment_method'],
+            'shipping_postal_code' => auth()->user()->postal_code,
+            'shipping_address' => auth()->user()->address,
+            'shipping_building' => auth()->user()->building
+        ]
+    );
+
+    // **決済画面にリダイレクト**
+    return redirect()->route('payment.page', ['item_id' => $item_id])->with('success', '支払い方法が選択されました');
+}
 
     public function changeAddress($item_id)
 {
@@ -208,7 +232,7 @@ public function updateAddress(AddressChangeRequest $request, $item_id)
     $user = auth()->user();
 
     // **購入情報（transactions テーブル）を取得 or 作成**
-    $transaction = \App\Models\Transaction::firstOrCreate(
+    $transaction = \App\Models\Transaction::updateOrCreate(
         ['item_id' => $item_id, 'buyer_id' => $user->id], // 条件（既にレコードがあれば取得、なければ作成）
         [
             'status_id' => 1, // 例: "購入処理中"
@@ -223,11 +247,16 @@ public function updateAddress(AddressChangeRequest $request, $item_id)
     $transaction->update([
         'shipping_postal_code' => $request->postal_code,
         'shipping_address' => $request->address,
-        'shipping_building' => $request->has('building') ? ($request->filled('building') ? $request->building : null) : null, 
+        'shipping_building' => $request->filled('building') ? $request->building : null, // `null` を許可
     ]);
 
     return redirect()->route('item.purchase', ['item_id' => $item_id])->with('success', '住所が更新されました');
 }
 
-
+public function create()
+{
+    $categories = Category::all();
+    $conditions = Condition::all();
+    return view('items.sell', compact('categories', 'conditions'));
+}
 }
