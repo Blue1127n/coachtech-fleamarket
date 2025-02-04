@@ -24,22 +24,27 @@ class PaymentController extends Controller
         $item = Item::findOrFail($item_id);
         $user = Auth::user();
 
-        // **transactions テーブルのデータを取得**
-        $transaction = Transaction::where('item_id', $item_id)
-                            ->where('buyer_id', $user->id)
-                            ->orderBy('updated_at', 'desc') // 最新の更新日時を基準に取得
-                            ->first();
+        // **transactions テーブルのデータを取得 or 作成**
+        $transaction = Transaction::firstOrCreate(
+            ['item_id' => $item_id, 'buyer_id' => $user->id], // 既存のデータがあれば取得、なければ作成
+            [
+                'status_id' => 1, // 初期状態を設定
+                'payment_method' => '未選択',
+                'shipping_postal_code' => $user->postal_code,
+                'shipping_address' => $user->address,
+                'shipping_building' => $user->building,
+            ]
+        );
 
-        // **`transactions` のデータを優先する**
+        // **transactions のデータを優先的に取得**
         $shipping = [
-            'postal_code' => $transaction && !empty($transaction->shipping_postal_code) ? preg_replace('/(\d{3})(\d{4})/', '$1-$2', $transaction->shipping_postal_code) : preg_replace('/(\d{3})(\d{4})/', '$1-$2', $user->postal_code),
-            'address' => $transaction && !empty($transaction->shipping_address) ? $transaction->shipping_address : $user->address,
-            'building' => isset($transaction->shipping_building) ? $transaction->shipping_building : (isset($user->building) ? $user->building : ''),
+            'postal_code' => preg_replace('/(\d{3})(\d{4})/', '$1-$2', $transaction->shipping_postal_code),
+            'address' => $transaction->shipping_address,
+            'building' => $transaction->shipping_building ?? '',
         ];
 
-        // **GETリクエストから支払い方法を取得**
-        $payment_method = $transaction ? $transaction->payment_method : '未選択';
-
+        // **支払い方法も transactions から取得**
+        $payment_method = $transaction->payment_method ?? '未選択';
 
         return view('payment.payment', compact('item', 'shipping', 'payment_method'));
     }

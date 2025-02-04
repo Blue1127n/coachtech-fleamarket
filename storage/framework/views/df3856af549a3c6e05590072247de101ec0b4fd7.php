@@ -18,6 +18,16 @@
                 </div>
         </div>
 
+        <?php if($errors->any()): ?>
+    <div class="alert alert-danger">
+        <ul>
+            <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <li><?php echo e($error); ?></li>
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+        </ul>
+    </div>
+<?php endif; ?>
+
         <div class="payment-method">
             <h2>支払い方法</h2>
             <form action="<?php echo e(route('item.processPurchase', ['item_id' => $item->id])); ?>" method="POST">
@@ -32,7 +42,7 @@ $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
 $message = $__bag->first($__errorArgs[0]); ?>
-                <p class="error-message" style="color: red;"><?php echo e($message); ?></p>
+                    <p class="error-message"><?php echo e($message); ?></p>
                 <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
@@ -43,17 +53,18 @@ unset($__errorArgs, $__bag); ?>
         <div class="shipping-address">
             <h2>配送先</h2>
             <div class="shipping-content">
-                <?php
-                    // 取引情報を取得（なければ users テーブルのデータを使う）
-                    $transaction = \App\Models\Transaction::where('item_id', $item->id)
-                                                            ->where('buyer_id', auth()->id())
-                                                            ->first();
+            <?php
+                // 取引情報を取得（なければ users テーブルのデータを使う）
+                $transaction = \App\Models\Transaction::where('item_id', $item->id)
+                                                        ->where('buyer_id', auth()->id())
+                                                        ->first();
 
-                    // 最初は users テーブルのデータを使用し、変更があった場合は transactions テーブルのデータを使用
-                    $postalCode = $transaction && $transaction->shipping_postal_code ? $transaction->shipping_postal_code : auth()->user()->postal_code;
-                    $address = $transaction && $transaction->shipping_address ? $transaction->shipping_address : auth()->user()->address;
-                    $building = $transaction && $transaction->shipping_building ? $transaction->shipping_building : auth()->user()->building;
-                ?>
+                $postalCode = $transaction->shipping_postal_code ?? auth()->user()->postal_code ?? '未登録';
+                $address = $transaction->shipping_address ?? auth()->user()->address ?? '未登録';
+                $building = isset($transaction->shipping_building)
+                            ? $transaction->shipping_building
+                            : (isset(auth()->user()->building) ? auth()->user()->building : '');
+            ?>
 
                 <div class="shipping-info">
                     <p>〒 <?php echo e(preg_replace('/(\d{3})(\d{4})/', '$1-$2', $postalCode)); ?></p>

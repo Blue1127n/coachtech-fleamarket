@@ -1,17 +1,15 @@
-@extends('layouts.main')
+<?php $__env->startSection('title', '商品の出品'); ?>
 
-@section('title', '商品の出品')
+<?php $__env->startPush('styles'); ?>
+<link rel="stylesheet" href="<?php echo e(asset('css/sell.css')); ?>">
+<?php $__env->stopPush(); ?>
 
-@push('styles')
-<link rel="stylesheet" href="{{ asset('css/sell.css') }}">
-@endpush
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 <div class="sell-container">
     <h2 class="title">商品を出品</h2>
 
-    <form action="{{ route('item.store') }}" method="POST" enctype="multipart/form-data">
-        @csrf
+    <form action="<?php echo e(route('item.store')); ?>" method="POST" enctype="multipart/form-data">
+        <?php echo csrf_field(); ?>
 
         <div class="form-group">
             <div class="form-group image-upload">
@@ -29,12 +27,12 @@
             <div class="form-group category-group">
                 <label class="category-label">カテゴリー</label>
                 <div class="category-options">
-                    @foreach($categories as $category)
+                    <?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <label class="category-option">
-                            <input type="checkbox" name="category[]" value="{{ $category->id }}" class="category-checkbox">
-                            <span class="category-name">{{ $category->name }}</span>
+                            <input type="checkbox" name="category[]" value="<?php echo e($category->id); ?>" class="category-checkbox">
+                            <span class="category-name"><?php echo e($category->name); ?></span>
                         </label>
-                    @endforeach
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </div>
             </div>
 
@@ -42,9 +40,9 @@
                 <label class="condition-label">商品の状態</label>
                 <select name="condition_id" class="condition-select" required>
                     <option value="">選択してください</option>
-                    @foreach($conditions as $condition)
-                        <option value="{{ $condition->id }}">{{ $condition->condition }}</option>
-                    @endforeach
+                    <?php $__currentLoopData = $conditions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $condition): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <option value="<?php echo e($condition->id); ?>"><?php echo e($condition->condition); ?></option>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </select>
             </div>
 
@@ -71,9 +69,9 @@
         </div>
     </form>
 </div>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@push('scripts')
+<?php $__env->startPush('scripts'); ?>
 <script>
 document.addEventListener("DOMContentLoaded", function () {
     const categoryOptions = document.querySelectorAll(".category-option");
@@ -89,5 +87,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 </script>
-@endpush
+<?php $__env->stopPush(); ?>
 
+
+<?php echo $__env->make('layouts.main', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /var/www/resources/views/item/sell.blade.php ENDPATH**/ ?>

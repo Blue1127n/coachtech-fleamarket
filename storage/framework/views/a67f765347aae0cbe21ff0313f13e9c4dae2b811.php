@@ -14,7 +14,7 @@
 
         <div class="form-group">
             <label for="postal_code">郵便番号</label>
-            <input type="text" name="postal_code" id="postal_code" value="<?php echo e(old('postal_code', $postalCode)); ?>">
+            <input type="text" name="postal_code" id="postal_code" value="<?php echo e(old('postal_code', $shippingPostalCode)); ?>">
             <?php $__errorArgs = ['postal_code'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -29,7 +29,7 @@ unset($__errorArgs, $__bag); ?>
 
         <div class="form-group">
             <label for="address">住所</label>
-            <input type="text" name="address" id="address" value="<?php echo e(old('address', auth()->user()->address ?? '')); ?>">
+            <input type="text" name="address" id="address" value="<?php echo e(old('address', $shippingAddress)); ?>">
             <?php $__errorArgs = ['address'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -44,7 +44,7 @@ unset($__errorArgs, $__bag); ?>
 
         <div class="form-group">
             <label for="building">建物名</label>
-            <input type="text" name="building" id="building" value="<?php echo e(old('building', auth()->user()->building ?? '')); ?>">
+            <input type="text" name="building" id="building" value="<?php echo e(old('building', isset($shippingBuilding) ? $shippingBuilding : auth()->user()->building)); ?>">
             <?php $__errorArgs = ['building'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :

@@ -7,6 +7,9 @@ use App\Http\Requests\CommentRequest;
 use App\Http\Requests\AddressChangeRequest;
 use App\Http\Requests\PurchaseRequest;
 use App\Models\Item;
+use App\Models\Category;
+use App\Models\Condition;
+use App\Models\Transaction;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 
@@ -181,6 +184,11 @@ class ItemController extends Controller
         $item = Item::findOrFail($item_id);
         $user = auth()->user();
 
+        // ログインしていない場合はリダイレクト
+        if (!$user) {
+            return redirect()->route('login')->with('error', 'ログインが必要です');
+        }
+
         // 以前に選択した支払い方法を取得（セッションから）
         $selectedPaymentMethod = session('selected_payment_method', '');
 
@@ -216,38 +224,55 @@ class ItemController extends Controller
     return redirect()->route('payment.page', ['item_id' => $item_id])->with('success', '支払い方法が選択されました');
 }
 
-    public function changeAddress($item_id)
+public function changeAddress($item_id)
 {
     $item = Item::findOrFail($item_id);
     $user = auth()->user();
 
-    // 郵便番号をハイフン付きで整形
-    $postalCode = $user->postal_code ? preg_replace('/(\d{3})(\d{4})/', '$1-$2', $user->postal_code) : '';
+    // 既存の取引データを取得
+    $transaction = \App\Models\Transaction::where('item_id', $item_id)
+                                ->where('buyer_id', $user->id)
+                                ->first();
 
-    return view('item.address_change', compact('item', 'user', 'postalCode'));
+    // **データをセット（transactions にデータがあればそれを優先）**
+    $shippingPostalCode = $transaction && !empty($transaction->shipping_postal_code)
+        ? preg_replace('/(\d{3})(\d{4})/', '$1-$2', $transaction->shipping_postal_code)
+        : ($user->postal_code ? preg_replace('/(\d{3})(\d{4})/', '$1-$2', $user->postal_code) : '');
+
+    $shippingAddress = $transaction && !empty($transaction->shipping_address)
+        ? $transaction->shipping_address
+        : $user->address;
+
+    $shippingBuilding = isset($transaction->shipping_building) && !is_null($transaction->shipping_building)
+        ? $transaction->shipping_building
+        : $user->building;  // **ここが追加されてる！**
+
+    return view('item.address_change', compact('item', 'shippingPostalCode', 'shippingAddress', 'shippingBuilding'));
 }
 
 public function updateAddress(AddressChangeRequest $request, $item_id)
 {
     $user = auth()->user();
 
-    // **購入情報（transactions テーブル）を取得 or 作成**
+    \Log::info('🚀 updateAddress() が呼ばれた!', ['item_id' => $item_id, 'user_id' => $user->id]);
+
+    // **transactions テーブルを取得 or 作成し、更新**
     $transaction = \App\Models\Transaction::updateOrCreate(
-        ['item_id' => $item_id, 'buyer_id' => $user->id], // 条件（既にレコードがあれば取得、なければ作成）
+        ['item_id' => $item_id, 'buyer_id' => $user->id], // 条件: 既存のデータがあれば取得、なければ新規作成
         [
-            'status_id' => 1, // 例: "購入処理中"
-            'payment_method' => '未設定',// 変更済みのテーブルに合わせる
+            'status_id' => 1,
+            'payment_method' => '未設定',
             'shipping_postal_code' => $request->postal_code,
             'shipping_address' => $request->address,
-            'shipping_building' => $request->filled('building') ? $request->building : null, // 空の場合は `null`
+            'shipping_building' => $request->filled('building') ? $request->building : null,
         ]
     );
 
-    // すでに `transactions` にデータがある場合は更新
-    $transaction->update([
-        'shipping_postal_code' => $request->postal_code,
-        'shipping_address' => $request->address,
-        'shipping_building' => $request->filled('building') ? $request->building : null, // `null` を許可
+    \Log::info('✅ transactions テーブルに保存!', [
+        'transaction_id' => $transaction->id,
+        'postal_code' => $transaction->shipping_postal_code,
+        'address' => $transaction->shipping_address,
+        'building' => $transaction->shipping_building
     ]);
 
     return redirect()->route('item.purchase', ['item_id' => $item_id])->with('success', '住所が更新されました');
@@ -257,6 +282,7 @@ public function create()
 {
     $categories = Category::all();
     $conditions = Condition::all();
-    return view('items.sell', compact('categories', 'conditions'));
+
+    return view('item.sell', compact('categories', 'conditions'));
 }
 }
