@@ -203,9 +203,14 @@ class ItemController extends Controller
                         ? $transaction->shipping_address
                         : $user->address;
 
-        $building = isset($transaction->shipping_building) && !is_null($transaction->shipping_building)
-                        ? $transaction->shipping_building
-                        : (!empty($user->building) ? $user->building : '');
+            // **建物名の取得（期待する動作通りの条件を適用）**
+        if (is_null($transaction)) {
+            // **初回購入時 → users の building を使う**
+            $building = !empty($user->building) ? $user->building : '';
+        } else {
+            // **過去に住所を変更していた場合**
+            $building = !is_null($transaction->shipping_building) ? $transaction->shipping_building : '';
+        }
 
         return view('item.purchase', compact('item', 'postalCode', 'address', 'building'));
     }

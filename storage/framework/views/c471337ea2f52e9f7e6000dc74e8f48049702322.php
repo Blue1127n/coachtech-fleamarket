@@ -38,8 +38,8 @@
 
             <div class="form-group condition-group">
                 <label class="condition-label">商品の状態</label>
-                <select name="condition_id" class="condition-select" style="background-image: url('<?php echo e(asset('storage/items/triangle.svg')); ?>');">
-                    <option value="" disabled selected hidden>選択してください</option>
+                <select name="condition_id" id="condition_select" class="condition-select" style="background-image: url('<?php echo e(asset('storage/items/triangle.svg')); ?>');">
+                    <option value="" class="default-option" disabled selected hidden>選択してください</option>
                     <?php $__currentLoopData = $conditions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $condition): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <option value="<?php echo e($condition->id); ?>"><?php echo e($condition->condition); ?></option>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -85,9 +85,32 @@ document.addEventListener("DOMContentLoaded", function () {
             this.classList.toggle("selected", checkbox.checked);
         });
     });
+
+    // **商品の状態プルダウンの「✓」処理**
+    const selectCondition = document.getElementById("condition_select");
+
+    if (selectCondition) {
+        // **オプションの元のテキストを dataset に保存**
+        Array.from(selectCondition.options).forEach(option => {
+            option.dataset.originalText = option.textContent;
+        });
+
+        // **マウスホバー時に ✓ を追加**
+        selectCondition.addEventListener("mouseover", function (event) {
+            if (event.target.tagName === "OPTION") {
+                event.target.textContent = `✓ ${event.target.dataset.originalText}`;
+            }
+        });
+
+        // **マウスが離れたら元のテキストに戻す**
+        selectCondition.addEventListener("mouseout", function (event) {
+            if (event.target.tagName === "OPTION") {
+                event.target.textContent = event.target.dataset.originalText;
+        });
+    }
 });
+
 </script>
 <?php $__env->stopPush(); ?>
-
 
 <?php echo $__env->make('layouts.main', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /var/www/resources/views/item/sell.blade.php ENDPATH**/ ?>

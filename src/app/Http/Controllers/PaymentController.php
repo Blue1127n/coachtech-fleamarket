@@ -30,23 +30,13 @@ class PaymentController extends Controller
             [
                 'status_id' => 1, // 初期状態を設定
                 'payment_method' => '未選択',
-                'shipping_postal_code' => $user->postal_code,
-                'shipping_address' => $user->address,
-                'shipping_building' => $user->building,
             ]
         );
-
-        // **transactions のデータを優先的に取得**
-        $shipping = [
-            'postal_code' => preg_replace('/(\d{3})(\d{4})/', '$1-$2', $transaction->shipping_postal_code),
-            'address' => $transaction->shipping_address,
-            'building' => $transaction->shipping_building ?? '',
-        ];
 
         // **支払い方法も transactions から取得**
         $payment_method = $transaction->payment_method ?? '未選択';
 
-        return view('payment.payment', compact('item', 'shipping', 'payment_method'));
+        return view('payment.payment', compact('item', 'payment_method'));
     }
 
     /**
@@ -91,9 +81,6 @@ class PaymentController extends Controller
         // ここで `payment_method` を更新
         $transaction->update([
             'payment_method' => $request->input('payment_method'),
-            'shipping_postal_code' => $request->input('shipping_postal_code', $user->postal_code),
-            'shipping_address' => $request->input('shipping_address', $user->address),
-            'shipping_building' => $request->input('shipping_building', $user->building),
         ]);
 
         // 支払い方法の取得

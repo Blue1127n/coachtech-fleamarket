@@ -40,8 +40,8 @@
 
             <div class="form-group condition-group">
                 <label class="condition-label">商品の状態</label>
-                <select name="condition_id" class="condition-select" style="background-image: url('{{ asset('storage/items/triangle.svg') }}');">
-                    <option value="" disabled selected hidden>選択してください</option>
+                <select name="condition_id" id="condition_select" class="condition-select" style="background-image: url('{{ asset('storage/items/triangle.svg') }}');">
+                    <option value="" class="default-option" disabled selected hidden>選択してください</option>
                     @foreach($conditions as $condition)
                         <option value="{{ $condition->id }}">{{ $condition->condition }}</option>
                     @endforeach
@@ -87,7 +87,30 @@ document.addEventListener("DOMContentLoaded", function () {
             this.classList.toggle("selected", checkbox.checked);
         });
     });
+
+    // **商品の状態プルダウンの「✓」処理**
+    const selectCondition = document.getElementById("condition_select");
+
+    if (selectCondition) {
+        // **オプションの元のテキストを dataset に保存**
+        Array.from(selectCondition.options).forEach(option => {
+            option.dataset.originalText = option.textContent;
+        });
+
+        // **マウスホバー時に ✓ を追加**
+        selectCondition.addEventListener("mouseover", function (event) {
+            if (event.target.tagName === "OPTION") {
+                event.target.textContent = `✓ ${event.target.dataset.originalText}`;
+            }
+        });
+
+        // **マウスが離れたら元のテキストに戻す**
+        selectCondition.addEventListener("mouseout", function (event) {
+            if (event.target.tagName === "OPTION") {
+                event.target.textContent = event.target.dataset.originalText;
+        });
+    }
 });
+
 </script>
 @endpush
-

@@ -148,7 +148,7 @@ body {
     height: 45px;
     margin-top: 5px;
     margin-bottom: 30px;
-    padding-left: 5px;
+    padding-left: 15px;
     gap: 0px;
     border-radius: 4px;
     border: 1px solid rgba(95, 95, 95, 1);
@@ -164,6 +164,12 @@ body {
     background-repeat: no-repeat;
     background-position: right 10px center;
     background-size: 13px 14px;
+}
+
+s/* 選択中の項目のデザイン */
+select option:hover {
+    background-color: blue; /* 背景を青にする */
+    color: white; /* 文字を白くする */
 }
 
 .product-name-description {
@@ -186,6 +192,7 @@ body {
     border-radius: 4px;
     border: 1px solid rgba(95, 95, 95, 1);
     margin-bottom: 15px;
+    padding-left: 5px;
 }
 
 .description-textarea {
@@ -194,6 +201,7 @@ body {
     gap: 0px;
     border-radius: 4px;
     border: 1px solid rgba(95, 95, 95, 1);
+    padding-left: 5px;
 }
 
 .product-price {
@@ -234,5 +242,6 @@ body {
 .submit-button:hover {
     background-color: rgba(255, 85, 85, 1);
 }
+
 
 

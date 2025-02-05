@@ -51,7 +51,7 @@
                 <div class="shipping-info">
                     <p>〒 {{ preg_replace('/(\d{3})(\d{4})/', '$1-$2', $postalCode) }}</p>
                     <p>{{ $address }}</p>
-                    @if(isset($building) && $building !== '')
+                    @if(!empty($building))
                         <p>{{ $building }}</p>
                     @endif
                 </div>
