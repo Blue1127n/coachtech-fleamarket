@@ -48,23 +48,10 @@
         <div class="shipping-address">
             <h2>配送先</h2>
             <div class="shipping-content">
-            @php
-                // 取引情報を取得（なければ users テーブルのデータを使う）
-                $transaction = \App\Models\Transaction::where('item_id', $item->id)
-                                                        ->where('buyer_id', auth()->id())
-                                                        ->first();
-
-                $postalCode = $transaction->shipping_postal_code ?? auth()->user()->postal_code ?? '未登録';
-                $address = $transaction->shipping_address ?? auth()->user()->address ?? '未登録';
-                $building = isset($transaction->shipping_building)
-                            ? $transaction->shipping_building
-                            : (isset(auth()->user()->building) ? auth()->user()->building : '');
-            @endphp
-
                 <div class="shipping-info">
                     <p>〒 {{ preg_replace('/(\d{3})(\d{4})/', '$1-$2', $postalCode) }}</p>
                     <p>{{ $address }}</p>
-                    @if(!empty($building))
+                    @if(isset($building) && $building !== '')
                         <p>{{ $building }}</p>
                     @endif
                 </div>

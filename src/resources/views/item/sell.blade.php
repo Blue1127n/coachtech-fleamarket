@@ -40,8 +40,8 @@
 
             <div class="form-group condition-group">
                 <label class="condition-label">商品の状態</label>
-                <select name="condition_id" class="condition-select" required>
-                    <option value="">選択してください</option>
+                <select name="condition_id" class="condition-select" style="background-image: url('{{ asset('storage/items/triangle.svg') }}');">
+                    <option value="" disabled selected hidden>選択してください</option>
                     @foreach($conditions as $condition)
                         <option value="{{ $condition->id }}">{{ $condition->condition }}</option>
                     @endforeach

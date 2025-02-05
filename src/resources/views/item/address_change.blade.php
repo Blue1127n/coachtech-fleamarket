@@ -32,7 +32,7 @@
 
         <div class="form-group">
             <label for="building">建物名</label>
-            <input type="text" name="building" id="building" value="{{ old('building', isset($shippingBuilding) ? $shippingBuilding : auth()->user()->building) }}">
+            <input type="text" name="building" id="building" value="{{ old('building', !is_null($shippingBuilding) ? $shippingBuilding : auth()->user()->building) }}">
             @error('building')
                 <p class="error-message">{{ $message }}</p>
             @enderror

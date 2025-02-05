@@ -44,7 +44,7 @@ unset($__errorArgs, $__bag); ?>
 
         <div class="form-group">
             <label for="building">建物名</label>
-            <input type="text" name="building" id="building" value="<?php echo e(old('building', isset($shippingBuilding) ? $shippingBuilding : auth()->user()->building)); ?>">
+            <input type="text" name="building" id="building" value="<?php echo e(old('building', !is_null($shippingBuilding) ? $shippingBuilding : auth()->user()->building)); ?>">
             <?php $__errorArgs = ['building'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :

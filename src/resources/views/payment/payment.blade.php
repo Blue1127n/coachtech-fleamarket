@@ -20,16 +20,6 @@
         </p>
     </div>
 
-    <!-- 送付先情報の表示 -->
-    <div class="shipping-info">
-        <h3>送付先情報</h3>
-        <p>〒{{ $shipping['postal_code'] }}</p>
-        <p>{{ $shipping['address'] }}</p>
-        @if (!empty($shipping['building']))
-            <p>{{ $shipping['building'] }}</p>
-        @endif
-    </div>
-
     <!-- 選択済みの支払い方法 -->
     <div class="payment-method">
         <h3>支払い方法</h3>

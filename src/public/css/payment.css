@@ -57,27 +57,6 @@ h1 {
     line-height: 38.73px;
 }
 
-.shipping-info {
-    padding: 15px;
-    border-radius: 5px;
-    margin-bottom: 20px;
-    text-align: center;
-}
-
-.shipping-info h3 {
-    font-size: 24px;
-    font-weight: 700;
-    line-height: 24.2px;
-    margin-bottom: 20px;
-}
-
-.shipping-info p {
-    font-size: 20px;
-    font-weight: 700;
-    line-height: 24.2px;
-    margin: 5px 0;
-}
-
 .payment-method {
     padding: 15px;
     border-radius: 5px;

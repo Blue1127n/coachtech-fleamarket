@@ -180,7 +180,7 @@ class ItemController extends Controller
    // GETリクエスト: 購入画面表示（バリデーションなし）
     public function purchase(Request $request, $item_id)
     {
-        // 商品を取得
+        // 商品情報を取得
         $item = Item::findOrFail($item_id);
         $user = auth()->user();
 
@@ -189,14 +189,25 @@ class ItemController extends Controller
             return redirect()->route('login')->with('error', 'ログインが必要です');
         }
 
-        // 以前に選択した支払い方法を取得（セッションから）
-        $selectedPaymentMethod = session('selected_payment_method', '');
+       // 取引データを取得（あれば使用、なければ `users` テーブルのデータを使用）
+        $transaction = Transaction::where('item_id', $item_id)
+                                    ->where('buyer_id', $user->id)
+                                    ->first();
 
-        // 郵便番号をハイフン付きに整形
-        $postalCode = $user->postal_code ? preg_replace('/(\d{3})(\d{4})/', '$1-$2', $user->postal_code) : '';
+        // **配送先情報**
+        $postalCode = !empty($transaction->shipping_postal_code)
+                        ? preg_replace('/(\d{3})(\d{4})/', '$1-$2', $transaction->shipping_postal_code)
+                        : preg_replace('/(\d{3})(\d{4})/', '$1-$2', $user->postal_code);
 
-        // そのままビューを返す（リダイレクトしない）
-        return view('item.purchase', compact('item', 'user', 'postalCode', 'selectedPaymentMethod'));
+        $address = !empty($transaction->shipping_address)
+                        ? $transaction->shipping_address
+                        : $user->address;
+
+        $building = isset($transaction->shipping_building) && !is_null($transaction->shipping_building)
+                        ? $transaction->shipping_building
+                        : (!empty($user->building) ? $user->building : '');
+
+        return view('item.purchase', compact('item', 'postalCode', 'address', 'building'));
     }
 
     // 購入処理 (POST) - フォームリクエスト適用
@@ -204,23 +215,23 @@ class ItemController extends Controller
 {
     \Log::info('🚀 processPurchase が呼ばれた!', ['item_id' => $item_id, 'request' => $request->all()]);
 
-    // **バリデーションの適用**
-    $validated = $request->validated();
-    \Log::info('✅ バリデーション通過:', $validated);
+    // **ログインユーザー情報**
+    $user = auth()->user();
 
-    // **transactions テーブルに保存 or 更新**
-    $transaction = \App\Models\Transaction::updateOrCreate(
-        ['item_id' => $item_id, 'buyer_id' => auth()->id()], // 既存レコードを検索
+    // **既存の `transactions` を取得 or 作成**
+    $transaction = Transaction::updateOrCreate(
+        ['item_id' => $item_id, 'buyer_id' => $user->id],
         [
-            'status_id' => 1, // 初期ステータスを設定
-            'payment_method' => $validated['payment_method'],
-            'shipping_postal_code' => auth()->user()->postal_code,
-            'shipping_address' => auth()->user()->address,
-            'shipping_building' => auth()->user()->building
+            'status_id' => 1, // 初期ステータス
+            'payment_method' => $request->payment_method,
         ]
     );
 
-    // **決済画面にリダイレクト**
+    \Log::info('✅ 購入処理: `transactions` テーブルに保存', [
+        'transaction_id' => $transaction->id,
+        'payment_method' => $transaction->payment_method
+    ]);
+
     return redirect()->route('payment.page', ['item_id' => $item_id])->with('success', '支払い方法が選択されました');
 }
 
@@ -229,23 +240,23 @@ public function changeAddress($item_id)
     $item = Item::findOrFail($item_id);
     $user = auth()->user();
 
-    // 既存の取引データを取得
-    $transaction = \App\Models\Transaction::where('item_id', $item_id)
+    // 取引データを取得
+    $transaction = Transaction::where('item_id', $item_id)
                                 ->where('buyer_id', $user->id)
                                 ->first();
 
-    // **データをセット（transactions にデータがあればそれを優先）**
-    $shippingPostalCode = $transaction && !empty($transaction->shipping_postal_code)
+    // **変更前のデータをセット**
+    $shippingPostalCode = !empty($transaction) && !empty($transaction->shipping_postal_code)
         ? preg_replace('/(\d{3})(\d{4})/', '$1-$2', $transaction->shipping_postal_code)
-        : ($user->postal_code ? preg_replace('/(\d{3})(\d{4})/', '$1-$2', $user->postal_code) : '');
+        : preg_replace('/(\d{3})(\d{4})/', '$1-$2', $user->postal_code);
 
-    $shippingAddress = $transaction && !empty($transaction->shipping_address)
+    $shippingAddress = !empty($transaction) && !empty($transaction->shipping_address)
         ? $transaction->shipping_address
         : $user->address;
 
-    $shippingBuilding = isset($transaction->shipping_building) && !is_null($transaction->shipping_building)
+    $shippingBuilding = !empty($transaction) && !is_null($transaction->shipping_building)
         ? $transaction->shipping_building
-        : $user->building;  // **ここが追加されてる！**
+        : ($user->building ?? '');
 
     return view('item.address_change', compact('item', 'shippingPostalCode', 'shippingAddress', 'shippingBuilding'));
 }
@@ -256,9 +267,9 @@ public function updateAddress(AddressChangeRequest $request, $item_id)
 
     \Log::info('🚀 updateAddress() が呼ばれた!', ['item_id' => $item_id, 'user_id' => $user->id]);
 
-    // **transactions テーブルを取得 or 作成し、更新**
-    $transaction = \App\Models\Transaction::updateOrCreate(
-        ['item_id' => $item_id, 'buyer_id' => $user->id], // 条件: 既存のデータがあれば取得、なければ新規作成
+    // **transactions テーブルを更新**
+    $transaction = Transaction::updateOrCreate(
+        ['item_id' => $item_id, 'buyer_id' => $user->id],
         [
             'status_id' => 1,
             'payment_method' => '未設定',

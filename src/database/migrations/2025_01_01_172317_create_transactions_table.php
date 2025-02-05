@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 class CreateTransactionsTable extends Migration
 {
@@ -17,7 +18,7 @@ class CreateTransactionsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('item_id')->unique();
             $table->unsignedBigInteger('buyer_id');
-            $table->unsignedBigInteger('status_id');
+            $table->unsignedBigInteger('status_id')->default(1);
             $table->string('payment_method', 50)->nullable();
             $table->string('shipping_postal_code', 8);
             $table->text('shipping_address');
@@ -28,6 +29,9 @@ class CreateTransactionsTable extends Migration
             $table->foreign('item_id')->references('id')->on('items')->onDelete('cascade');
             $table->foreign('status_id')->references('id')->on('statuses')->onDelete('cascade');
         });
+
+        //既存の `NULL` データを `1` に更新
+        DB::statement("UPDATE transactions SET status_id = 1 WHERE status_id IS NULL");
     }
 
     /**
@@ -37,6 +41,10 @@ class CreateTransactionsTable extends Migration
      */
     public function down()
     {
+        Schema::table('transactions', function (Blueprint $table) {
+            $table->unsignedBigInteger('status_id')->change(); //デフォルト値を削除
+        });
+
         Schema::dropIfExists('transactions');
     }
 }
