@@ -91,53 +91,54 @@
 @push('scripts')
 <script>
 document.addEventListener("DOMContentLoaded", function () {
-    const select = document.getElementById("payment_method");
-    const selectedMethod = document.getElementById("selected-method");
-    const selectedPaymentMethod = document.getElementById("selected-payment-method");
-    const purchaseForm = document.getElementById("purchase-form");
+    const paymentSelectBox = document.querySelector(".custom-payment-select");
+    const selectedPaymentOption = document.getElementById("selectedPayment");
+    const paymentDropdownOptions = document.getElementById("paymentDropdown");
+    const paymentOptions = document.querySelectorAll(".dropdown-option");
+    const paymentInput = document.getElementById("paymentInput");
 
-    // **バリデーションエラー時に old() の値を復元**
-    const oldPaymentMethod = "{{ old('payment_method', '') }}";
-
-    if (select) {
-        if (oldPaymentMethod) {
-            select.value = oldPaymentMethod;
-            selectedMethod.textContent = oldPaymentMethod;
-            selectedPaymentMethod.value = oldPaymentMethod;
-        } else {
-            select.selectedIndex = 0;
-            selectedMethod.textContent = "未選択";
-            selectedPaymentMethod.value = "";
-        }
-
-        // **プルダウンの変更イベントで hidden input を更新**
-        select.addEventListener("change", function () {
-            selectedMethod.textContent = select.value;
-            selectedPaymentMethod.value = select.value;
-            localStorage.setItem("selectedPaymentMethod", select.value);
-
-            // **選択されたオプションに "✓" を付与**
-            select.querySelectorAll("option").forEach(option => {
-                option.textContent = option.value === select.value ? `✓ ${option.value}` : option.value;
-            });
-
-            // **200ms 後に元の状態に戻す**
-            setTimeout(() => {
-                select.querySelectorAll("option").forEach(option => {
-                    option.textContent = option.value;
-                });
-            }, 200);
+    if (paymentSelectBox) {
+        // **クリックで開閉**
+        paymentSelectBox.addEventListener("click", function (event) {
+            event.stopPropagation();
+            paymentDropdownOptions.style.display = paymentDropdownOptions.style.display === "block" ? "none" : "block";
         });
 
-        // **購入ボタンのクリック時にバリデーションをチェック**
-        purchaseForm.addEventListener("submit", function (event) {
-            if (!select.value) {
-                event.preventDefault();
-                alert("支払い方法を選択してください。");
+        // **オプション選択時の処理**
+        paymentOptions.forEach(option => {
+            option.addEventListener("click", function () {
+                // **すべてのオプションの "✓" を削除**
+                paymentOptions.forEach(opt => opt.classList.remove("selected"));
+
+                // **選択されたオプションに "✓" を追加**
+                option.classList.add("selected");
+
+                // **選択した項目を表示し、前の「✓」を除去**
+                selectedPaymentOption.textContent = option.textContent.replace(/^✓\s*/, "").trim();
+                paymentInput.value = option.dataset.value;
+
+                // **選択後にドロップダウンを閉じる**
+                setTimeout(() => {
+                    paymentDropdownOptions.style.display = "none";
+                    paymentSelectBox.blur();
+                }, 100);
+            });
+        });
+
+        // **外部クリックでドロップダウンを閉じる**
+        document.addEventListener("click", function (event) {
+            if (!paymentSelectBox.contains(event.target) && !paymentDropdownOptions.contains(event.target)) {
+                paymentDropdownOptions.style.display = "none";
+            }
+        });
+
+        // **キーボードの "Escape" でもドロップダウンを閉じる**
+        document.addEventListener("keydown", function (event) {
+            if (event.key === "Escape") {
+                paymentDropdownOptions.style.display = "none";
             }
         });
     }
 });
-
 </script>
 @endpush

@@ -37,14 +37,20 @@
             </div>
 
             <div class="form-group condition-group">
-                <label class="condition-label">商品の状態</label>
-                <select name="condition_id" id="condition_select" class="condition-select" style="background-image: url('<?php echo e(asset('storage/items/triangle.svg')); ?>');">
-                    <option value="" class="default-option" disabled selected hidden>選択してください</option>
-                    <?php $__currentLoopData = $conditions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $condition): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                        <option value="<?php echo e($condition->id); ?>"><?php echo e($condition->condition); ?></option>
-                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                </select>
-            </div>
+    <label class="condition-label">商品の状態</label>
+    <div class="custom-condition-select">
+        <div class="selected-option" id="selectedCondition">選択してください</div>
+        <div class="dropdown-options" id="dropdownOptions">
+            <?php $__currentLoopData = $conditions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $condition): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <div class="dropdown-option" data-value="<?php echo e($condition->id); ?>">
+                    <span class="check-icon"></span><?php echo e($condition->condition); ?>
+
+                </div>
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+        </div>
+        <input type="hidden" name="condition_id" id="conditionInput">
+    </div>
+</div>
 
             <div class="form-group product-name-description">
                 <h2>商品名と説明</h2>
@@ -74,14 +80,13 @@
 <?php $__env->startPush('scripts'); ?>
 <script>
 document.addEventListener("DOMContentLoaded", function () {
+    // **カテゴリー選択の処理**
     const categoryOptions = document.querySelectorAll(".category-option");
 
     categoryOptions.forEach(option => {
         option.addEventListener("click", function () {
             const checkbox = this.querySelector(".category-checkbox");
-            checkbox.checked = !checkbox.checked; // チェックのON/OFFを切り替え
-
-            // クラスを切り替えて選択状態の見た目を変更
+            checkbox.checked = !checkbox.checked;
             this.classList.toggle("selected", checkbox.checked);
         });
     });
@@ -90,7 +95,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const selectCondition = document.getElementById("condition_select");
 
     if (selectCondition) {
-        // **オプションの元のテキストを dataset に保存**
         Array.from(selectCondition.options).forEach(option => {
             option.dataset.originalText = option.textContent;
         });
@@ -106,9 +110,60 @@ document.addEventListener("DOMContentLoaded", function () {
         selectCondition.addEventListener("mouseout", function (event) {
             if (event.target.tagName === "OPTION") {
                 event.target.textContent = event.target.dataset.originalText;
+            }
+        });
+
+        // **選択時にドロップダウンを閉じる**
+        selectCondition.addEventListener("change", function () {
+            setTimeout(() => {
+                selectCondition.blur(); // フォーカスを外して閉じる
+            }, 100);
+        });
+    }
+
+    // **カスタムドロップダウンの処理**
+    const selectBox = document.querySelector(".custom-condition-select");
+    const selectedOption = document.getElementById("selectedCondition");
+    const dropdownOptions = document.getElementById("dropdownOptions");
+    const options = document.querySelectorAll(".dropdown-option");
+    const conditionInput = document.getElementById("conditionInput");
+
+    if (selectBox) {
+        selectBox.addEventListener("click", function (event) {
+            event.stopPropagation();
+            dropdownOptions.style.display = dropdownOptions.style.display === "block" ? "none" : "block";
+        });
+
+        options.forEach(option => {
+            option.addEventListener("click", function () {
+                options.forEach(opt => opt.classList.remove("selected"));
+                option.classList.add("selected");
+
+                // **選択された項目を表示**
+                selectedOption.textContent = option.textContent.trim();
+                conditionInput.value = option.dataset.value;
+
+                // **ドロップダウンを閉じる**
+                dropdownOptions.style.display = "none";
+            });
+        });
+
+        // **外部クリックでドロップダウンを閉じる**
+        document.addEventListener("click", function (event) {
+            if (!selectBox.contains(event.target) && !dropdownOptions.contains(event.target)) {
+                dropdownOptions.style.display = "none";
+            }
+        });
+
+        // **選択時に自動で閉じる**
+        dropdownOptions.addEventListener("click", function () {
+            setTimeout(() => {
+                dropdownOptions.style.display = "none";
+            }, 100);
         });
     }
 });
+
 
 </script>
 <?php $__env->stopPush(); ?>
