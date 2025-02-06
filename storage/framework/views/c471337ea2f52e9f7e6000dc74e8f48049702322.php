@@ -37,20 +37,20 @@
             </div>
 
             <div class="form-group condition-group">
-    <label class="condition-label">商品の状態</label>
-    <div class="custom-condition-select">
-        <div class="selected-option" id="selectedCondition">選択してください</div>
-        <div class="dropdown-options" id="dropdownOptions">
-            <?php $__currentLoopData = $conditions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $condition): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                <div class="dropdown-option" data-value="<?php echo e($condition->id); ?>">
-                    <span class="check-icon"></span><?php echo e($condition->condition); ?>
+                <label class="condition-label">商品の状態</label>
+                <div class="custom-condition-select">
+                    <div class="selected-option" id="selectedCondition">選択してください</div>
+                        <div class="dropdown-options" id="dropdownOptions">
+                        <?php $__currentLoopData = $conditions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $condition): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <div class="dropdown-option" data-value="<?php echo e($condition->id); ?>">
+                            <span class="check-icon"></span><?php echo e($condition->condition); ?>
 
+                            </div>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                    </div>
+                    <input type="hidden" name="condition_id" id="conditionInput">
                 </div>
-            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-        </div>
-        <input type="hidden" name="condition_id" id="conditionInput">
-    </div>
-</div>
+            </div>
 
             <div class="form-group product-name-description">
                 <h2>商品名と説明</h2>

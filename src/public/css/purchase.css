@@ -69,6 +69,10 @@ body {
     line-height: 38.73px;
 }
 
+
+
+
+
 .payment-method {
     margin-top: 40px;
     color: rgba(0, 0, 0, 1);
@@ -83,112 +87,69 @@ body {
     margin-left: 20px;
 }
 
-
-
-
-
-
-.payment-select option {
-    background: rgba(99, 103, 105, 1);
-    border: 1.5px solid rgba(177, 177, 177, 1);
-    padding-left: 25px;
-}
-
-.payment-select:focus {
-    border-color: #007bff;
-}
-
-.payment-select option:hover {
-    content: "✓ ";
-}
-
-.convenience-option,.card-option {
-    font-size: 12px;
-    font-weight: 600;
-    line-height: 14.52px;
-    color: rgba(234, 234, 234, 1);
-}
-
-
-
-.custom-payment-select {
-    position: relative;
+.payment-select {
     width: 265px;
     height: 31px;
-    margin-top: 5px;
-    margin-bottom: 50px;
-    padding: 15px 20px 16px 15px;
+    border-radius: 5px;
     gap: 0px;
-    border-radius: 4px;
+    text-align: left;
     border: 1px solid rgba(95, 95, 95, 1);
+    margin-top: 5px;
+    margin-left: 80px;
+    margin-bottom: 50px;
+    padding-left: 15px;
     font-size: 16px;
     font-weight: 700;
     line-height: 19.36px;
     text-align: left;
-    color: rgba(234, 234, 234, 1);
+    color: rgba(95, 95, 95, 1);
+    background-color: rgba(255, 255, 255, 1);
     cursor: pointer;
     -webkit-appearance: none;
     -moz-appearance: none;
-    background-image: url('/storage/items/triangle.svg'); /* ▼ の画像 */
+    background-image: url('/storage/items/triangle.svg');
     background-repeat: no-repeat;
     background-position: right 10px center;
-    background-size: 10px 10px;
+    background-size: 13px 14px;
 }
 
-.selected-option {
-    background-color: rgba(255, 255, 255, 1);
-    border-radius: 4px;
-}
-
-.dropdown-options {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    background-color: rgba(177, 177, 177, 1);
-    border: 1.5px solid rgba(177, 177, 177, 1);
-    border-top: none;
-    display: none;
-    z-index: 10;
+.payment-select option {
+    padding-left: 25px;
     font-size: 12px;
     font-weight: 600;
     line-height: 14.52px;
     text-align: left;
-}
-
-.dropdown-option {
-    padding: 10px 15px;
-    cursor: pointer;
+    background: rgba(177, 177, 177, 1);
+    border: 1.5px solid rgba(177, 177, 177, 1);
+    color: rgba(255, 255, 255, 1);
     position: relative;
-    display: flex;
-    align-items: center;
-    background-color: rgba(177, 177, 177, 1);
 }
 
-/* ホバー時の背景色と ✓ の追加 */
-.dropdown-option:hover {
+/* ✓ を表示 */
+.payment-select option:hover::before {
+    content: "✓ ";
+    position: absolute;
+    left: 5px;
+    color: white;
+}
+
+/* 選択中のオプション */
+.payment-select option:checked {
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 14.52px;
     background: rgba(85, 153, 235, 1);
     color: rgba(255, 255, 255, 1);
 }
 
-.dropdown-option:hover .check-icon {
-    background: url('/storage/items/check.svg') no-repeat center;
-    background-size: contain;
-    display: inline-block;
-    width: 15px;
-    height: 15px;
-    margin-right: 10px;
+/* 選択されていないときのデフォルト表示 */
+.default-option {
+    color: rgba(95, 95, 95, 0.7);
+    background: rgba(177, 177, 177, 1);
 }
 
-/* 選択中のアイテム */
-.dropdown-option.selected .check-icon {
-    background: url('/storage/items/check.svg') no-repeat center;
-    background-size: contain;
-    display: inline-block;
-    width: 15px;
-    height: 15px;
-    margin-right: 10px;
-}
+
+
 
 
 
@@ -329,3 +290,80 @@ body {
     background-color: rgba(255, 85, 85, 1);
 }
 
+
+
+
+
+
+.custom-payment-select {
+    position: relative;
+    width: 265px;
+    height: 40px;
+    border-radius: 5px;
+    border: 1px solid rgba(95, 95, 95, 1);
+    padding: 10px 15px;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 19.36px;
+    color: rgba(95, 95, 95, 1);
+    background-color: rgba(255, 255, 255, 1);
+    cursor: pointer;
+    background-image: url('/storage/items/triangle.svg');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 13px 14px;
+    margin-bottom: 50px;
+    margin-left: 50px;
+}
+
+.selected-option {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 4px;
+}
+
+.dropdown-options {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: rgba(177, 177, 177, 1);
+    border: 1.5px solid rgba(177, 177, 177, 1);
+    border-top: none;
+    display: none;
+    z-index: 10;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: left;
+}
+
+.dropdown-option {
+    padding: 10px 15px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    position: relative;
+    background-color: rgba(177, 177, 177, 1);
+    color: rgba(255, 255, 255, 1);
+}
+
+/* ホバー時の背景色と ✓ の追加 */
+.dropdown-option:hover {
+    background: rgba(85, 153, 235, 1);
+    color: rgba(255, 255, 255, 1);
+}
+
+.dropdown-option:hover .check-icon {
+    background: url('/storage/items/check.svg') no-repeat center;
+    background-size: contain;
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    margin-right: 10px;
+}
+
+/* 選択中のアイテムは✓を消す */
+.dropdown-option.selected .check-icon {
+    display: none;
+}

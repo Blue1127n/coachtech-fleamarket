@@ -18,22 +18,15 @@
                 </div>
         </div>
 
-        <?php if($errors->any()): ?>
-    <div class="alert alert-danger">
-        <ul>
-            <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                <li><?php echo e($error); ?></li>
-            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-        </ul>
-    </div>
-<?php endif; ?>
-
-<div class="payment-method">
+        <div class="payment-method">
     <h2>支払い方法</h2>
     <form action="<?php echo e(route('item.processPurchase', ['item_id' => $item->id])); ?>" method="POST">
         <?php echo csrf_field(); ?>
         <div class="custom-payment-select">
-            <div class="selected-option" id="selectedPayment">選択してください</div>
+            <div class="selected-option" id="selectedPayment">
+                <?php echo e(old('payment_method', '選択してください')); ?>
+
+            </div>
             <div class="dropdown-options" id="paymentDropdown">
                 <div class="dropdown-option" data-value="コンビニ払い">
                     <span class="check-icon"></span>コンビニ払い
@@ -42,7 +35,7 @@
                     <span class="check-icon"></span>カード支払い
                 </div>
             </div>
-            <input type="hidden" name="payment_method" id="paymentInput">
+            <input type="hidden" name="payment_method" id="paymentInput" value="<?php echo e(old('payment_method')); ?>">
         </div>
         <?php $__errorArgs = ['payment_method'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -57,6 +50,8 @@ unset($__errorArgs, $__bag); ?>
     </form>
 </div>
 
+
+
         <div class="shipping-address">
             <h2>配送先</h2>
             <div class="shipping-content">
@@ -64,7 +59,6 @@ unset($__errorArgs, $__bag); ?>
                     <p>〒 <?php echo e(preg_replace('/(\d{3})(\d{4})/', '$1-$2', $postalCode)); ?></p>
                     <p><?php echo e($address); ?></p>
                     <?php if(!empty($building)): ?>
-                        <p><?php echo e($building); ?></p>
                     <?php endif; ?>
                 </div>
                 <a href="<?php echo e(route('item.changeAddress', ['item_id' => $item->id])); ?>" class="change-address-link">変更する</a>
@@ -103,52 +97,64 @@ unset($__errorArgs, $__bag); ?>
 <?php $__env->startPush('scripts'); ?>
 <script>
 document.addEventListener("DOMContentLoaded", function () {
-    const paymentSelectBox = document.querySelector(".custom-payment-select");
-    const selectedPaymentOption = document.getElementById("selectedPayment");
-    const paymentDropdownOptions = document.getElementById("paymentDropdown");
-    const paymentOptions = document.querySelectorAll(".dropdown-option");
+    const selectBox = document.querySelector(".custom-payment-select");
+    const selectedOption = document.getElementById("selectedPayment");
+    const dropdownOptions = document.getElementById("paymentDropdown");
+    const options = document.querySelectorAll(".dropdown-option");
     const paymentInput = document.getElementById("paymentInput");
 
-    if (paymentSelectBox) {
-        paymentSelectBox.addEventListener("click", function (event) {
+    if (selectBox) {
+        // **クリックでプルダウン表示**
+        selectBox.addEventListener("click", function (event) {
             event.stopPropagation();
-            paymentDropdownOptions.style.display = paymentDropdownOptions.style.display === "block" ? "none" : "block";
+            dropdownOptions.style.display = dropdownOptions.style.display === "block" ? "none" : "block";
         });
 
-        paymentOptions.forEach(option => {
+        options.forEach(option => {
             option.addEventListener("click", function () {
                 // すべてのオプションの "✓" を削除
-                paymentOptions.forEach(opt => opt.classList.remove("selected"));
+                options.forEach(opt => opt.classList.remove("selected"));
 
                 // 選択されたオプションに "✓" を追加
                 option.classList.add("selected");
 
                 // **選択した項目を表示**
-                selectedPaymentOption.textContent = option.textContent.trim();
+                selectedOption.textContent = option.textContent.trim();
                 paymentInput.value = option.dataset.value;
 
-                // **選択後にドロップダウンを確実に閉じる**
+                // **選択後にドロップダウンを閉じる**
                 setTimeout(() => {
-                    paymentDropdownOptions.style.display = "none";
+                    dropdownOptions.style.display = "none";
                 }, 100);
+            });
+
+            // **ポインターをかざすと ✓ を表示**
+            option.addEventListener("mouseenter", function () {
+                this.querySelector(".check-icon").style.display = "inline-block";
+            });
+
+            // **ポインターを外すと ✓ を非表示**
+            option.addEventListener("mouseleave", function () {
+                this.querySelector(".check-icon").style.display = "none";
             });
         });
 
         // **外部クリックでドロップダウンを閉じる**
         document.addEventListener("click", function (event) {
-            if (!paymentSelectBox.contains(event.target) && !paymentDropdownOptions.contains(event.target)) {
-                paymentDropdownOptions.style.display = "none";
+            if (!selectBox.contains(event.target) && !dropdownOptions.contains(event.target)) {
+                dropdownOptions.style.display = "none";
             }
         });
 
         // **キーボードの "Escape" でもドロップダウンを閉じる**
         document.addEventListener("keydown", function (event) {
             if (event.key === "Escape") {
-                paymentDropdownOptions.style.display = "none";
+                dropdownOptions.style.display = "none";
             }
         });
     }
 });
+
 </script>
 <?php $__env->stopPush(); ?>
 
