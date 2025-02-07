@@ -8,20 +8,20 @@
 
 @section('content')
 <div class="purchase-container">
-        <div class="purchase-details">
-            <div class="item-info">
-                <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->name }}" class="item-image">
-                <div class="item-details">
-                    <h1 class="item-name">{{ $item->name }}</h1>
-                    <p class="item-price">
-                        <span class="item-price-symbol">¥</span>
-                        <span class="item-price-value">{{ number_format($item->price) }}</span>
-                    </p>
-                </div>
+    <div class="purchase-details">
+        <div class="item-info">
+            <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->name }}" class="item-image">
+            <div class="item-details">
+                <h1 class="item-name">{{ $item->name }}</h1>
+                <p class="item-price">
+                    <span class="item-price-symbol">¥</span>
+                    <span class="item-price-value">{{ number_format($item->price) }}</span>
+                </p>
             </div>
+        </div>
 
         <form action="{{ route('item.processPurchase', ['item_id' => $item->id]) }}" method="POST">
-        @csrf
+            @csrf
 
             <div class="payment-method">
                 <h2>支払い方法</h2>
@@ -57,29 +57,29 @@
                     <a href="{{ route('item.changeAddress', ['item_id' => $item->id]) }}" class="change-address-link">変更する</a>
                 </div>
             </div>
+    </div>
+
+    <div class="summary-container">
+        <div class="summary">
+            <table class="summary-table">
+                <tr>
+                    <td>商品代金</td>
+                    <td class="price">
+                        <span class="price-symbol">¥</span>
+                        <span class="price-value">{{ number_format($item->price) }}</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>支払い方法</td>
+                    <td id="selected-method">未選択</td>
+                </tr>
+            </table>
         </div>
 
-        <div class="summary-container">
-            <div class="summary">
-                <table class="summary-table">
-                    <tr>
-                        <td>商品代金</td>
-                        <td class="price">
-                            <span class="price-symbol">¥</span>
-                            <span class="price-value">{{ number_format($item->price) }}</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>支払い方法</td>
-                        <td id="selected-method">未選択</td>
-                    </tr>
-                </table>
-            </div>
-
-            <div class="summary-button">
-                <button type="submit" class="purchase-summary-btn">購入する</button>
-            </div>
+        <div class="summary-button">
+            <button type="submit" class="purchase-summary-btn">購入する</button>
         </div>
+    </div>
     </form>
 </div>
 @endsection
@@ -149,6 +149,5 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 });
-
 </script>
 @endpush

@@ -104,7 +104,7 @@
             <p>商品へのコメント</p>
             <textarea name="content" id="comment-content">{{ old('content') }}</textarea>
             @if ($errors->has('content'))
-        <p class="error-message" style="color: red;">{{ $errors->first('content') }}</p>
+        <p class="error-message" style="color: blue;">{{ $errors->first('content') }}</p>
     @endif
 
             <button type="submit" class="comment-submit-btn">コメントを送信する</button>
@@ -124,7 +124,7 @@
     const commentCountElement = document.getElementById('comment-count'); // コメントアイコンの数
     const commentHeading = document.querySelector('.comments-section h2'); // 「コメント (0)」
 
-    // いいね機能
+    // **いいね機能**
     if (likeForm) {
         likeForm.addEventListener('submit', function (event) {
             event.preventDefault();
@@ -148,14 +148,14 @@
                     }
                     document.getElementById('like-count').textContent = data.likeCount;
                 }
-            })
+            });
         });
     }
 
-    // コメント機能
+    // **コメント機能**
     if (commentForm) {
         commentForm.addEventListener('submit', function (event) {
-            event.preventDefault();
+            event.preventDefault(); // フォーム送信を防ぐ
 
             // **未入力チェック（ここでバリデーションを行う）**
             if (!commentContent.value.trim()) {
@@ -180,7 +180,13 @@
                     });
                 }
                 if (response.status === 422) {
-                    return response.json().then(data => { throw data.errors; });
+                    return response.json().then(data => {
+                        // **エラーメッセージを表示**
+                        if (data.errors && data.errors.content) {
+                            displayErrorMessage(data.errors.content[0]); 
+                        }
+                        throw new Error('Validation Error');
+                    });
                 }
                 return response.json();
             })
@@ -209,20 +215,13 @@
                     document.querySelector('.error-message')?.remove();
                 }
             })
-            .catch(errors => {
-                let errorMessage = 'コメントの投稿に失敗しました';
-                if (errors.content) {
-                    errorMessage = errors.content[0];
-                }
-
-                displayErrorMessage(errorMessage);
-            });
+            .catch(error => console.error("コメントエラー:", error));
         });
     }
 
     // **エラーメッセージを表示する関数**
     function displayErrorMessage(message) {
-        document.querySelector('.error-message')?.remove();
+        document.querySelector('.error-message')?.remove(); // 既存のエラーメッセージを削除
 
         let errorElement = document.createElement('p');
         errorElement.classList.add('error-message');
@@ -231,5 +230,6 @@
         commentForm.appendChild(errorElement);
     }
 });
+
 </script>
 @endpush
