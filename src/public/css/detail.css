@@ -271,6 +271,11 @@ button.like-button,.like-section {
     background: rgba(229, 229, 229, 1);
 }
 
+.error-message {
+    color: rgba(255, 85, 85, 1);
+    font-size: 10px;
+}
+
 .comment-submit-btn {
     display: inline-block;
     width: 570px;
