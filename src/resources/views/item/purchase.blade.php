@@ -48,16 +48,28 @@
                 <h2>配送先</h2>
                 <div class="shipping-content">
                     <div class="shipping-info">
-                        <p>〒 {{ preg_replace('/(\d{3})(\d{4})/', '$1-$2', $postalCode) }}</p>
-                        <p>{{ $address }}</p>
+                        <p>〒 {{ preg_replace('/(\d{3})(\d{4})/', '$1-$2', old('postal_code', $postalCode)) }}</p>
+                        @error('postal_code')
+                            <p class="error-message">{{ $message }}</p>
+                        @enderror
+                        <p>{{ old('address', $address) }}</p>
+                        @error('address')
+                            <p class="error-message">{{ $message }}</p>
+                        @enderror
                         @if(!empty(trim($building)))
-                            <p>{{ $building }}</p>
+                            <p>{{ old('building', $building) }}</p>
                         @endif
                     </div>
+
+                    <input type="hidden" name="postal_code" value="{{ old('postal_code', $postalCode) }}">
+                    <input type="hidden" name="address" value="{{ old('address', $address) }}">
+                    <input type="hidden" name="building" value="{{ old('building', $building) }}">
+
                     <a href="{{ route('item.changeAddress', ['item_id' => $item->id]) }}" class="change-address-link">変更する</a>
                 </div>
             </div>
-    </div>
+        </div>
+
 
     <div class="summary-container">
         <div class="summary">

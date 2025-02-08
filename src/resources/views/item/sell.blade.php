@@ -20,6 +20,9 @@
                         <input type="file" name="image" id="imageInput" accept="image/*" class="image-input">
                         <label for="imageInput" class="image-button">画像を選択する</label>
                     </div>
+                    @error('image')
+                        <p class="error-message">{{ $message }}</p>
+                    @enderror
             </div>
 
             <div class="form-group product-details">
@@ -36,6 +39,9 @@
                         </label>
                     @endforeach
                 </div>
+                @error('category')
+                    <p class="error-message">{{ $message }}</p>
+                @enderror
             </div>
 
             <div class="form-group condition-group">
@@ -49,8 +55,11 @@
                             </div>
                         @endforeach
                     </div>
-                    <input type="hidden" name="condition_id" id="conditionInput">
+                    <input type="hidden" name="condition" id="conditionInput">
                 </div>
+                @error('condition')
+                    <p class="error-message">{{ $message }}</p>
+                @enderror
             </div>
 
             <div class="form-group product-name-description">
@@ -59,17 +68,26 @@
 
             <div class="form-group product-name">
                 <label class="name-label">商品名</label>
-                <input type="text" name="name" class="name-input" required>
+                <input type="text" name="name" class="name-input">
+                @error('name')
+                    <p class="error-message">{{ $message }}</p>
+                @enderror
             </div>
 
             <div class="form-group product-description">
                 <label class="description-label">商品の説明</label>
-                <textarea name="description" class="description-textarea" rows="4" required></textarea>
+                <textarea name="description" class="description-textarea" rows="4"></textarea>
+                @error('description')
+                    <p class="error-message">{{ $message }}</p>
+                @enderror
             </div>
 
             <div class="form-group price">
                 <label class="price-label">販売価格</label>
-                <input type="number" name="price" class="price-input" required placeholder="¥">
+                <input type="number" name="price" class="price-input" placeholder="¥">
+                @error('price')
+                    <p class="error-message">{{ $message }}</p>
+                @enderror
             </div>
 
             <button type="submit" class="submit-button">出品する</button>
@@ -81,6 +99,45 @@
 @push('scripts')
 <script>
 document.addEventListener("DOMContentLoaded", function () {
+
+    // CSRFトークンを取得
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+    document.querySelector(".submit-button").addEventListener("click", function (event) {
+        //event.preventDefault(); // フォームのデフォルト送信を防ぐ
+
+        const form = document.querySelector("form");
+        const formData = new FormData(form);
+
+        fetch(form.action, {
+            method: "POST",
+            headers: {
+                "X-CSRF-TOKEN": csrfToken
+            },
+            body: formData
+        })
+        .then(response => {
+            if (!response.ok) {
+                return response.text().then(text => {
+                    console.error("エラーの詳細:", text);
+                    throw new Error(text);
+                });
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log("成功:", data);
+            alert("商品が出品されました！");
+            window.location.href = "/sell"; // 成功後にリダイレクト
+        })
+        .catch(error => {
+            console.error("エラー:", error);
+            error.response?.text().then(text => console.error("サーバーエラー詳細:", text));
+            alert("エラーが発生しました。もう一度試してください。");
+        });
+    });
+});
+
     // **カテゴリー選択の処理**
     const categoryOptions = document.querySelectorAll(".category-option");
 
@@ -163,8 +220,5 @@ document.addEventListener("DOMContentLoaded", function () {
             }, 100);
         });
     }
-});
-
-
 </script>
 @endpush

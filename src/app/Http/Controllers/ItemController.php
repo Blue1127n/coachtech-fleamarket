@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\CommentRequest;
 use App\Http\Requests\AddressChangeRequest;
 use App\Http\Requests\PurchaseRequest;
+use App\Http\Requests\ExhibitionRequest;
 use App\Models\Item;
 use App\Models\Category;
 use App\Models\Condition;
@@ -124,10 +125,6 @@ class ItemController extends Controller
         // いいねの合計数を取得
         $likeCount = $item->likes()->count();
 
-        // デバッグ用ログ
-        \Log::info('Like Count:', ['likeCount' => $likeCount]);
-        \Log::info('Liked State:', ['liked' => $liked]);
-
         // セッションにフラッシュデータとして保存
         return response()->json([
             'liked' => $liked,
@@ -142,17 +139,6 @@ class ItemController extends Controller
             'success' => false,
             'redirect' => route('login'),
         ], 401);
-    }
-
-    $validator = \Validator::make($request->all(), [
-        'content' => 'required|max:255',
-    ]);
-
-    if ($validator->fails()) {
-        return response()->json([
-            'success' => false,
-            'errors' => $validator->errors(),
-        ], 422);
     }
 
     $item = Item::findOrFail($item_id);
@@ -206,16 +192,12 @@ class ItemController extends Controller
                         ? $transaction->shipping_building
                         : ($transaction ? null : (!empty($user->building) ? $user->building : null));
 
-        \Log::info('📌 取得した建物名', ['building' => $building]);
-
         return view('item.purchase', compact('item', 'postalCode', 'address', 'building'));
     }
 
     // 購入処理 (POST) - フォームリクエスト適用
     public function processPurchase(PurchaseRequest $request, $item_id)
 {
-    \Log::info('🚀 processPurchase が呼ばれた!', ['item_id' => $item_id, 'request' => $request->all()]);
-
     // **ログインユーザー情報**
     $user = auth()->user();
 
@@ -227,11 +209,6 @@ class ItemController extends Controller
             'payment_method' => $request->payment_method,
         ]
     );
-
-    \Log::info('✅ 購入処理: `transactions` テーブルに保存', [
-        'transaction_id' => $transaction->id,
-        'payment_method' => $transaction->payment_method
-    ]);
 
     return redirect()->route('payment.page', ['item_id' => $item_id])->with('success', '支払い方法が選択されました');
 }
@@ -266,8 +243,6 @@ public function updateAddress(AddressChangeRequest $request, $item_id)
 {
     $user = auth()->user();
 
-    \Log::info('🚀 updateAddress() が呼ばれた!', ['item_id' => $item_id, 'user_id' => $user->id]);
-
     // **transactions テーブルを更新**
     $transaction = Transaction::updateOrCreate(
         ['item_id' => $item_id, 'buyer_id' => $user->id],
@@ -280,13 +255,6 @@ public function updateAddress(AddressChangeRequest $request, $item_id)
         ]
     );
 
-    \Log::info('✅ transactions テーブルに保存!', [
-        'transaction_id' => $transaction->id,
-        'postal_code' => $transaction->shipping_postal_code,
-        'address' => $transaction->shipping_address,
-        'building' => $transaction->shipping_building
-    ]);
-
     return redirect()->route('item.purchase', ['item_id' => $item_id])->with('success', '住所が更新されました');
 }
 
@@ -297,4 +265,37 @@ public function create()
 
     return view('item.sell', compact('categories', 'conditions'));
 }
+
+public function store(ExhibitionRequest $request)
+{
+
+    if (!Auth::check()) {
+        return response()->json(['error' => 'ログインしていません'], 403);
+    }
+
+    // 商品画像を保存
+    $imagePath = $request->file('image')->store('items', 'public');
+
+    // 商品データを保存
+    $item = Item::create([
+        'user_id' => Auth::id(),
+        'name' => $request->name,
+        'description' => $request->description,
+        'price' => $request->price,
+        'condition_id' => $request->condition,
+        'image' => $imagePath,
+        'brand' => null,
+    ]);
+
+    // カテゴリーの保存
+    if ($request->has('category')) {
+        $item->categories()->attach($request->category);
+    }
+
+    return response()->json([
+        'message' => '商品が出品されました',
+        'item' => $item
+    ]);
+}
+
 }

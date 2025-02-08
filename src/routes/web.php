@@ -60,8 +60,9 @@ Route::post('/purchase/{item_id}', [ItemController::class, 'processPurchase'])->
 Route::get('/purchase/address/{item_id}', [ItemController::class, 'changeAddress'])->name('item.changeAddress'); // 住所変更
 Route::post('/purchase/address/{item_id}', [ItemController::class, 'updateAddress'])->name('item.updateAddress');
 Route::get('/profile/purchases', [UserProfileController::class, 'purchasedItems'])->name('profile.purchases');
-Route::get('/sell', [ItemController::class, 'create'])->name('item.create'); // 商品出品
-Route::post('/sell', [ItemController::class, 'store'])->name('item.store');
+Route::get('/sell', [ItemController::class, 'create'])->middleware('auth')->name('item.create');
+Route::post('/sell', [ItemController::class, 'store'])->middleware('auth')->name('item.store');
+
 
 // 決済関連 (追加)
 Route::middleware(['auth'])->group(function () {
