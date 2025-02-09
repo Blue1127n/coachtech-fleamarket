@@ -133,7 +133,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (fileInput.files.length > 0) {
             formData.append("image", fileInput.files[0]);
         } else {
-            console.warn("⚠️ 画像が選択されていません！");
+            console.warn("画像が選択されていません！");
         }
 
         // **デバッグ用: 送信データを確認**
@@ -169,7 +169,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     }
                 });
             } else {
-                alert("予期しないエラーが発生しました。");
+                alert("予期しないエラーが発生しました: " + JSON.stringify(error));
             }
         }
     });

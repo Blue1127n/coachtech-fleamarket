@@ -268,14 +268,18 @@ public function create()
 
 public function store(ExhibitionRequest $request)
 {
-    dd($request->all()); // デバッグ用
-
     if (!Auth::check()) {
         return response()->json(['error' => 'ログインしていません'], 403);
     }
 
+    if (!$request->hasFile('image')) {
+        return response()->json(['error' => '商品画像がアップロードされていません'], 422);
+    }
+
     // 商品画像を保存
     $imagePath = $request->file('image')->store('items', 'public');
+
+    dd($imagePath);
 
     // 商品データを保存
     $item = Item::create([
@@ -290,7 +294,8 @@ public function store(ExhibitionRequest $request)
 
     // カテゴリーの保存
     if ($request->has('category')) {
-        $item->categories()->attach($request->category);
+        $categories = is_array($request->category) ? $request->category : [$request->category];
+        $item->categories()->attach($categories);
     }
 
     return response()->json([
