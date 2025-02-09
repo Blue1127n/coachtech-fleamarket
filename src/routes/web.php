@@ -80,3 +80,6 @@ Route::middleware(['auth', 'verified', 'profile.complete'])->group(function () {
     Route::get('/mypage/items', [UserProfileController::class, 'listItems'])->name('mypage.items'); // 購入・出品商品一覧（パラメータで切り替え）
 });
 
+Route::get('/phpinfo', function() {
+    phpinfo();
+});

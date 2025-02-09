@@ -6,10 +6,11 @@ body {
     color: rgba(0, 0, 0, 1);
     margin: 0;
     padding: 0;
+    max-width: 1512px;
 }
 
 .sell-container {
-    max-width: 1512px;
+    max-width: 680px;
     margin: 0 auto;
     padding: 20px;
 }
@@ -20,10 +21,6 @@ body {
     font-weight: 700;
     line-height: 43.57px;
     margin-bottom: 20px;
-}
-
-.sell-container {
-    max-width: 680px;
 }
 
 .form-group {
@@ -82,9 +79,12 @@ body {
 }
 
 .image-button:hover {
-    background-color: rgba(255, 85, 85, 1);
-    color: rgba(255, 255, 255, 1);
+    background-color: rgba(255, 255, 255, 1);
 }
+
+
+
+
 
 .product-details {
     font-size: 30px;
@@ -302,3 +302,8 @@ body {
     margin-right: 10px;
 }
 
+.error-message {
+    color: rgba(255, 86, 85, 1);
+    font-size: 14px;
+    margin-top: 10px;
+}

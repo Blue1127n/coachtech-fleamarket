@@ -10,7 +10,7 @@
 <div class="sell-container">
     <h2 class="title">商品を出品</h2>
 
-    <form action="{{ route('item.store') }}" method="POST" enctype="multipart/form-data">
+    <form id="sell-form" action="{{ route('item.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
 
         <div class="form-group">
@@ -20,9 +20,7 @@
                         <input type="file" name="image" id="imageInput" accept="image/*" class="image-input">
                         <label for="imageInput" class="image-button">画像を選択する</label>
                     </div>
-                    @error('image')
-                        <p class="error-message">{{ $message }}</p>
-                    @enderror
+                    <div class="error-message" id="error-image"></div>
             </div>
 
             <div class="form-group product-details">
@@ -39,9 +37,7 @@
                         </label>
                     @endforeach
                 </div>
-                @error('category')
-                    <p class="error-message">{{ $message }}</p>
-                @enderror
+                <div class="error-message" id="error-category"></div>
             </div>
 
             <div class="form-group condition-group">
@@ -57,9 +53,7 @@
                     </div>
                     <input type="hidden" name="condition" id="conditionInput">
                 </div>
-                @error('condition')
-                    <p class="error-message">{{ $message }}</p>
-                @enderror
+                <div class="error-message" id="error-condition"></div>
             </div>
 
             <div class="form-group product-name-description">
@@ -69,25 +63,19 @@
             <div class="form-group product-name">
                 <label class="name-label">商品名</label>
                 <input type="text" name="name" class="name-input">
-                @error('name')
-                    <p class="error-message">{{ $message }}</p>
-                @enderror
+                <div class="error-message" id="error-name"></div>
             </div>
 
             <div class="form-group product-description">
                 <label class="description-label">商品の説明</label>
                 <textarea name="description" class="description-textarea" rows="4"></textarea>
-                @error('description')
-                    <p class="error-message">{{ $message }}</p>
-                @enderror
+                <div class="error-message" id="error-description"></div>
             </div>
 
             <div class="form-group price">
                 <label class="price-label">販売価格</label>
                 <input type="number" name="price" class="price-input" placeholder="¥">
-                @error('price')
-                    <p class="error-message">{{ $message }}</p>
-                @enderror
+                <div class="error-message" id="error-price"></div>
             </div>
 
             <button type="submit" class="submit-button">出品する</button>
@@ -99,42 +87,91 @@
 @push('scripts')
 <script>
 document.addEventListener("DOMContentLoaded", function () {
+    document.querySelector(".submit-button").addEventListener("click", async function (event) {
+        event.preventDefault(); // フォームのデフォルト送信を防ぐ
 
-    // CSRFトークンを取得
-    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        const form = document.querySelector("#sell-form");
+        const formData = new FormData(form); // フォームデータを取得
+        const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+        const fileInput = document.querySelector('input[name="image"]');
 
-    document.querySelector(".submit-button").addEventListener("click", function (event) {
-        //event.preventDefault(); // フォームのデフォルト送信を防ぐ
+        // **CSRFトークンを追加**
+        formData.append("_token", csrfToken);
 
-        const form = document.querySelector("form");
-        const formData = new FormData(form);
+        // **既存のエラーメッセージをクリア**
+        document.querySelectorAll(".error-message").forEach(el => el.textContent = "");
 
-        fetch(form.action, {
-            method: "POST",
-            headers: {
-                "X-CSRF-TOKEN": csrfToken
-            },
-            body: formData
-        })
-        .then(response => {
+        // **未入力チェック（フロントエンドでバリデーション）**
+        let error = false;
+
+        if (!formData.get("name")) {
+            document.getElementById("error-name").textContent = "商品名を入力してください";
+            error = true;
+        }
+        if (!formData.get("description")) {
+            document.getElementById("error-description").textContent = "商品説明を入力してください";
+            error = true;
+        }
+        if (!formData.get("price")) {
+            document.getElementById("error-price").textContent = "価格を入力してください";
+            error = true;
+        }
+        if (!formData.get("condition")) {
+            document.getElementById("error-condition").textContent = "商品の状態を選択してください";
+            error = true;
+        }
+        if (fileInput.files.length === 0) {
+            document.getElementById("error-image").textContent = "商品画像をアップロードしてください";
+            error = true;
+        }
+
+        if (error) {
+            return; // バリデーションエラーがあれば送信しない
+        }
+
+        // **画像が正しく追加されているか確認**
+        if (fileInput.files.length > 0) {
+            formData.append("image", fileInput.files[0]);
+        } else {
+            console.warn("⚠️ 画像が選択されていません！");
+        }
+
+        // **デバッグ用: 送信データを確認**
+        console.log("送信データ:", Object.fromEntries(formData.entries()));
+
+        try {
+            const response = await fetch(form.action, {
+                method: "POST",
+                body: formData // ヘッダーを設定しない（自動で multipart/form-data になる）
+            });
+
+            const data = await response.json();
+
             if (!response.ok) {
-                return response.text().then(text => {
-                    console.error("エラーの詳細:", text);
-                    throw new Error(text);
-                });
+                throw data; // バリデーションエラーを投げる
             }
-            return response.json();
-        })
-        .then(data => {
+
             console.log("成功:", data);
             alert("商品が出品されました！");
-            window.location.href = "/sell"; // 成功後にリダイレクト
-        })
-        .catch(error => {
-            console.error("エラー:", error);
-            error.response?.text().then(text => console.error("サーバーエラー詳細:", text));
-            alert("エラーが発生しました。もう一度試してください。");
-        });
+            window.location.href = "/sell"; // 成功時にリダイレクト
+
+        } catch (error) {
+            console.error("エラー発生:", error);
+
+            if (error.errors) {
+                console.log("エラーデータ:", error.errors); // エラーの詳細をコンソールに表示
+
+                Object.keys(error.errors).forEach(key => {
+                    const errorDiv = document.getElementById(`error-${key}`);
+                    if (errorDiv) {
+                        errorDiv.textContent = error.errors[key][0]; // 最初のエラーを表示
+                        errorDiv.style.color = "rgba(255, 86, 85, 1)";
+                    }
+                });
+            } else {
+                alert("予期しないエラーが発生しました。");
+            }
+        }
     });
 });
 

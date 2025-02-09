@@ -268,6 +268,7 @@ public function create()
 
 public function store(ExhibitionRequest $request)
 {
+    dd($request->all()); // デバッグ用
 
     if (!Auth::check()) {
         return response()->json(['error' => 'ログインしていません'], 403);

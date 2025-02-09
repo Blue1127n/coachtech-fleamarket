@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class ExhibitionRequest extends FormRequest
 {
@@ -49,6 +51,14 @@ class ExhibitionRequest extends FormRequest
             'price.numeric' => '価格は数値で入力してください',
             'price.min' => '価格は0円以上にしてください',
         ];
+    }
+
+    public function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(response()->json([
+            'message' => 'バリデーションエラー',
+            'errors' => $validator->errors()
+        ], 422));
     }
 }
 
