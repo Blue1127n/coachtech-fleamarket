@@ -272,14 +272,25 @@ public function store(ExhibitionRequest $request)
         return response()->json(['error' => 'ログインしていません'], 403);
     }
 
+    // **アップロードされたファイルを確認**
+    dd($request->file('image')); // ← ここで `image` のデータを確認！
+
     if (!$request->hasFile('image')) {
         return response()->json(['error' => '商品画像がアップロードされていません'], 422);
     }
 
+    // **画像の情報を確認**
+    \Log::info('画像情報:', [
+        'original_name' => $request->file('image')->getClientOriginalName(),
+        'mime_type' => $request->file('image')->getMimeType(),
+        'extension' => $request->file('image')->extension(),
+    ]);
+
     // 商品画像を保存
     $imagePath = $request->file('image')->store('items', 'public');
 
-    dd($imagePath);
+    // **画像の保存後のパスを確認**
+    \Log::info('画像の保存パス: ' . $imagePath);
 
     // 商品データを保存
     $item = Item::create([
