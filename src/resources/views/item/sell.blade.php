@@ -19,6 +19,7 @@
                     <div class="image-upload-box">
                         <input type="file" name="image" id="imageInput" accept="image/*" class="image-input">
                         <label for="imageInput" class="image-button">画像を選択する</label>
+                        <img id="imagePreview" class="image-preview" />
                     </div>
                     <div class="error-message" id="error-image"></div>
             </div>
@@ -87,13 +88,45 @@
 @push('scripts')
 <script>
 document.addEventListener("DOMContentLoaded", function () {
-    document.querySelector(".submit-button").addEventListener("click", async function (event) {
+    const form = document.querySelector("#sell-form");
+    const submitButton = document.querySelector(".submit-button");
+    const fileInput = document.getElementById("imageInput");
+
+    // **プレビュー用の要素を作成**
+    const previewBox = document.createElement("div");
+    const previewImage = document.createElement("img");
+
+    previewBox.style.marginTop = "10px";
+    previewImage.style.maxWidth = "100%";
+    previewImage.style.height = "auto";
+    previewBox.appendChild(previewImage);
+    fileInput.parentNode.appendChild(previewBox); // ファイル選択ボタンの後に追加
+
+    fileInput.addEventListener("change", function (event) {
+        if (event.target.files.length > 0) {
+            const file = event.target.files[0];
+            console.log("✅ 画像が選択されました:", file.name);
+
+            // **画像のプレビュー表示**
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                previewImage.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        } else {
+            console.warn("⚠️ 画像が選択されていません！");
+            previewImage.src = ""; // プレビューをクリア
+        }
+    });
+
+    submitButton.addEventListener("click", async function (event) {
         event.preventDefault(); // フォームのデフォルト送信を防ぐ
 
-        const form = document.querySelector("#sell-form");
         const formData = new FormData(form); // フォームデータを取得
         const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
-        const fileInput = document.querySelector('input[name="image"]');
+
+        console.log("fileInput:", fileInput);
+        console.log("fileInput.files:", fileInput.files);
 
         // **CSRFトークンを追加**
         formData.append("_token", csrfToken);
@@ -130,14 +163,19 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         // **画像が正しく追加されているか確認**
+        formData.delete("image"); // 既存の画像データを削除（リセット）
         if (fileInput.files.length > 0) {
-            formData.append("image", fileInput.files[0]);
+            formData.append("image", fileInput.files[0]); // 画像を追加
+            console.log("✅ `FormData` に画像が追加されました:", fileInput.files[0].name);
         } else {
-            console.warn("画像が選択されていません！");
+            console.warn("⚠️ `FormData` に画像が追加されていません！");
         }
 
-        // **デバッグ用: 送信データを確認**
-        console.log("送信データ:", Object.fromEntries(formData.entries()));
+        // **デバッグ用: `FormData` の内容を確認**
+        console.log("📩 送信データ:");
+        for (let pair of formData.entries()) {
+            console.log(`${pair[0]}:`, pair[1] instanceof Blob ? pair[1].name : pair[1]);
+        }
 
         try {
             const response = await fetch(form.action, {
@@ -151,12 +189,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 throw data; // バリデーションエラーを投げる
             }
 
-            console.log("成功:", data);
+            console.log("✅ 成功:", data);
             alert("商品が出品されました！");
             window.location.href = "/sell"; // 成功時にリダイレクト
 
         } catch (error) {
-            console.error("エラー発生:", error);
+            console.error("❌ エラー発生:", error);
 
             if (error.errors) {
                 console.log("エラーデータ:", error.errors); // エラーの詳細をコンソールに表示
@@ -174,6 +212,9 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
+
+
+
 
     // **カテゴリー選択の処理**
     const categoryOptions = document.querySelectorAll(".category-option");
