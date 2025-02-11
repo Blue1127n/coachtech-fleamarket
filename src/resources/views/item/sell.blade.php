@@ -95,25 +95,21 @@ document.addEventListener("DOMContentLoaded", function () {
     // **画像とボタンを横並びにするためのラッパー**
     const imageWrapper = document.createElement("div");
     imageWrapper.style.display = "flex";
-    imageWrapper.style.alignItems = "center"; // 縦方向の中央揃え
-    imageWrapper.style.gap = "20px"; // ボタンと画像の間隔を空ける
+    imageWrapper.style.alignItems = "center";
+    imageWrapper.style.gap = "20px";
 
     // **プレビュー用の要素を作成**
     const previewImage = document.createElement("img");
-    previewImage.style.width = "200px"; // 画像サイズを適切に設定
+    previewImage.style.width = "200px";
     previewImage.style.height = "auto";
-    previewImage.style.objectFit = "contain"; // 画像の比率を維持して枠内に収める
-    previewImage.style.border = "1px solid #ccc"; // 見やすくするための枠
-    previewImage.style.display = "none"; // 初期状態で非表示
+    previewImage.style.objectFit = "contain";
+    previewImage.style.border = "1px solid #ccc";
+    previewImage.style.display = "none";
 
     // **fileInput の親要素を取得**
     const parentDiv = fileInput.parentNode;
-    
-    // **imageWrapper に fileInput を追加**
     imageWrapper.appendChild(fileInput);
     imageWrapper.appendChild(previewImage);
-
-    // **fileInput の親要素に imageWrapper を正しく追加**
     parentDiv.appendChild(imageWrapper);
 
     fileInput.addEventListener("change", function (event) {
@@ -125,34 +121,30 @@ document.addEventListener("DOMContentLoaded", function () {
             const reader = new FileReader();
             reader.onload = function (e) {
                 previewImage.src = e.target.result;
-                previewImage.style.display = "block"; // 画像を表示
+                previewImage.style.display = "block";
             };
             reader.readAsDataURL(file);
         } else {
             console.warn("⚠️ 画像が選択されていません！");
-            previewImage.src = ""; // プレビューをクリア
-            previewImage.style.display = "none"; // 画像を非表示
+            previewImage.src = "";
+            previewImage.style.display = "none";
         }
     });
 
     submitButton.addEventListener("click", async function (event) {
-        event.preventDefault(); // フォームのデフォルト送信を防ぐ
+        event.preventDefault();
 
-        const formData = new FormData(form); // フォームデータを取得
+        const formData = new FormData(form);
         const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
 
         console.log("fileInput:", fileInput);
         console.log("fileInput.files:", fileInput.files);
 
-        // **CSRFトークンを追加**
         formData.append("_token", csrfToken);
 
-        // **既存のエラーメッセージをクリア**
         document.querySelectorAll(".error-message").forEach(el => el.textContent = "");
 
-        // **未入力チェック（フロントエンドでバリデーション）**
         let error = false;
-
         if (!formData.get("name")) {
             document.getElementById("error-name").textContent = "商品名を入力してください";
             error = true;
@@ -175,19 +167,17 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         if (error) {
-            return; // バリデーションエラーがあれば送信しない
+            return;
         }
 
-        // **画像が正しく追加されているか確認**
-        formData.delete("image"); // 既存の画像データを削除（リセット）
+        formData.delete("image");
         if (fileInput.files.length > 0) {
-            formData.append("image", fileInput.files[0], fileInput.files[0].name); // 画像を追加
+            formData.append("image", fileInput.files[0], fileInput.files[0].name);
             console.log("✅ `FormData` に画像が追加されました:", fileInput.files[0].name);
         } else {
             console.warn("⚠️ `FormData` に画像が追加されていません！");
         }
 
-        // **デバッグ用: `FormData` の内容を確認**
         console.log("📩 送信データ:");
         for (let pair of formData.entries()) {
             console.log(`${pair[0]}:`, pair[1] instanceof Blob ? pair[1].name : pair[1]);
@@ -196,36 +186,37 @@ document.addEventListener("DOMContentLoaded", function () {
         try {
             const response = await fetch(form.action, {
                 method: "POST",
-                body: formData // ヘッダーを設定しない（自動で multipart/form-data になる）
+                body: formData
             });
 
-            // **レスポンスが JSON であることを確認**
             const contentType = response.headers.get("content-type");
             if (contentType && contentType.includes("application/json")) {
                 const data = await response.json();
 
                 if (!response.ok) {
-                    throw data; // バリデーションエラーを投げる
+                    throw data;
                 }
 
                 console.log("✅ 成功:", data);
                 alert("商品が出品されました！");
-                window.location.href = "/sell"; // 成功時にリダイレクト
+                window.location.href = "/sell";
             } else {
                 console.error("❌ サーバーからのレスポンスがJSONではありません。");
-                alert("予期しないエラーが発生しました。");
+                const responseText = await response.text();
+                console.error("レスポンス内容:", responseText);
+                alert("予期しないエラーが発生しました。サーバーのレスポンスを確認してください。");
             }
 
         } catch (error) {
             console.error("❌ エラー発生:", error);
 
             if (error.errors) {
-                console.log("エラーデータ:", error.errors); // エラーの詳細をコンソールに表示
+                console.log("エラーデータ:", error.errors);
 
                 Object.keys(error.errors).forEach(key => {
                     const errorDiv = document.getElementById(`error-${key}`);
                     if (errorDiv) {
-                        errorDiv.textContent = error.errors[key][0]; // 最初のエラーを表示
+                        errorDiv.textContent = error.errors[key][0];
                         errorDiv.style.color = "rgba(255, 86, 85, 1)";
                     }
                 });
