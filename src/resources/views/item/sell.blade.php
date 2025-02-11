@@ -115,7 +115,7 @@ document.addEventListener("DOMContentLoaded", function () {
     fileInput.addEventListener("change", function (event) {
         if (event.target.files.length > 0) {
             const file = event.target.files[0];
-            console.log("✅ 画像が選択されました:", file.name);
+            console.log("画像が選択されました:", file.name);
 
             // **画像のプレビュー表示**
             const reader = new FileReader();
@@ -125,7 +125,7 @@ document.addEventListener("DOMContentLoaded", function () {
             };
             reader.readAsDataURL(file);
         } else {
-            console.warn("⚠️ 画像が選択されていません！");
+            console.warn("画像が選択されていません！");
             previewImage.src = "";
             previewImage.style.display = "none";
         }
@@ -173,12 +173,12 @@ document.addEventListener("DOMContentLoaded", function () {
         formData.delete("image");
         if (fileInput.files.length > 0) {
             formData.append("image", fileInput.files[0], fileInput.files[0].name);
-            console.log("✅ `FormData` に画像が追加されました:", fileInput.files[0].name);
+            console.log("`FormData` に画像が追加されました:", fileInput.files[0].name);
         } else {
-            console.warn("⚠️ `FormData` に画像が追加されていません！");
+            console.warn("`FormData` に画像が追加されていません！");
         }
 
-        console.log("📩 送信データ:");
+        console.log("送信データ:");
         for (let pair of formData.entries()) {
             console.log(`${pair[0]}:`, pair[1] instanceof Blob ? pair[1].name : pair[1]);
         }
@@ -197,18 +197,17 @@ document.addEventListener("DOMContentLoaded", function () {
                     throw data;
                 }
 
-                console.log("✅ 成功:", data);
-                alert("商品が出品されました！");
+                console.log("成功:", data);
                 window.location.href = "/sell";
             } else {
-                console.error("❌ サーバーからのレスポンスがJSONではありません。");
+                console.error("サーバーからのレスポンスがJSONではありません。");
                 const responseText = await response.text();
                 console.error("レスポンス内容:", responseText);
                 alert("予期しないエラーが発生しました。サーバーのレスポンスを確認してください。");
             }
 
         } catch (error) {
-            console.error("❌ エラー発生:", error);
+            console.error("エラー発生:", error);
 
             if (error.errors) {
                 console.log("エラーデータ:", error.errors);
@@ -226,9 +225,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
-
-
-
 
     // **カテゴリー選択の処理**
     const categoryOptions = document.querySelectorAll(".category-option");

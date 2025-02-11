@@ -272,8 +272,7 @@ public function store(ExhibitionRequest $request)
         return response()->json(['error' => 'ログインしていません'], 403);
     }
 
-    // **アップロードされたファイルを確認**
-    dd($request->file('image')); // ← ここで `image` のデータを確認！
+    \Log::info('リクエスト内容:', $request->all());
 
     if (!$request->hasFile('image')) {
         return response()->json(['error' => '商品画像がアップロードされていません'], 422);
@@ -311,7 +310,7 @@ public function store(ExhibitionRequest $request)
 
     return response()->json([
         'message' => '商品が出品されました',
-        'item' => $item
+        'image_path' => $imagePath
     ]);
 }
 

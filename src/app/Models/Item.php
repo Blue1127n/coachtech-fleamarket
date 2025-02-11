@@ -20,6 +20,11 @@ class Item extends Model
         'brand',
     ];
 
+    // `status_id` にデフォルト値を設定
+    protected $attributes = [
+        'status_id' => 1,
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class);

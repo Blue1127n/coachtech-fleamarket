@@ -16,7 +16,7 @@ class CreateItemsTable extends Migration
         Schema::create('items', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('status_id');
+            $table->unsignedBigInteger('status_id')->default(1);
             $table->unsignedBigInteger('condition_id');
             $table->string('name');
             $table->text('description')->nullable();
@@ -37,7 +37,7 @@ class CreateItemsTable extends Migration
      * @return void
      */
     public function down()
-    {
-        Schema::dropIfExists('items');
-    }
+{
+    Schema::dropIfExists('items'); // テーブル削除だけでOK
+}
 }

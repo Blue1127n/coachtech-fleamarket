@@ -41,10 +41,6 @@ class CreateTransactionsTable extends Migration
      */
     public function down()
     {
-        Schema::table('transactions', function (Blueprint $table) {
-            $table->unsignedBigInteger('status_id')->change(); //デフォルト値を削除
-        });
-
-        Schema::dropIfExists('transactions');
+    Schema::dropIfExists('transactions');
     }
 }

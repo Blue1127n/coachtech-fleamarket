@@ -60,12 +60,12 @@
 
 ## 商品画像保存先  
 
-![商品画像保存先](public/imems)  
+[商品画像保存先](public/imems)  
 
 
-## 商品画像保存先  
+## プロフィール画像保存先  
 
-![プロフィール画像保存先](public/profile_images)  
+[プロフィール画像保存先](public/profile_images)  
 
 
 ## 使用技術(実行環境)  
