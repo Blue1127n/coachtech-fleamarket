@@ -43,8 +43,10 @@ class LoginRequest extends FormRequest
 
     protected function failedValidation(Validator $validator)
 {
-    \Log::info('Validation errors', $validator->errors()->all()); // エラーログ
-    throw new ValidationException($validator); // 例外スロー
+    throw new ValidationException(
+        $validator,
+        redirect()->back()->withErrors($validator)->withInput()
+    );
 }
 }
 

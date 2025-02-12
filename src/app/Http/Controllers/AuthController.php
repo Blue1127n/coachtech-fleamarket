@@ -34,14 +34,24 @@ class AuthController extends Controller
         \Log::info('Login by name:', ['result' => $loginByName]);
 
         // ログイン失敗時の処理
-        if (!$loginByEmail && !$loginByName) {
+       if (!$loginByEmail && !$loginByName) {
             \Log::error('Login failed: Invalid credentials', ['email' => $credentials['email']]);
+
+            if ($request->expectsJson()) {
+                return response()->json(['message' => 'ログイン情報が登録されていません'], 422);
+            }
+
             return back()->withErrors(['login' => 'ログイン情報が登録されていません'])->withInput();
         }
 
         // メール認証済みかを確認
         if (!Auth::user()->hasVerifiedEmail()) {
             Auth::logout(); // 認証を解除
+
+            if ($request->expectsJson()) {
+                return response()->json(['message' => __('auth.unverified_email')], 403);
+            }
+
             return back()->withErrors(['login' => __('auth.unverified_email')])->withInput();
         }
 
@@ -53,6 +63,11 @@ class AuthController extends Controller
         // 認証成功時の処理
         $request->session()->regenerate(); // セッションの再生成
         \Log::info('Login successful for user', ['user' => Auth::user()->id]);
+
+        // JSONリクエストの場合はJSONレスポンスを返す
+        if ($request->expectsJson()) {
+            return response()->json(['message' => 'ログインしました', 'user' => Auth::user()], 200);
+        }
 
         // プロフィール設定が必要ならプロフィール画面にリダイレクト
         if (session('redirect_to_profile', false)) {
@@ -72,6 +87,9 @@ class AuthController extends Controller
     // 会員登録処理
     public function register(RegisterRequest $request)
     {
+
+        \Log::info('Register Request Headers:', $request->headers->all());
+
         // ユーザー作成
         $user = User::create([
             'name' => $request->name,
@@ -82,13 +100,18 @@ class AuthController extends Controller
         // 自動的にログイン
         Auth::login($user);
 
-        // デバッグ: メール送信トリガーをログに記録
-        \Log::info('Sending verification email to ' . $user->email);
+        // JSONリクエストの場合はJSONレスポンスを返す
+        if ($request->expectsJson()) {
+            return response()->json([
+                'message' => '会員登録が完了しました',
+                'user' => $user
+            ], 201);
+        }
 
-        // 認証メールを送信
+        // **JSONリクエストでない場合のみメールを送信**
         $user->sendEmailVerificationNotification();
 
-        // ユーザーがメール認証済みでない場合、/email/verify にリダイレクト
+        // メール認証済みでない場合、認証画面へ
         if (!Auth::user()->hasVerifiedEmail()) {
             return redirect()->route('verification.notice');
         }

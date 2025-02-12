@@ -3,6 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Validation\ValidationException;
 
 class RegisterRequest extends FormRequest
 {
@@ -23,6 +26,7 @@ class RegisterRequest extends FormRequest
      */
     public function rules()
     {
+        \Log::info('expectsJson:', ['result' => $this->expectsJson()]);
         return [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255', 'unique:users,email'],
@@ -41,4 +45,16 @@ class RegisterRequest extends FormRequest
             'password.confirmed' => 'パスワードと一致しません',
         ];
     }
+
+    protected function failedValidation(Validator $validator)
+{
+    throw new HttpResponseException(
+        redirect()->back()->withErrors($validator)->withInput()
+    );
+}
+
+public function expectsJson()
+{
+    return false;
+}
 }
