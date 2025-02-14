@@ -26,7 +26,7 @@ class LoginRequest extends FormRequest
     public function rules()
     {
         return [
-            'email' => ['required', 'string', 'email'],
+            'email' => ['required', 'string'],
             'password' => ['required', 'string', 'min:8'],
         ];
     }
@@ -35,7 +35,6 @@ class LoginRequest extends FormRequest
     {
         return [
             'email.required' => 'ユーザー名またはメールアドレスを入力してください',
-            'email.email' => '正しいメール形式で入力してください',
             'password.required' => 'パスワードを入力してください',
             'password.min' => 'パスワードは8文字以上で入力してください',
         ];
@@ -43,15 +42,21 @@ class LoginRequest extends FormRequest
 
     protected function failedValidation(Validator $validator)
 {
+    \Log::error('バリデーションエラー', [
+        'errors' => $validator->errors(),
+        'request' => request()->all(),
+    ]);
+
     if ($this->expectsJson()) {
         throw new ValidationException($validator, response()->json([
             'message' => 'バリデーションエラーがあります',
-            'errors' => $validator->errors(),
+            'errors' => $validator->errors()
         ], 422));
-    } else {
-        throw new ValidationException($validator);
     }
+
+    throw new ValidationException($validator, redirect()->back()->withErrors($validator)->withInput());
 }
+
 }
 
 

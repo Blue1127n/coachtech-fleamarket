@@ -97,8 +97,8 @@ body {
 .image-preview {
     max-width: 100%;
     max-height: 100%;
-    object-fit: contain; /* 画像を枠内に収める */
-    display: none; /* 初期状態では非表示 */
+    object-fit: contain;
+    display: none;
 }
 
 

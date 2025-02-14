@@ -74,7 +74,6 @@ class User extends Authenticatable implements MustVerifyEmail
         return asset('storage/' . $this->profile_image);
     }
 
-    // プロフィール画像が存在しない場合はnullを返す
     return null;
 }
 
@@ -84,15 +83,13 @@ class User extends Authenticatable implements MustVerifyEmail
         null,
         function ($value) {
             if ($value instanceof \Illuminate\Http\UploadedFile) {
-                // 一意のファイル名を生成
+
                 $fileName = uniqid() . '_' . time() . '_' . $value->getClientOriginalName();
 
-                // 拡張子の検証
                 if (!in_array($value->getClientOriginalExtension(), ['jpeg', 'png'])) {
                     throw new \RuntimeException('JPEGまたはPNG形式の画像のみアップロードできます。');
                 }
 
-                // ファイルを保存
                 $filePath = $value->storeAs('public/profile_images', $fileName);
                 if (!$filePath) {
                     throw new \RuntimeException('プロフィール画像のアップロードに失敗しました。再試行してください。');
@@ -104,17 +101,16 @@ class User extends Authenticatable implements MustVerifyEmail
     );
 }
 
-// ユーザーが購入した商品を取得
 public function purchasedItems()
 {
     return $this->hasManyThrough(
-        Item::class,        // 取得するモデル (items テーブル)
-        Transaction::class, // 経由するモデル (transactions テーブル)
-        'buyer_id',         // transactions テーブルの外部キー (users テーブルの id を参照)
-        'id',               // items テーブルの主キー
-        'id',               // users テーブルの主キー
-        'item_id'           // transactions テーブルの items テーブル参照キー
-    )->whereIn('transactions.status_id', [3, 5]); // 取引完了 or 売り切れの商品を取得
+        Item::class,
+        Transaction::class,
+        'buyer_id',
+        'id',
+        'id',
+        'item_id'
+    )->whereIn('transactions.status_id', [3, 5]);
 }
 }
 

@@ -28,9 +28,6 @@ class Handler extends ExceptionHandler
         'password_confirmation',
     ];
 
-    /**
-     * Laravel のエラーログを強化する
-     */
     public function report(Throwable $exception)
     {
         \Log::error("Exception occurred: " . $exception->getMessage(), [

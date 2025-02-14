@@ -14,8 +14,7 @@ class ItemsTableSeeder extends Seeder
      */
     public function run()
     {
-        // conditions テーブルからデータを取得
-        $conditions = DB::table('conditions')->pluck('id', 'condition'); // 'condition' => 'id'
+        $conditions = DB::table('conditions')->pluck('id', 'condition');
 
         $items = [
             [

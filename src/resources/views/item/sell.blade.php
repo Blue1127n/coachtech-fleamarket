@@ -92,13 +92,11 @@ document.addEventListener("DOMContentLoaded", function () {
     const submitButton = document.querySelector(".submit-button");
     const fileInput = document.getElementById("imageInput");
 
-    // **画像とボタンを横並びにするためのラッパー**
     const imageWrapper = document.createElement("div");
     imageWrapper.style.display = "flex";
     imageWrapper.style.alignItems = "center";
     imageWrapper.style.gap = "20px";
 
-    // **プレビュー用の要素を作成**
     const previewImage = document.createElement("img");
     previewImage.style.width = "200px";
     previewImage.style.height = "auto";
@@ -106,7 +104,6 @@ document.addEventListener("DOMContentLoaded", function () {
     previewImage.style.border = "1px solid #ccc";
     previewImage.style.display = "none";
 
-    // **fileInput の親要素を取得**
     const parentDiv = fileInput.parentNode;
     imageWrapper.appendChild(fileInput);
     imageWrapper.appendChild(previewImage);
@@ -117,7 +114,6 @@ document.addEventListener("DOMContentLoaded", function () {
             const file = event.target.files[0];
             console.log("画像が選択されました:", file.name);
 
-            // **画像のプレビュー表示**
             const reader = new FileReader();
             reader.onload = function (e) {
                 previewImage.src = e.target.result;
@@ -226,7 +222,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-    // **カテゴリー選択の処理**
     const categoryOptions = document.querySelectorAll(".category-option");
 
     categoryOptions.forEach(option => {
@@ -237,7 +232,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-    // **商品の状態プルダウンの「✓」処理**
     const selectCondition = document.getElementById("condition_select");
 
     if (selectCondition) {
@@ -245,29 +239,25 @@ document.addEventListener("DOMContentLoaded", function () {
             option.dataset.originalText = option.textContent;
         });
 
-        // **マウスホバー時に ✓ を追加**
         selectCondition.addEventListener("mouseover", function (event) {
             if (event.target.tagName === "OPTION") {
                 event.target.textContent = `✓ ${event.target.dataset.originalText}`;
             }
         });
 
-        // **マウスが離れたら元のテキストに戻す**
         selectCondition.addEventListener("mouseout", function (event) {
             if (event.target.tagName === "OPTION") {
                 event.target.textContent = event.target.dataset.originalText;
             }
         });
 
-        // **選択時にドロップダウンを閉じる**
         selectCondition.addEventListener("change", function () {
             setTimeout(() => {
-                selectCondition.blur(); // フォーカスを外して閉じる
+                selectCondition.blur();
             }, 100);
         });
     }
 
-    // **カスタムドロップダウンの処理**
     const selectBox = document.querySelector(".custom-condition-select");
     const selectedOption = document.getElementById("selectedCondition");
     const dropdownOptions = document.getElementById("dropdownOptions");
@@ -285,23 +275,19 @@ document.addEventListener("DOMContentLoaded", function () {
                 options.forEach(opt => opt.classList.remove("selected"));
                 option.classList.add("selected");
 
-                // **選択された項目を表示**
                 selectedOption.textContent = option.textContent.trim();
                 conditionInput.value = option.dataset.value;
 
-                // **ドロップダウンを閉じる**
                 dropdownOptions.style.display = "none";
             });
         });
 
-        // **外部クリックでドロップダウンを閉じる**
         document.addEventListener("click", function (event) {
             if (!selectBox.contains(event.target) && !dropdownOptions.contains(event.target)) {
                 dropdownOptions.style.display = "none";
             }
         });
 
-        // **選択時に自動で閉じる**
         dropdownOptions.addEventListener("click", function () {
             setTimeout(() => {
                 dropdownOptions.style.display = "none";

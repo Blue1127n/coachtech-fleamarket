@@ -116,10 +116,10 @@ body {
 }
 
 a {
-    text-decoration: none; /* リンクの下線を削除 */
-    color: inherit; /* 親要素の色を継承 */
+    text-decoration: none;
+    color: inherit;
 }
 
 a:hover {
-    text-decoration: underline; /* 必要に応じてホバー時の効果を指定 */
+    text-decoration: underline;
 }

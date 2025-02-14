@@ -113,15 +113,14 @@ button.like-button,.like-section {
 .like-icon {
     cursor: pointer;
     object-fit: contain;
-    transition: filter 0.3s ease; /* モノクロからカラーへのアニメーション */
-    filter: grayscale(100%) brightness(1); /* 通常状態ではモノクロ */
+    transition: filter 0.3s ease;
+    filter: grayscale(100%) brightness(1);
     width: 40px;
     height: 40px;
 }
 
-/* いいね状態のアイコン（黄） */
 .like-icon.liked {
-    filter: grayscale(0%) sepia(1) hue-rotate(45deg) saturate(5) brightness(1.2); /* 黄色の色調を再現 */
+    filter: grayscale(0%) sepia(1) hue-rotate(45deg) saturate(5) brightness(1.2);
 }
 
 .comment-icon {

@@ -23,11 +23,10 @@ class RedirectIfAuthenticated
 
     foreach ($guards as $guard) {
         if (Auth::guard($guard)->check()) {
-            // `/login` や `/register` を除外
+
             if ($request->routeIs('login') || $request->routeIs('register')) {
                 return $next($request);
             }
-            \Log::info('User is authenticated. Redirecting to home.');
             return redirect(RouteServiceProvider::HOME);
         }
     }

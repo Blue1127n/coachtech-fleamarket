@@ -34,24 +34,23 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::resetUserPasswordsUsing(ResetUserPassword::class);
 
         Fortify::registerView(function () {
-            return view('auth.register'); // 会員登録画面
+            return view('auth.register');
         });
 
         Fortify::loginView(function () {
-            return view('auth.login'); // ログイン画面
+            return view('auth.login');
         });
 
         Fortify::requestPasswordResetLinkView(function () {
-            return view('auth.passwords.email'); // パスワードリセット要求画面
+            return view('auth.passwords.email');
         });
 
         Fortify::resetPasswordView(function ($request) {
-            return view('auth.passwords.reset', ['request' => $request]); // パスワードリセット画面
+            return view('auth.passwords.reset', ['request' => $request]);
         });
 
-        // メール認証画面
         Fortify::verifyEmailView(function () {
-            return view('auth.verify-email'); // メール認証画面
+            return view('auth.verify-email');
         });
 
         RateLimiter::for('login', function (Request $request) {

@@ -8,14 +8,13 @@
 
 @section('content')
 <div class="item-detail-container">
-    <!-- 商品画像 -->
+
     <div class="item-detail-left">
         <div class="item-image">
             <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->name }}">
         </div>
     </div>
 
-    <!-- 商品詳細 -->
     <div class="item-detail-right">
         <div class="item-detail">
             <h1>{{ $item->name }}</h1>
@@ -26,10 +25,8 @@
                 <span class="item-price-tax">（税込）</span>
             </p>
 
-            <!-- いいねボタン -->
             <div class="item-actions">
                 @if(auth()->check())
-                <!-- ログイン済みのユーザー -->
                 <form id="like-form" action="{{ route('item.like', ['item_id' => $item->id]) }}" method="POST">
                         @csrf
                         <div class="like-section">
@@ -40,21 +37,18 @@
                         </div>
                     </form>
                 @else
-                    <!-- 未認証ユーザー -->
                     <a href="{{ route('login') }}" class="like-section">
                         <img src="{{ asset('storage/items/star-icon.png') }}" alt="いいねアイコン" class="like-icon">
                         <span id="like-count">{{ $item->likes->count() }}</span>
                     </a>
                 @endif
 
-                <!-- コメント数アイコン -->
                 <div class="comment-section">
                     <img id="comment-icon" src="{{ asset('storage/items/ふきだしのアイコン.png') }}" alt="コメントアイコン">
                     <span id="comment-count">{{ $item->comments()->count() }}</span>
                 </div>
             </div>
 
-            <!-- 購入ボタン -->
             @if(auth()->check())
                 <a href="{{ route('item.purchase', ['item_id' => $item->id]) }}" class="purchase-btn">購入手続きへ</a>
             @else
@@ -62,13 +56,11 @@
             @endif
         </div>
 
-        <!-- 商品説明 -->
         <div class="item-description">
             <h2>商品説明</h2>
             <p>{{ $item->description }}</p>
         </div>
 
-        <!-- 商品情報 -->
         <div class="item-info">
             <h2>商品情報</h2>
             <p class="categories-section">カテゴリ
@@ -81,7 +73,6 @@
             </p>
         </div>
 
-        <!-- コメントセクション -->
         <div class="comments-section">
             <h2>コメント ({{ $item->comments()->count() }})</h2>
             <ul class="comments-list">
@@ -98,7 +89,6 @@
     @endforeach
 </ul>
 
-        <!-- コメント投稿フォーム -->
         <form id="comment-form" action="{{ route('item.comment', ['item_id' => $item->id]) }}" method="POST">
             @csrf
             <p>商品へのコメント</p>
@@ -120,11 +110,10 @@
         const likeForm = document.getElementById('like-form');
         const commentForm = document.getElementById('comment-form');
         const commentContent = document.getElementById('comment-content');
-        const commentList = document.querySelector('.comments-list'); // コメント一覧
-        const commentCountElement = document.getElementById('comment-count'); // コメントアイコンの数
-        const commentHeading = document.querySelector('.comments-section h2'); // 「コメント (0)」
+        const commentList = document.querySelector('.comments-list');
+        const commentCountElement = document.getElementById('comment-count');
+        const commentHeading = document.querySelector('.comments-section h2');
 
-        // **いいね機能**
         if (likeForm) {
             likeForm.addEventListener('submit', function (event) {
                 event.preventDefault();
@@ -152,15 +141,12 @@
             });
         }
 
-        // **コメント機能**
         if (commentForm) {
             commentForm.addEventListener('submit', function (event) {
                 event.preventDefault();
 
-                // **エラーメッセージのクリア**
                 document.querySelector('.error-message')?.remove();
 
-                // **未入力チェック**
                 if (!commentContent.value.trim()) {
                     displayErrorMessage('コメントを入力してください');
                     return;
@@ -217,7 +203,6 @@
             });
         }
 
-        // **エラーメッセージを表示する関数**
         function displayErrorMessage(message) {
             const errorElement = document.createElement('p');
             errorElement.classList.add('error-message');
@@ -226,7 +211,6 @@
             errorElement.textContent = message;
             commentContent.insertAdjacentElement('afterend', errorElement);
         }
-
     });
 </script>
 @endpush

@@ -134,7 +134,6 @@ body {
     color: rgba(234, 234, 234, 1);
 }
 
-/* ホバー時の背景色と ✓ の追加 */
 .dropdown-option:hover {
     background: rgba(85, 153, 235, 1);
     color: rgba(255, 255, 255, 1);
@@ -149,7 +148,6 @@ body {
     margin-right: 10px;
 }
 
-/* 選択中のアイテムは✓を消す */
 .dropdown-option.selected .check-icon {
     display: none;
 }
@@ -250,7 +248,7 @@ body {
 }
 
 .summary-table tr:last-child td {
-    border-bottom: none;/*支払い方法 の下に余計な線が入らないようにするため*/
+    border-bottom: none;
 }
 
 .price {

@@ -10,12 +10,9 @@
 <div class="login-container">
     <h2>ログイン</h2>
 
-    @error('login')
-        <div class="error-message global-error">{{ $message }}</div>
-    @enderror
-
     <form action="{{ route('login') }}" method="POST">
         @csrf
+
         <div class="form-group">
             <label for="email">ユーザー名 / メールアドレス</label>
             <input type="text" name="email" id="email" class="input-text" value="{{ old('email') }}">

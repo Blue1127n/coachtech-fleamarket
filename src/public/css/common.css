@@ -21,7 +21,6 @@
     padding: 22px 25px 0px 0px;
 }
 
-/* PC（1400px以上） */
 @media screen and (min-width: 1400px) {
     .container {
         max-width: 1200px;
@@ -30,7 +29,6 @@
     }
 }
 
-/* タブレット（768px～1400px） */
 @media screen and (min-width: 768px) and (max-width: 1400px) {
     .container {
         max-width: 900px;
@@ -39,7 +37,6 @@
     }
 }
 
-/* スマホ（768px以下） */
 @media screen and (max-width: 768px) {
     .container {
         max-width: 100%;

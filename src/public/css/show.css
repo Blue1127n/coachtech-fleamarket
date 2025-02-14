@@ -29,7 +29,7 @@ body {
     overflow: hidden;
     margin-right: 20px;
     margin-left: 250px;
-    flex-shrink: 0;/* サイズ固定 */
+    flex-shrink: 0;
     background-color: rgba(217, 217, 217, 1);
 }
 
@@ -91,18 +91,18 @@ body {
     position: relative;
     width: 100%;
     padding-left: 20px;
-    box-sizing: border-box;/* 線のはみ出し防止 */
+    box-sizing: border-box;
 }
 
 .tabs::after {
     content: '';
     position: absolute;
-    bottom: -5px; /* 線をタブの下に配置 */
+    bottom: -5px;
     left: 0;
     width: 100%;
     height: 2px;
-    background-color: rgba(95, 95, 95, 1); /* 線の色 */
-    z-index: 1; /* 他の要素より前面に */
+    background-color: rgba(95, 95, 95, 1);
+    z-index: 1;
 }
 
 .tabs a {
@@ -117,9 +117,9 @@ body {
     text-underline-position: from-font;
     text-decoration-skip-ink: none;
     margin: 0 30px;
-    position: relative; /* 下線と競合しないように */
-    z-index: 2; /* 線より前面に表示 */
-    background-color: rgba(255, 255, 255, 1); /* 線に被らないよう背景色を追加 */
+    position: relative;
+    z-index: 2;
+    background-color: rgba(255, 255, 255, 1);
 }
 
 .tabs a.active {
@@ -153,10 +153,10 @@ body {
 }
 
 .product-image {
-    position: relative; /* SOLDバッジを画像内で適切に配置する */
-    display: block; /* inline-block ではなく block にする */
-    width: 100%; /* 画像が親要素の幅いっぱいになるように */
-    height: auto; /* 高さを自動調整 */
+    position: relative;
+    display: block;
+    width: 100%;
+    height: auto;
 }
 
 .product-image img {

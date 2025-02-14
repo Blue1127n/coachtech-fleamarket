@@ -93,7 +93,6 @@ h1 {
     transition: 0.3s ease-in-out;
 }
 
-/* 購入ボタン */
 .payment-btn {
     background-color: rgba(255, 85, 85, 1);
     color: rgba(255, 255, 255, 1);
@@ -104,7 +103,6 @@ h1 {
     background-color: rgba(255, 85, 85, 1);
 }
 
-/* 戻るボタン */
 .back-btn {
     background-color: rgba(217, 217, 217, 1);
     color: rgba(0, 0, 0, 1);

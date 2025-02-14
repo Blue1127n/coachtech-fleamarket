@@ -59,7 +59,7 @@ body {
     width: 150px;
     height: 150px;
     border-radius: 50%;
-    display: none; /* 初期状態で非表示 */
+    display: none;
     object-fit: cover;
 }
 

@@ -32,7 +32,7 @@
                 <div class="item">
                     <div class="product-image">
                         <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->name }}">
-                        @if($item->status_id == 5) <!-- 5 = 売り切れ -->
+                        @if($item->status_id == 5)
                             <div class="sold-badge">SOLD</div>
                         @endif
                     </div>

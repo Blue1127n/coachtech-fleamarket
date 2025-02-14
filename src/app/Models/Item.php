@@ -20,7 +20,6 @@ class Item extends Model
         'brand',
     ];
 
-    // `status_id` にデフォルト値を設定
     protected $attributes = [
         'status_id' => 1,
     ];
@@ -62,15 +61,14 @@ class Item extends Model
 
     public function getImageUrlAttribute()
 {
-    // 現在の画像がある場合のみチェック
+
     if ($this->image) {
-        $extension = pathinfo($this->image, PATHINFO_EXTENSION); // 拡張子を取得
+        $extension = pathinfo($this->image, PATHINFO_EXTENSION);
         if (in_array($extension, ['jpeg', 'png'])) {
             return asset('storage/' . $this->image);
         }
     }
 
-    // 画像が存在しない場合は null を返す
     return null;
 }
 

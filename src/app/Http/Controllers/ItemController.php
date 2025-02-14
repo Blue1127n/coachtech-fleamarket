@@ -16,19 +16,17 @@ use Illuminate\Support\Facades\Auth;
 
 class ItemController extends Controller
 {
-    // おすすめ商品の表示
+
     public function index(Request $request)
     {
-        $search = $request->input('search'); // 検索クエリ
+        $search = $request->input('search');
         $query = Item::query();
 
-        // 検索条件を適用
         $query = $this->applySearchFilter($query, $search);
 
-        // 全商品を取得（ログイン後は自分の商品を除外）
-        $products = $query->with('status') // ステータスのリレーションをロード
+        $products = $query->with('status')
                             ->when(auth()->check(), function ($query) {
-                            $query->where('user_id', '!=', auth()->id()); // 自分の商品を除外
+                            $query->where('user_id', '!=', auth()->id());
                             })
                             ->orderBy('created_at', 'desc')
                             ->get();
@@ -36,31 +34,27 @@ class ItemController extends Controller
         return view('products.index', [
             'products' => $products,
             'isMyList' => false,
-            'search' => $search, // 検索クエリをビューに渡す
+            'search' => $search,
         ]);
     }
 
-    // マイリストの表示
     public function mylist(Request $request)
     {
-        $search = $request->input('search'); // 検索クエリ
+        $search = $request->input('search');
 
-        // ログインしていない場合は空のコレクションを渡す
         if (!auth()->check()) {
             return view('products.index', [
-                'products' => collect(), // 空のコレクションを渡す
+                'products' => collect(),
                 'isMyList' => true,
-                'search' => $search, // 検索クエリをビューに渡す
+                'search' => $search,
             ]);
         }
 
-        // ログインしている場合は「いいね」した商品を取得
         $products = auth()->user()
                             ->likes()
-                            ->with('status') // ステータスをロード
+                            ->with('status')
                             ->get();
 
-        // 検索条件の適用（コレクションに対するフィルタリング）
         if ($search) {
             $products = $products->filter(function ($product) use ($search) {
                 return stripos($product->name, $search) !== false;
@@ -70,11 +64,10 @@ class ItemController extends Controller
         return view('products.index', [
             'products' => $products,
             'isMyList' => true,
-            'search' => $search, // 検索クエリをビューに渡す
+            'search' => $search,
         ]);
     }
 
-    // 検索条件の適用
     private function applySearchFilter($query, $search)
     {
         if ($search) {
@@ -83,14 +76,12 @@ class ItemController extends Controller
         return $query;
     }
 
-    // 商品詳細の表示
     public function show($item_id)
     {
         $item = Item::with(['categories', 'condition', 'user', 'likes'])->findOrFail($item_id);
 
         $isLiked = false;
 
-        // ログインしている場合、いいね済みかどうか確認
         if (Auth::check()) {
             $isLiked = Auth::user()->likes()->where('item_id', $item->id)->exists();
         }
@@ -111,21 +102,18 @@ class ItemController extends Controller
         $item = Item::findOrFail($item_id);
         $user = Auth::user();
 
-        // ユーザーが既にいいねしているか確認
         $isLiked = $user->likes()->where('item_id', $item->id)->exists();
 
         if ($isLiked) {
-            $user->likes()->detach($item->id); // いいねを解除
+            $user->likes()->detach($item->id);
             $liked = false;
         } else {
-            $user->likes()->attach($item->id); // いいねを追加
+            $user->likes()->attach($item->id);
             $liked = true;
         }
 
-        // いいねの合計数を取得
         $likeCount = $item->likes()->count();
 
-        // セッションにフラッシュデータとして保存
         return response()->json([
             'liked' => $liked,
             'likeCount' => $likeCount,
@@ -163,19 +151,16 @@ class ItemController extends Controller
     ]);
 }
 
-   // GETリクエスト: 購入画面表示（バリデーションなし）
     public function purchase(Request $request, $item_id)
     {
-        // 商品情報を取得
+
         $item = Item::findOrFail($item_id);
         $user = auth()->user();
 
-        // ログインしていない場合はリダイレクト
         if (!$user) {
             return redirect()->route('login')->with('error', 'ログインが必要です');
         }
 
-       // 取引データを取得（あれば使用、なければ `users` テーブルのデータを使用）
         $transaction = Transaction::where('item_id', $item_id)
                                     ->where('buyer_id', $user->id)
                                     ->first();
@@ -195,17 +180,15 @@ class ItemController extends Controller
         return view('item.purchase', compact('item', 'postalCode', 'address', 'building'));
     }
 
-    // 購入処理 (POST) - フォームリクエスト適用
     public function processPurchase(PurchaseRequest $request, $item_id)
 {
-    // **ログインユーザー情報**
+
     $user = auth()->user();
 
-    // **既存の `transactions` を取得 or 作成**
     $transaction = Transaction::updateOrCreate(
         ['item_id' => $item_id, 'buyer_id' => $user->id],
         [
-            'status_id' => 1, // 初期ステータス
+            'status_id' => 1,
             'payment_method' => $request->payment_method,
         ]
     );
@@ -218,12 +201,10 @@ public function changeAddress($item_id)
     $item = Item::findOrFail($item_id);
     $user = auth()->user();
 
-    // 取引データを取得
     $transaction = Transaction::where('item_id', $item_id)
                                 ->where('buyer_id', $user->id)
                                 ->first();
 
-    // **変更前のデータをセット**
     $shippingPostalCode = !empty($transaction) && !empty($transaction->shipping_postal_code)
         ? preg_replace('/(\d{3})(\d{4})/', '$1-$2', $transaction->shipping_postal_code)
         : preg_replace('/(\d{3})(\d{4})/', '$1-$2', $user->postal_code);
@@ -243,7 +224,6 @@ public function updateAddress(AddressChangeRequest $request, $item_id)
 {
     $user = auth()->user();
 
-    // **transactions テーブルを更新**
     $transaction = Transaction::updateOrCreate(
         ['item_id' => $item_id, 'buyer_id' => $user->id],
         [
@@ -272,26 +252,15 @@ public function store(ExhibitionRequest $request)
         return response()->json(['error' => 'ログインしていません'], 403);
     }
 
-    \Log::info('リクエスト内容:', $request->all());
 
     if (!$request->hasFile('image')) {
         return response()->json(['error' => '商品画像がアップロードされていません'], 422);
     }
 
-    // **画像の情報を確認**
-    \Log::info('画像情報:', [
-        'original_name' => $request->file('image')->getClientOriginalName(),
-        'mime_type' => $request->file('image')->getMimeType(),
-        'extension' => $request->file('image')->extension(),
-    ]);
 
-    // 商品画像を保存
     $imagePath = $request->file('image')->store('items', 'public');
 
-    // **画像の保存後のパスを確認**
-    \Log::info('画像の保存パス: ' . $imagePath);
 
-    // 商品データを保存
     $item = Item::create([
         'user_id' => Auth::id(),
         'name' => $request->name,
@@ -302,7 +271,6 @@ public function store(ExhibitionRequest $request)
         'brand' => null,
     ]);
 
-    // カテゴリーの保存
     if ($request->has('category')) {
         $categories = is_array($request->category) ? $request->category : [$request->category];
         $item->categories()->attach($categories);

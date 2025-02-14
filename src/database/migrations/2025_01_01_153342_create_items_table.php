@@ -38,6 +38,6 @@ class CreateItemsTable extends Migration
      */
     public function down()
 {
-    Schema::dropIfExists('items'); // テーブル削除だけでOK
+    Schema::dropIfExists('items');
 }
 }

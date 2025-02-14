@@ -31,7 +31,6 @@
         }
     }
 
-    // ファイル選択時のログ出力
     document.getElementById('profile_image').addEventListener('change', (event) => {
     const file = event.target.files[0];
     console.log('選択されたファイル:', file);

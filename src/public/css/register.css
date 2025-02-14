@@ -104,10 +104,9 @@ body {
     text-decoration: underline;
 }
 
-/* PC（1400px以上） */
 @media screen and (min-width: 1400px) {
     .register-container {
-        max-width: 800px; /* PC用に幅を広げる */
+        max-width: 800px;
         padding: 40px;
     }
     .btn-submit {
@@ -116,10 +115,9 @@ body {
     }
 }
 
-/* タブレット（768px～1400px） */
 @media screen and (min-width: 768px) and (max-width: 1400px) {
     .register-container {
-        max-width: 680px; /* タブレット用の幅に */
+        max-width: 680px;
         padding: 20px;
     }
     .btn-submit {
@@ -127,7 +125,7 @@ body {
         height: 60px;
     }
     .form-group label {
-        font-size: 20px; /* ラベルを小さく */
+        font-size: 20px;
     }
 }
 
