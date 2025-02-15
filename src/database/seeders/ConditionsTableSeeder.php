@@ -25,6 +25,8 @@ class ConditionsTableSeeder extends Seeder
             ['condition' => 'ジャンク品'],
         ];
 
-        DB::table('conditions')->insert($conditions);
+        foreach ($conditions as $condition) {
+            DB::table('conditions')->updateOrInsert(['condition' => $condition['condition']], $condition);
+        }
     }
 }

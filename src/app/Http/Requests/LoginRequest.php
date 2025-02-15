@@ -47,7 +47,7 @@ class LoginRequest extends FormRequest
         'request' => request()->all(),
     ]);
 
-    if ($this->expectsJson()) {
+    if ($this->ajax()) {
         throw new ValidationException($validator, response()->json([
             'message' => 'バリデーションエラーがあります',
             'errors' => $validator->errors()

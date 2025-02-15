@@ -23,6 +23,11 @@ class RedirectIfProfileIncomplete
             return $next($request);
         }
 
+        if ($request->route()->getName() === 'logout') {
+            \Log::info('Skipping middleware for logout');
+            return $next($request);
+        }
+
         if ($request->route()->getName() === 'mypage.profile.update') {
             \Log::info('Skipping middleware for profile update');
             return $next($request);

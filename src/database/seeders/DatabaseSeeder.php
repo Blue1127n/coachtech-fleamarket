@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
@@ -15,10 +16,10 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             StatusesTableSeeder::class,
-            CategoriesTableSeeder::class,
-            UsersTableSeeder::class,
             ConditionsTableSeeder::class,
+            UsersTableSeeder::class,
             ItemsTableSeeder::class,
+            CategoriesTableSeeder::class,
             TransactionsTableSeeder::class,
             ItemCategoryTableSeeder::class,
             ]);

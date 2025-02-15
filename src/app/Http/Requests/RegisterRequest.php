@@ -55,6 +55,6 @@ class RegisterRequest extends FormRequest
 
 public function expectsJson()
 {
-    return false;
+    return request()->expectsJson();
 }
 }
