@@ -31,7 +31,7 @@ class ProfileRequest extends FormRequest
 
     public function messages()
     {
-        \Log::info('ProfileRequest Messages Triggered', ['data' => $this->all()]);
+        \Log::info('バリデーション実行', ['data' => $this->all()]);
 
         return [
             'profile_image.mimes' => 'jpegまたはpng形式で登録してください',

@@ -34,6 +34,7 @@ class UserProfileController extends Controller
     public function update(Request $request, AddressRequest $addressRequest, ProfileRequest $profileRequest)
 {
 
+    \Log::info('Request Data:', $request->all());
     try {
 
         $validatedAddress = $addressRequest->validated();
@@ -42,7 +43,7 @@ class UserProfileController extends Controller
             $validatedProfile = $profileRequest->validated();
         } catch (\Illuminate\Validation\ValidationException $e) {
 
-        return redirect()->back()->withErrors($e->errors())->withInput();
+            return response()->json(['errors' => $e->errors()], 422);
         }
 
 
@@ -65,17 +66,14 @@ class UserProfileController extends Controller
 
         } catch (\Exception $imageException) {
 
-            return redirect()->back()->withErrors(['profile_image' => '画像アップロードに失敗しました']);
+            return response()->json(['errors' => ['profile_image' => '画像アップロードに失敗しました']], 422);
         }
-    } else {
-
     }
 
-    return redirect()->route('products.index')->with('success', 'プロフィールが更新されました');
-} catch (\Exception $e) {
-
-    return redirect()->back()->withErrors(['message' => '予期しないエラーが発生しました']);
-}
+    return response()->json(['success' => true, 'message' => 'プロフィールが更新されました']);
+    } catch (\Exception $e) {
+        return response()->json(['message' => '予期しないエラーが発生しました', 'error' => $e->getMessage()], 500);
+    }
 }
 
     public function purchasedItems()

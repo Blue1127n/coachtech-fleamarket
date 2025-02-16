@@ -5,6 +5,8 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use App\Models\User;
 
 class LoginRequest extends FormRequest
 {
@@ -25,8 +27,14 @@ class LoginRequest extends FormRequest
      */
     public function rules()
     {
+        \Log::info('Request Headers', request()->headers->all());
+    \Log::info('Request expectsJson:', ['expectsJson' => $this->expectsJson()]);
+    \Log::info('Request ajax:', ['ajax' => request()->ajax()]);
+    \Log::info('Request wantsJson:', ['wantsJson' => request()->wantsJson()]);
+    \Log::info('expectsJson:', ['result' => $this->expectsJson()]);
+
         return [
-            'email' => ['required', 'string'],
+            'email' => ['required', 'string', 'max:255'],
             'password' => ['required', 'string', 'min:8'],
         ];
     }
@@ -40,24 +48,37 @@ class LoginRequest extends FormRequest
         ];
     }
 
-    protected function failedValidation(Validator $validator)
-{
-    \Log::error('バリデーションエラー', [
-        'errors' => $validator->errors(),
-        'request' => request()->all(),
-    ]);
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'email' => trim($this->email),
+        ]);
+    }
 
-    if ($this->ajax()) {
-        throw new ValidationException($validator, response()->json([
-            'message' => 'バリデーションエラーがあります',
+    protected function withValidator($validator)
+    {
+        $validator->after(function ($validator) {
+            $value = $this->input('email');
+
+            // メールアドレス形式でない場合、かつユーザー名も存在しない場合はエラー
+            if (!filter_var($value, FILTER_VALIDATE_EMAIL) && !User::where('name', $value)->exists()) {
+                $validator->errors()->add('email', '正しいメールアドレスの形式で入力するか、登録済みのユーザー名を入力してください。');
+            }
+        });
+    }
+
+    public function failedValidation(Validator $validator)
+    {
+        \Log::error('Validation failed', ['errors' => $validator->errors()]);
+        throw new HttpResponseException(response()->json([
+            'message' => 'バリデーションエラー',
             'errors' => $validator->errors()
         ], 422));
     }
 
-    throw new ValidationException($validator, redirect()->back()->withErrors($validator)->withInput());
+    public function expectsJson()
+    {
+        return true;
+    }
 }
-
-}
-
-
 

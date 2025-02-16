@@ -20,16 +20,7 @@ class AuthController extends Controller
 
     public function login(LoginRequest $request)
 {
-
-    // **リクエストの全データをログに記録**
-    \Log::info('Login request received', ['request_data' => $request->all()]);
-
-    // **リクエストの型をログに記録**
-    \Log::info('Request Type', [
-        'ajax' => $request->ajax(),
-        'expectsJson' => $request->expectsJson(),
-        'wantsJson' => $request->wantsJson(),
-    ]);
+    \Log::info('Request Data', ['data' => $request->all()]);
 
     $credentials = $request->only('email', 'password');
 
@@ -40,29 +31,27 @@ class AuthController extends Controller
     if (!$user || !Auth::attempt(['email' => $user->email, 'password' => $credentials['password']])) {
         \Log::error('Login failed: Invalid credentials', ['email' => $credentials['email']]);
 
-        if ($request->ajax()) {
+        if ($request->expectsJson()) {
             return response()->json([
                 'message' => 'ログインに失敗しました',
                 'errors' => ['email' => ['認証情報が正しくありません。']]
             ], 422);
         }
 
-        \Log::info('Redirecting back with login error');
         return redirect()->back()->withErrors(['login' => 'ログイン情報が登録されていません'])->withInput();
     }
 
     if (!$user->hasVerifiedEmail()) {
-        \Log::warning('User has not verified email', ['user_id' => $user->id]);
+        \Log::warning('メール認証未完了', ['user_id' => $user->id]);
         Auth::logout();
 
-        if ($request->ajax()) {
+        if ($request->expectsJson()) {
             return response()->json(['error' => 'メール認証が完了していません'], 403);
         }
         return back()->withErrors(['login' => __('auth.unverified_email')])->withInput();
     }
 
     if (is_null(Auth::user()->address) || empty(Auth::user()->postal_code)) {
-        \Log::info('User needs to set up profile', ['user_id' => Auth::id()]);
         session(['redirect_to_profile' => true]);
     }
 
@@ -70,7 +59,7 @@ class AuthController extends Controller
 
     $request->session()->regenerate();
 
-    if ($request->ajax()) {
+    if ($request->expectsJson()) {
         return response()->json([
             'message' => 'ログイン成功',
             'user' => Auth::user()
