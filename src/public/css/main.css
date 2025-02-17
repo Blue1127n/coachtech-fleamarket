@@ -116,3 +116,57 @@ body {
     border: none;
 }
 
+@media screen and (max-width: 1540px) {
+    .container {
+        max-width: 90%;
+    }
+
+    .header__search input {
+        max-width: 450px;
+        height: 45px;
+        font-size: 22px;
+    }
+
+    .header__menu a, .header__menu button {
+        font-size: 22px;
+    }
+}
+
+@media screen and (max-width: 850px) {
+    .main-header {
+        flex-direction: column;
+        height: auto;
+        padding: 15px;
+    }
+
+    .header__logo {
+        max-width: 250px;
+        margin-bottom: 10px;
+    }
+
+    .header__search {
+        margin: 10px 0;
+    }
+
+    .header__search input {
+        width: 90%;
+        height: 40px;
+        font-size: 18px;
+    }
+
+    .header__menu {
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 10px;
+    }
+
+    .header__menu a, .header__menu button {
+        font-size: 20px;
+        margin-right: 0;
+    }
+
+    .header__sell-btn {
+        font-size: 20px;
+        padding: 8px 12px;
+    }
+}

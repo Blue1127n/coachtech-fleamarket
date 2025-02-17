@@ -312,22 +312,68 @@ textarea[name="content"] {
     resize: none;
 }
 
-@media (max-width: 768px) {
+@media screen and (max-width: 1540px) {
+    .item-detail-container {
+        max-width: 90%;
+    }
+
+    .item-image img {
+        max-width: 500px;
+        max-height: 500px;
+    }
+
+    .purchase-btn {
+        width: 90%;
+        font-size: 26px;
+    }
+}
+
+@media screen and (max-width: 850px) {
     .item-detail-container {
         flex-direction: column;
-        padding: 10px;
+        max-width: 95%;
+        gap: 30px;
     }
 
     .item-detail-left {
-        border-right: none;
-        padding-right: 0;
+        text-align: center;
+    }
+
+    .item-image img {
+        max-width: 100%;
+        height: auto;
     }
 
     .item-detail-right {
-        padding-left: 0;
+        max-width: 100%;
     }
 
-    .item-actions {
-        flex-direction: column;
+    .item-detail h1 {
+        font-size: 32px;
+        line-height: 40px;
+    }
+
+    .item-brand, .item-price-symbol, .item-price-tax, .condition-section {
+        font-size: 18px;
+    }
+
+    .item-price-value {
+        font-size: 32px;
+    }
+
+    .purchase-btn {
+        width: 100%;
+        font-size: 24px;
+        padding: 15px;
+    }
+
+    .comments-section h2 {
+        font-size: 30px;
+    }
+
+    .comments-section .comment p {
+        font-size: 16px;
+        width: 100%;
+        padding: 10px;
     }
 }
