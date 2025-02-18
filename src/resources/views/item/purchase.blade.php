@@ -20,7 +20,7 @@
             </div>
         </div>
 
-        <form action="{{ route('item.processPurchase', ['item_id' => $item->id]) }}" method="POST">
+        <form id="purchase-form" action="{{ route('item.processPurchase', ['item_id' => $item->id]) }}" method="POST">
             @csrf
 
             <div class="payment-method">
@@ -39,9 +39,7 @@
                     </div>
                     <input type="hidden" name="payment_method" id="paymentInput" value="{{ old('payment_method') ?: '' }}">
                 </div>
-                @error('payment_method')
-                    <p class="error-message">{{ $message }}</p>
-                @enderror
+                <p class="error-message" id="payment_method-error"></p>
             </div>
 
             <div class="shipping-address">
@@ -49,13 +47,9 @@
                 <div class="shipping-content">
                     <div class="shipping-info">
                         <p>〒 {{ preg_replace('/(\d{3})(\d{4})/', '$1-$2', old('postal_code', $postalCode)) }}</p>
-                        @error('postal_code')
-                            <p class="error-message">{{ $message }}</p>
-                        @enderror
+                        <p class="error-message" id="postal_code-error"></p>
                         <p>{{ old('address', $address) }}</p>
-                        @error('address')
-                            <p class="error-message">{{ $message }}</p>
-                        @enderror
+                        <p class="error-message" id="address-error"></p>
                         @if(!empty(trim($building)))
                             <p>{{ old('building', $building) }}</p>
                         @endif
@@ -99,6 +93,76 @@
 @push('scripts')
 <script>
 document.addEventListener("DOMContentLoaded", function () {
+    const form = document.getElementById("purchase-form");
+
+    if (form) {
+        form.addEventListener("submit", async function (event) {
+            event.preventDefault();
+
+            const csrfToken = document.querySelector('input[name=_token]').value;
+            const paymentMethod = document.getElementById("paymentInput").value;
+
+            console.log("送信する支払い方法:", paymentMethod); // デバッグ用
+
+            if (!paymentMethod) {
+                document.getElementById("payment_method-error").textContent = "支払い方法を選択してください";
+                document.getElementById("payment_method-error").style.color = "red";
+                return;
+            }
+
+            const formData = new FormData(form);
+
+            // エラーメッセージをクリア
+            document.querySelectorAll(".error-message").forEach(el => el.textContent = "");
+
+            try {
+                const response = await fetch(form.action, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRF-TOKEN": csrfToken
+                },
+                body: JSON.stringify({
+                    payment_method: document.getElementById("paymentInput").value,
+                    postal_code: document.querySelector('input[name="postal_code"]').value,
+                    address: document.querySelector('input[name="address"]').value,
+                    building: document.querySelector('input[name="building"]').value
+                })
+            });
+
+                const text = await response.text(); // まずテキストとして取得
+                console.log("サーバーレスポンス:", text); // デバッグ用
+
+                try {
+                    const data = JSON.parse(text); // JSONに変換
+
+                    if (!response.ok) {
+                        console.log("エラー内容:", data);
+                        if (data.errors) {
+                            Object.keys(data.errors).forEach(key => {
+                                const errorField = document.getElementById(`${key}-error`);
+                                if (errorField) {
+                                    errorField.textContent = data.errors[key][0];
+                                    errorField.style.color = "red";
+                                }
+                            });
+                        }
+                    } else {
+                        console.log("成功レスポンス:", data);
+                        if (data.redirect_url) {
+                            window.location.href = data.redirect_url;
+                        }
+                    }
+                } catch (e) {
+                    console.error("JSON パースエラー:", text);
+                }
+
+            } catch (error) {
+                console.error("エラーが発生しました:", error);
+            }
+        });
+    }
+
     const selectBox = document.querySelector(".custom-payment-select");
     const selectedOption = document.getElementById("selectedPayment");
     const selectedMethod = document.getElementById("selected-method");

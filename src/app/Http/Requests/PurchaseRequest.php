@@ -3,6 +3,10 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Validation\ValidationException;
+
 
 class PurchaseRequest extends FormRequest
 {
@@ -41,5 +45,21 @@ class PurchaseRequest extends FormRequest
             'address.required' => '住所を入力してください',
         ];
     }
+
+    public function failedValidation(Validator $validator)
+{
+    throw new HttpResponseException(
+        response()->json([
+            'message' => 'バリデーションエラーが発生しました。',
+            'errors' => $validator->errors()
+        ], 422)
+    );
 }
 
+protected function prepareForValidation()
+{
+    if ($this->isJson()) {
+        $this->merge(json_decode($this->getContent(), true));
+    }
+}
+}

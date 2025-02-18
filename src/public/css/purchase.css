@@ -10,18 +10,16 @@ body {
 .purchase-container {
     max-width: 1512px;
     margin: 30px auto;
-    padding: 20px;
+    padding: 10px;
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
     color: rgba(0, 0, 0, 1);
-
 }
 
 .purchase-details {
     flex: 2;
     max-width: 805px;
-    margin-left: 50px;
 }
 
 .item-info {
@@ -301,6 +299,15 @@ body {
 @media screen and (max-width: 1540px) {
     .purchase-container {
         max-width: 90%;
+        flex-direction: row;
+    }
+
+    .summary-container {
+        max-width: 300px;
+    }
+
+    .summary-button .purchase-summary-btn {
+        width: 300px;
     }
 }
 
@@ -310,43 +317,11 @@ body {
         align-items: center;
     }
 
-    .purchase-details {
-        max-width: 100%;
-        margin: 0;
-    }
-
-    .item-info {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-    }
-
-    .item-image {
-        width: 150px;
-        height: 150px;
-    }
-
-    .custom-payment-select {
-        width: 90%;
-    }
-
-    .shipping-content {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-    }
-
     .summary-container {
         max-width: 100%;
-        margin: 20px auto;
     }
 
-    .summary {
-        width: 90%;
-        margin: 0 auto;
-    }
-
-    .purchase-summary-btn {
-        width: 90%;
+    .summary-button .purchase-summary-btn {
+        width: 100%;
     }
 }

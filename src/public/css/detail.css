@@ -315,65 +315,31 @@ textarea[name="content"] {
 @media screen and (max-width: 1540px) {
     .item-detail-container {
         max-width: 90%;
+        flex-wrap: wrap;
     }
 
-    .item-image img {
-        max-width: 500px;
-        max-height: 500px;
-    }
-
-    .purchase-btn {
-        width: 90%;
-        font-size: 26px;
-    }
-}
-
-@media screen and (max-width: 850px) {
-    .item-detail-container {
-        flex-direction: column;
-        max-width: 95%;
-        gap: 30px;
-    }
-
-    .item-detail-left {
-        text-align: center;
+    .item-detail-left, .item-detail-right {
+        max-width: 48%;
     }
 
     .item-image img {
         max-width: 100%;
         height: auto;
     }
+}
 
-    .item-detail-right {
+@media screen and (max-width: 850px) {
+    .item-detail-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .item-detail-left, .item-detail-right {
         max-width: 100%;
-    }
-
-    .item-detail h1 {
-        font-size: 32px;
-        line-height: 40px;
-    }
-
-    .item-brand, .item-price-symbol, .item-price-tax, .condition-section {
-        font-size: 18px;
-    }
-
-    .item-price-value {
-        font-size: 32px;
     }
 
     .purchase-btn {
         width: 100%;
-        font-size: 24px;
-        padding: 15px;
-    }
-
-    .comments-section h2 {
-        font-size: 30px;
-    }
-
-    .comments-section .comment p {
-        font-size: 16px;
-        width: 100%;
-        padding: 10px;
     }
 }
+

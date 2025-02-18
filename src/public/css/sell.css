@@ -10,9 +10,11 @@ body {
 }
 
 .sell-container {
+    width: 100%;
     max-width: 680px;
     margin: 0 auto;
     padding: 20px;
+    text-align: center;
 }
 
 .title {
@@ -25,6 +27,10 @@ body {
 
 .form-group {
     margin-bottom: 15px;
+    width: 100%;
+    max-width: 680px;
+    margin: 0 auto;
+    text-align: left;
 }
 
 .image-label, .category-label, .condition-label,
@@ -45,6 +51,7 @@ body {
 
 .image-upload-box {
     width: 100%;
+    max-width: 680px;
     height: 150px;
     gap: 0px;
     border: 1px dashed rgba(95, 95, 95, 1);
@@ -53,6 +60,7 @@ body {
     align-items: center;
     justify-content: center;
     position: relative;
+    overflow: hidden;
 }
 
 .image-input {
@@ -82,18 +90,6 @@ body {
     background-color: rgba(255, 255, 255, 1);
 }
 
-.image-upload-box {
-    width: 100%;
-    height: 200px;
-    border: 2px dashed rgba(95, 95, 95, 1);
-    border-radius: 4px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    overflow: hidden;
-}
-
 .image-preview {
     max-width: 100%;
     max-height: 100%;
@@ -103,7 +99,8 @@ body {
 
 
 .product-details {
-    width: 680px;
+    width: 100%;
+    max-width: 680px;
     border-bottom: 1px solid rgba(95, 95, 95, 1);
 }
 
@@ -123,7 +120,10 @@ body {
 .category-options {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     gap: 10px;
+    max-width: 100%;
+    margin: 0 auto;
 }
 
 .category-option {
@@ -160,11 +160,17 @@ body {
 
 .condition-group {
     margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    max-width: 680px;
 }
 
 .custom-condition-select {
     position: relative;
-    width: 680px;
+    width: 100%;
+    max-width: 680px;
     height: 45px;
     margin-top: 5px;
     margin-bottom: 50px;
@@ -186,14 +192,25 @@ body {
 
 .selected-option {
     background-color: rgba(255, 255, 255, 1);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 100%;
+    padding: 10px;
     border-radius: 4px;
 }
 
 .dropdown-options {
     position: absolute;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
     top: 100%;
     left: 0;
     width: 100%;
+    gap: 10px;
+    max-width: 100%;
     color: rgba(234, 234, 234, 1);
     background-color: rgba(95, 95, 95, 1);
     border: 1.5px solid rgba(177, 177, 177, 1);
@@ -238,7 +255,8 @@ body {
 
 .product-name-description {
     border-bottom: 1px solid rgba(95, 95, 95, 1);
-    width: 680px;
+    width: 100%;
+    max-width: 680px;
 }
 
 .product-name-description h2 {
@@ -255,7 +273,8 @@ body {
 }
 
 .name-input {
-    width: 680px;
+    width: 100%;
+    max-width: 680px;
     height: 45px;
     gap: 0px;
     border-radius: 4px;
@@ -268,7 +287,8 @@ body {
 }
 
 .description-textarea {
-    width: 680px;
+    width: 100%;
+    max-width: 680px;
     height: 125px;
     gap: 0px;
     border-radius: 4px;
@@ -285,7 +305,8 @@ body {
 }
 
 .price-input {
-    width: 680px;
+    width: 100%;
+    max-width: 680px;
     height: 45px;
     border-radius: 4px;
     border: 1px solid rgba(95, 95, 95, 1);
@@ -305,7 +326,8 @@ body {
 }
 
 .submit-button {
-    width: 680px;
+    width: 100%;
+    max-width: 680px;
     height: 60px;
     margin-top: 65px;
     background-color: rgba(255, 85, 85, 1);
@@ -332,29 +354,20 @@ body {
 
 @media screen and (max-width: 1540px) {
     .sell-container {
-        max-width: 90%;
+        max-width: 95%;
+    }
+    
+    .custom-condition-select,
+    .form-group input,
+    .form-group textarea,
+    .submit-button {
+        max-width: 100%;
     }
 }
 
 @media screen and (max-width: 850px) {
     .sell-container {
-        max-width: 95%;
-        padding: 15px;
-    }
-
-    .form-group {
-        width: 100%;
-    }
-
-    .image-upload-box {
-        width: 100%;
-    }
-
-    .name-input, .description-textarea, .price-input {
-        width: 100%;
-    }
-
-    .submit-button {
-        width: 100%;
+        max-width: 100%;
+        padding: 10px;
     }
 }

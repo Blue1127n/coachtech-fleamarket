@@ -13,6 +13,7 @@ use App\Models\Condition;
 use App\Models\Transaction;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class ItemController extends Controller
 {
@@ -181,20 +182,27 @@ class ItemController extends Controller
     }
 
     public function processPurchase(PurchaseRequest $request, $item_id)
-{
+    {
+        try {
+            $user = auth()->user();
 
-    $user = auth()->user();
+            $transaction = Transaction::updateOrCreate(
+                ['item_id' => $item_id, 'buyer_id' => $user->id],
+                [
+                    'status_id' => 1,
+                    'payment_method' => $request->payment_method,
+                ]
+            );
 
-    $transaction = Transaction::updateOrCreate(
-        ['item_id' => $item_id, 'buyer_id' => $user->id],
-        [
-            'status_id' => 1,
-            'payment_method' => $request->payment_method,
-        ]
-    );
+            return response()->json([
+                'message' => '支払い方法が選択されました',
+                'redirect_url' => route('payment.page', ['item_id' => $item_id])
+            ]);
 
-    return redirect()->route('payment.page', ['item_id' => $item_id])->with('success', '支払い方法が選択されました');
-}
+        } catch (\Exception $e) {
+            return response()->json(['error' => '内部エラーが発生しました'], 500);
+        }
+    }
 
 public function changeAddress($item_id)
 {

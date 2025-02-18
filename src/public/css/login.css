@@ -14,9 +14,10 @@ body {
 }
 
 .login-container {
+    width: 100%;
     max-width: 680px;
-    margin: 30px auto;
-    padding: 5px;
+    margin: 50px auto;
+    padding: 20px;
     background-color: rgba(255, 255, 255, 1);
     text-align: center;
 }
@@ -107,48 +108,22 @@ body {
     text-decoration: underline;
 }
 
-@media screen and (max-width: 1540px) {
+@media screen and (max-width: 850px) {
     .login-container {
         max-width: 90%;
     }
 
-    .input-text {
-        max-width: 600px;
-    }
-
-    .btn-submit {
-        max-width: 600px;
+    .input-text, .btn-submit {
+        max-width: 100%;
     }
 }
 
-@media screen and (max-width: 850px) {
+@media screen and (max-width: 1540px) {
     .login-container {
-        width: 90%;
         max-width: 600px;
-        padding: 15px;
     }
 
-    .login-container h2 {
-        font-size: 28px;
-    }
-
-    .form-group label {
-        font-size: 20px;
-    }
-
-    .input-text {
-        width: 100%;
-        height: 50px;
-        font-size: 16px;
-    }
-
-    .btn-submit {
-        width: 100%;
-        height: 55px;
-        font-size: 22px;
-    }
-
-    .login-container p a {
-        font-size: 18px;
+    .input-text, .btn-submit {
+        max-width: 95%;
     }
 }
