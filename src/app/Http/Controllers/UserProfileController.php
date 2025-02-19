@@ -36,16 +36,14 @@ class UserProfileController extends Controller
 
     \Log::info('Request Data:', $request->all());
     try {
-
+        // バリデーション
         $validatedAddress = $addressRequest->validated();
 
         try {
             $validatedProfile = $profileRequest->validated();
         } catch (\Illuminate\Validation\ValidationException $e) {
-
             return response()->json(['errors' => $e->errors()], 422);
         }
-
 
         $user = auth()->user();
         $user->update([
@@ -70,10 +68,18 @@ class UserProfileController extends Controller
         }
     }
 
-    return response()->json(['success' => true, 'message' => 'プロフィールが更新されました']);
-    } catch (\Exception $e) {
-        return response()->json(['message' => '予期しないエラーが発生しました', 'error' => $e->getMessage()], 500);
-    }
+    return response()->json([
+        'success' => true,
+        'message' => 'プロフィールが更新されました',
+        'redirect_url' => route('mypage.profile') // プロフィール画面へリダイレクト
+    ]);
+
+} catch (\Exception $e) {
+    return response()->json([
+        'message' => '予期しないエラーが発生しました',
+        'error' => $e->getMessage()
+    ], 500);
+}
 }
 
     public function purchasedItems()

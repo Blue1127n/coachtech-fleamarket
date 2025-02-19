@@ -1,6 +1,6 @@
 .header {
     background-color: rgba(0, 0, 0, 1);
-    padding: 10px 20px;
+    padding: 15px 20px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -20,14 +20,13 @@
     min-width: 1400px;
     height: 82px;
     gap: 0px;
-    padding: 22px 25px 0px 0px;
+    padding: 20px;
     margin: 0 auto;
 }
 
 @media screen and (max-width: 850px) {
     .container {
         max-width: 95%;
-        padding: 10px;
     }
 
     .header {
@@ -43,6 +42,5 @@
 @media screen and (max-width: 1540px) {
     .container {
         max-width: 95%;
-        padding: 10px;
     }
 }

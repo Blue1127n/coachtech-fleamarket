@@ -10,6 +10,7 @@ body {
 }
 
 .payment-container {
+    width: 100%;
     max-width: 680px;
     margin: 50px auto;
     padding: 20px;
@@ -115,7 +116,7 @@ h1 {
 
 @media screen and (max-width: 1540px) {
     .payment-container {
-        max-width: 90%;
+        max-width: 100%;
     }
 }
 
@@ -123,15 +124,5 @@ h1 {
     .payment-container {
         max-width: 95%;
         padding: 15px;
-    }
-
-    .item-image {
-        max-width: 100%;
-        height: auto;
-    }
-
-    .payment-btn, .back-btn {
-        width: 100%;
-        max-width: 350px;
     }
 }

@@ -85,23 +85,23 @@ body {
 
 @media screen and (max-width: 1540px) {
     .address-change-container {
-        width: 90%;  /* max-width を width に変更 */
-        max-width: 680px;  /* 最大幅を指定 */
+        width: 90%;
+        max-width: 680px;
     }
 
     .form-group input {
-        width: 90%; /* ここを変更 */
+        width: 90%;
         max-width: 680px;
     }
         .update-btn {
-        width: 90%; /* ここを変更 */
+        width: 90%;
         max-width: 680px;
     }
 }
 
 @media screen and (max-width: 850px) {
     .address-change-container {
-        width: 95%;  /* max-width を width に変更 */
+        width: 95%;
         max-width: 100%;
     }
 

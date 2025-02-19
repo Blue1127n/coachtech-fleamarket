@@ -38,16 +38,20 @@ class Handler extends ExceptionHandler
     }
 
     public function render($request, Throwable $exception)
-    {
+{
     if ($exception instanceof ValidationException) {
-        return response()->json([
-            'message' => 'バリデーションエラー',
-            'errors' => $exception->errors(),
-        ], 422);
+        if ($request->expectsJson()) {
+            return response()->json([
+                'message' => 'バリデーションエラー',
+                'errors' => $exception->errors(),
+            ], 422);
+        }
+        // 通常のリクエストならリダイレクト
+        return redirect()->back()->withErrors($exception->errors())->withInput();
     }
 
     return parent::render($request, $exception);
-    }
+}
 
     /**
      * Register the exception handling callbacks for the application.
