@@ -20,8 +20,6 @@ class AuthController extends Controller
 
     public function login(LoginRequest $request)
 {
-    \Log::info('Request Data', ['data' => $request->all()]);
-
     $credentials = $request->only('email', 'password');
 
     $user = User::where('email', $credentials['email'])
@@ -29,7 +27,6 @@ class AuthController extends Controller
                 ->first();
 
     if (!$user || !Auth::attempt(['email' => $user->email, 'password' => $credentials['password']])) {
-        \Log::error('Login failed: Invalid credentials', ['email' => $credentials['email']]);
 
         if ($request->expectsJson()) {
             return response()->json([
@@ -42,7 +39,6 @@ class AuthController extends Controller
     }
 
     if (!$user->hasVerifiedEmail()) {
-        \Log::warning('メール認証未完了', ['user_id' => $user->id]);
         Auth::logout();
 
         if ($request->expectsJson()) {
@@ -54,8 +50,6 @@ class AuthController extends Controller
     if (is_null(Auth::user()->address) || empty(Auth::user()->postal_code)) {
         session(['redirect_to_profile' => true]);
     }
-
-    \Log::info('Login successful', ['user_id' => Auth::id()]);
 
     $request->session()->regenerate();
 
@@ -108,15 +102,11 @@ class AuthController extends Controller
 
     public function logout(Request $request)
     {
-        \Log::info('Logging out user', ['user_id' => Auth::id()]);
-
         Auth::logout();
 
-        \Log::info('User logged out. Invalidating session...');
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        \Log::info('Redirecting to /');
         return redirect('/')->with('success', 'ログアウトしました');
     }
 }

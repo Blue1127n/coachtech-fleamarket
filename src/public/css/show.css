@@ -1,12 +1,15 @@
 body {
     background-color: rgba(255, 255, 255, 1);
     font-family: Inter;
+    margin: 0;
+    padding: 0;
 }
 
 .profile-container {
-    max-width: 1512px;
-    margin: 50px auto;
-    padding: 20px;
+    width: 100%;
+    max-width: 1540px;
+    margin: 0 auto;
+    padding-top: 60px;
     background-color: rgba(255, 255, 255, 1);
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -17,9 +20,10 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
     gap: 20px;
     width: 100%;
+    padding: 0 20px;
 }
 
 .profile-image {
@@ -127,14 +131,13 @@ body {
 }
 
 .items {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    gap: 50px;
+    display: grid;
+    gap: 30px;
     padding: 20px;
-    margin-left: 50px;
-    margin-bottom: 30px;
+    margin: 0 auto;
     box-sizing: border-box;
+    grid-template-columns: repeat(4, 1fr);
+    max-width: 1540px;
 }
 
 .item {
@@ -195,64 +198,71 @@ body {
 
 @media screen and (max-width: 1540px) {
     .profile-container {
-        max-width: 90%;
+        max-width: 100%;
+    }
+
+    .profile-header {
+        justify-content: space-between;
+        padding: 0 15px;
+    }
+
+    .profile-info h2 {
+        font-size: 32px;
+    }
+
+    .profile-btn {
+        justify-content: center;
+    }
+
+    .profile-btn .btn {
+        width: 250px;
+        font-size: 22px;
+    }
+
+    .items {
+        grid-template-columns: repeat(4, 1fr);
+        max-width: 100%;
     }
 }
 
 @media screen and (max-width: 850px) {
+    .profile-container {
+        max-width: 95%;
+        padding: 15px;
+    }
+
     .profile-header {
         flex-direction: column;
         align-items: center;
         text-align: center;
     }
 
-    .profile-image {
-        width: 120px;
-        height: 120px;
-        margin-left: 0;
-    }
-
     .profile-info h2 {
         font-size: 28px;
-        text-align: center;
-        margin-left: 0;
     }
 
     .profile-btn {
-        text-align: center;
-        margin-top: 10px;
+        width: 100%;
+        display: flex;
+        justify-content: center;
     }
 
     .profile-btn .btn {
-        width: 250px;
+        width: 90%;
         font-size: 20px;
     }
 
     .tabs {
-        justify-content: center;
-        flex-wrap: wrap;
-    }
-
-    .tabs a {
-        font-size: 20px;
-        margin: 0 15px;
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
     }
 
     .items {
-        justify-content: center;
-    }
-
-    .item {
-        width: 200px;
-        height: auto;
+        grid-template-columns: repeat(2, 1fr);
     }
 
     .product-image img {
-        max-width: 100%;
         height: auto;
-    }
-
-    .item p {
-        font-size: 18px;
     }
 }

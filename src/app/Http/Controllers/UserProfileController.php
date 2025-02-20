@@ -34,16 +34,9 @@ class UserProfileController extends Controller
     public function update(Request $request, AddressRequest $addressRequest, ProfileRequest $profileRequest)
 {
 
-    \Log::info('Request Data:', $request->all());
     try {
-        // バリデーション
         $validatedAddress = $addressRequest->validated();
-
-        try {
-            $validatedProfile = $profileRequest->validated();
-        } catch (\Illuminate\Validation\ValidationException $e) {
-            return response()->json(['errors' => $e->errors()], 422);
-        }
+        $validatedProfile = $profileRequest->validated();
 
         $user = auth()->user();
         $user->update([
@@ -54,32 +47,29 @@ class UserProfileController extends Controller
         ]);
 
         if ($profileRequest->hasFile('profile_image')) {
-
-            try {
-
             $file = $profileRequest->file('profile_image');
-
             $finalPath = $file->store('profile_images', 'public');
             $user->update(['profile_image' => $finalPath]);
-
-        } catch (\Exception $imageException) {
-
-            return response()->json(['errors' => ['profile_image' => '画像アップロードに失敗しました']], 422);
         }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'プロフィールが更新されました',
+            'redirect_url' => route('products.index')
+        ]);
+
+    } catch (\Illuminate\Validation\ValidationException $e) {
+        return response()->json([
+            'success' => false,
+            'errors' => $e->errors()
+        ], 422);
+    } catch (\Exception $e) {
+        return response()->json([
+            'success' => false,
+            'message' => '予期しないエラーが発生しました',
+            'error' => $e->getMessage()
+        ], 500);
     }
-
-    return response()->json([
-        'success' => true,
-        'message' => 'プロフィールが更新されました',
-        'redirect_url' => route('mypage.profile') // プロフィール画面へリダイレクト
-    ]);
-
-} catch (\Exception $e) {
-    return response()->json([
-        'message' => '予期しないエラーが発生しました',
-        'error' => $e->getMessage()
-    ], 500);
-}
 }
 
     public function purchasedItems()

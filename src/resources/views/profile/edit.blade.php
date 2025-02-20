@@ -49,62 +49,64 @@ document.getElementById('profile-form').addEventListener('submit', function(even
     let formData = new FormData(this);
     formData.append('_method', 'PUT');
 
-    // 既存のエラーメッセージをクリア
     document.querySelectorAll('.error-message').forEach(el => el.innerText = '');
 
     fetch("{{ route('mypage.profile.update') }}", {
         method: "POST",
         headers: {
-            "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+            "Accept": "application/json"
         },
         body: formData
     })
-    .then(response => response.json())
-    .then(data => {
-        if (data.errors) {
-            console.log(data.errors);
+    .then(response => response.json().then(body => ({ status: response.status, body })))
+    .then(({ status, body }) => {
+        if (status === 422) {
+            console.log("バリデーションエラー:", body.errors);
 
-            // 各エラーをHTMLに反映
-            if (data.errors.profile_image) {
-                document.getElementById('profile_image-error').innerText = data.errors.profile_image[0];
+            if (body.errors.profile_image) {
+                document.getElementById('profile_image-error').innerText = body.errors.profile_image[0];
             }
-            if (data.errors.name) {
-                document.getElementById('name-error').innerText = data.errors.name[0];
+            if (body.errors.name) {
+                document.getElementById('name-error').innerText = body.errors.name[0];
             }
-            if (data.errors.postal_code) {
-                document.getElementById('postal_code-error').innerText = data.errors.postal_code[0];
+            if (body.errors.postal_code) {
+                document.getElementById('postal_code-error').innerText = body.errors.postal_code[0];
             }
-            if (data.errors.address) {
-                document.getElementById('address-error').innerText = data.errors.address[0];
+            if (body.errors.address) {
+                document.getElementById('address-error').innerText = body.errors.address[0];
             }
-            if (data.errors.building) {
-                document.getElementById('building-error').innerText = data.errors.building[0];
+            if (body.errors.building) {
+                document.getElementById('building-error').innerText = body.errors.building[0];
             }
-        } else {
-            window.location.href = "{{ route('mypage') }}";
+        } else if (status === 200) {
+            console.log("リダイレクト先:", body.redirect_url);
+            if (body.redirect_url) {
+                window.location.href = body.redirect_url;
+            }
         }
     })
-    .catch(error => console.error('Error:', error));
+    .catch(error => {
+        console.error('通信エラー:', error);
+    });
 });
-
 </script>
-
 @endpush
 
 @section('content')
 <div class="profile-edit-container">
     <h2>プロフィール設定</h2>
 
-<form id="profile-form" action="{{ route('mypage.profile.update') }}" method="POST" enctype="multipart/form-data">
-    @csrf
-    @method('PUT')
+    <form id="profile-form" action="{{ route('mypage.profile.update') }}" method="POST" enctype="multipart/form-data">
+        @csrf
+        @method('PUT')
 
     <div class="profile-image-section">
         <div class="image-preview">
-        <img 
-        id="preview" 
+        <img
+        id="preview"
         src="{{ session('profile_image_temp') ?: (auth()->user()->profile_image ? asset('storage/' . auth()->user()->profile_image) : '') }}" 
-        alt="" 
+        alt=""
         class="{{ session('profile_image_temp') || auth()->user()->profile_image ? 'show' : '' }}">
         @if (!auth()->user()->profile_image && !session('profile_image_temp'))
             <div id="placeholder" class="placeholder"></div>
@@ -158,3 +160,4 @@ document.getElementById('profile-form').addEventListener('submit', function(even
     </form>
 </div>
 @endsection
+

@@ -36,7 +36,6 @@
 document.getElementById('login-form').addEventListener('submit', function(event) {
     event.preventDefault();
 
-    // エラーメッセージの初期化
     document.getElementById('email-error').innerText = '';
     document.getElementById('password-error').innerText = '';
 
@@ -55,7 +54,7 @@ document.getElementById('login-form').addEventListener('submit', function(event)
     .then(response => response.json())
     .then(data => {
         if (data.errors) {
-            // バリデーションエラーを表示
+
             if (data.errors.email) {
                 document.getElementById('email-error').innerText = data.errors.email[0];
             }
@@ -64,7 +63,7 @@ document.getElementById('login-form').addEventListener('submit', function(event)
             }
         } else {
             console.log("ログイン成功", data);
-            window.location.href = "{{ route('products.index') }}"; // ログイン成功時のリダイレクト
+            window.location.href = "{{ route('products.index') }}";
         }
     })
     .catch(error => console.error("通信エラー", error));

@@ -27,7 +27,7 @@
 
             <div class="item-actions">
                 @if(auth()->check())
-                <form id="like-form" action="{{ route('item.like', ['item_id' => $item->id]) }}" method="POST">
+                    <form id="like-form" action="{{ route('item.like', ['item_id' => $item->id]) }}" method="POST">
                         @csrf
                         <div class="like-section">
                             <button type="submit" class="like-button">
@@ -76,31 +76,31 @@
         <div class="comments-section">
             <h2>コメント ({{ $item->comments()->count() }})</h2>
             <ul class="comments-list">
-    @foreach ($item->comments as $comment)
-        <li class="comment">
-            @if ($comment->user->profile_image_url)
-                <img src="{{ $comment->user->profile_image_url }}" alt="{{ $comment->user->name }}" class="user-profile-image">
-            @else
-                <div class="user-profile-placeholder"></div>
-            @endif
-            <strong>{{ $comment->user->name }}</strong>
-            <p>{{ $comment->content }}</p>
-        </li>
-    @endforeach
-</ul>
+            @foreach ($item->comments as $comment)
+                <li class="comment">
+                    @if ($comment->user->profile_image_url)
+                        <img src="{{ $comment->user->profile_image_url }}" alt="{{ $comment->user->name }}" class="user-profile-image">
+                    @else
+                        <div class="user-profile-placeholder"></div>
+                    @endif
+                    <strong>{{ $comment->user->name }}</strong>
+                    <p>{{ $comment->content }}</p>
+                </li>
+            @endforeach
+            </ul>
 
-        <form id="comment-form" action="{{ route('item.comment', ['item_id' => $item->id]) }}" method="POST">
-            @csrf
-            <p>商品へのコメント</p>
-            <textarea name="content" id="comment-content">{{ old('content') }}</textarea>
-            @if ($errors->has('content'))
-                <p class="error-message">{{ $errors->first('content') }}</p>
-            @endif
+            <form id="comment-form" action="{{ route('item.comment', ['item_id' => $item->id]) }}" method="POST">
+                @csrf
+                <p>商品へのコメント</p>
+                <textarea name="content" id="comment-content">{{ old('content') }}</textarea>
+                @if ($errors->has('content'))
+                    <p class="error-message">{{ $errors->first('content') }}</p>
+                @endif
 
-            <button type="submit" class="comment-submit-btn">コメントを送信する</button>
-        </form>
+                <button type="submit" class="comment-submit-btn">コメントを送信する</button>
+            </form>
+        </div>
     </div>
-</div>
 </div>
 @endsection
 

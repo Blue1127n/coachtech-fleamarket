@@ -16,12 +16,12 @@
         <div class="form-group">
             <div class="form-group image-upload">
                 <label class="image-label">商品画像</label>
-                    <div class="image-upload-box">
-                        <input type="file" name="image" id="imageInput" accept="image/*" class="image-input">
-                        <label for="imageInput" class="image-button">画像を選択する</label>
-                        <img id="imagePreview" class="image-preview" />
-                    </div>
-                    <div class="error-message" id="error-image"></div>
+                <div class="image-upload-box">
+                    <input type="file" name="image" id="imageInput" accept="image/*" class="image-input">
+                    <label for="imageInput" class="image-button">画像を選択する</label>
+                    <img id="imagePreview" class="image-preview" />
+                </div>
+                <div class="error-message" id="error-image"></div>
             </div>
 
             <div class="form-group product-details">

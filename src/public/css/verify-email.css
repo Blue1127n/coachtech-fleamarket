@@ -24,19 +24,19 @@ body {
     font-size: 24px;
     font-weight: bold;
     margin-bottom: 20px;
-    color: #333333;
+    color: rgba(95, 95, 95, 1);
 }
 
 .verify-email-container p {
     font-size: 16px;
     line-height: 1.5;
-    color: #555555;
+    color: rgba(95, 95, 95, 1);
     margin-bottom: 20px;
 }
 
 .resend-button {
-    background-color: #007bff;
-    color: #ffffff;
+    background-color: rgba(0, 115, 204, 1);
+    color: rgba(255, 255, 255, 1);
     border: none;
     border-radius: 4px;
     padding: 10px 20px;
@@ -46,7 +46,7 @@ body {
 }
 
 .resend-button:hover {
-    background-color: #0056b3;
+    background-color: rgba(0, 115, 204, 1);
 }
 
 @media screen and (max-width: 850px) {

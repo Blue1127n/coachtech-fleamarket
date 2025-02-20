@@ -30,28 +30,35 @@ class Handler extends ExceptionHandler
 
     public function report(Throwable $exception)
     {
-        \Log::error("Exception occurred: " . $exception->getMessage(), [
-            'exception' => $exception
-        ]);
 
         parent::report($exception);
     }
 
     public function render($request, Throwable $exception)
-{
-    if ($exception instanceof ValidationException) {
-        if ($request->expectsJson()) {
-            return response()->json([
-                'message' => 'バリデーションエラー',
-                'errors' => $exception->errors(),
-            ], 422);
-        }
-        // 通常のリクエストならリダイレクト
-        return redirect()->back()->withErrors($exception->errors())->withInput();
-    }
+    {
 
-    return parent::render($request, $exception);
-}
+        if ($exception instanceof ValidationException) {
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'message' => 'バリデーションエラー',
+                    'errors' => $exception->errors(),
+                ], 422);
+            }
+
+            return redirect()->back()->withErrors($exception->errors())->withInput();
+        }
+
+        if ($exception instanceof \Illuminate\Auth\AuthenticationException) {
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'error' => '未認証のリクエストです',
+                ], 401);
+            }
+            return redirect()->route('login')->withErrors(['login' => 'ログインが必要です']);
+        }
+
+        return parent::render($request, $exception);
+    }
 
     /**
      * Register the exception handling callbacks for the application.

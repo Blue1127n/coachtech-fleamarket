@@ -260,14 +260,11 @@ public function store(ExhibitionRequest $request)
         return response()->json(['error' => 'ログインしていません'], 403);
     }
 
-
     if (!$request->hasFile('image')) {
         return response()->json(['error' => '商品画像がアップロードされていません'], 422);
     }
 
-
     $imagePath = $request->file('image')->store('items', 'public');
-
 
     $item = Item::create([
         'user_id' => Auth::id(),
@@ -289,5 +286,4 @@ public function store(ExhibitionRequest $request)
         'image_path' => $imagePath
     ]);
 }
-
 }

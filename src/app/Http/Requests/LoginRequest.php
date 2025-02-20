@@ -27,12 +27,6 @@ class LoginRequest extends FormRequest
      */
     public function rules()
     {
-        \Log::info('Request Headers', request()->headers->all());
-    \Log::info('Request expectsJson:', ['expectsJson' => $this->expectsJson()]);
-    \Log::info('Request ajax:', ['ajax' => request()->ajax()]);
-    \Log::info('Request wantsJson:', ['wantsJson' => request()->wantsJson()]);
-    \Log::info('expectsJson:', ['result' => $this->expectsJson()]);
-
         return [
             'email' => ['required', 'string', 'max:255'],
             'password' => ['required', 'string', 'min:8'],
@@ -60,7 +54,6 @@ class LoginRequest extends FormRequest
         $validator->after(function ($validator) {
             $value = $this->input('email');
 
-            // メールアドレス形式でない場合、かつユーザー名も存在しない場合はエラー
             if (!filter_var($value, FILTER_VALIDATE_EMAIL) && !User::where('name', $value)->exists()) {
                 $validator->errors()->add('email', '正しいメールアドレスの形式で入力するか、登録済みのユーザー名を入力してください。');
             }
@@ -69,7 +62,6 @@ class LoginRequest extends FormRequest
 
     public function failedValidation(Validator $validator)
     {
-        \Log::error('Validation failed', ['errors' => $validator->errors()]);
         throw new HttpResponseException(response()->json([
             'message' => 'バリデーションエラー',
             'errors' => $validator->errors()

@@ -19,24 +19,20 @@ class RedirectIfProfileIncomplete
     {
 
         if (!Auth::check()) {
-            \Log::info('User not authenticated, skipping middleware');
             return $next($request);
         }
 
         if ($request->route()->getName() === 'logout') {
-            \Log::info('Skipping middleware for logout');
             return $next($request);
         }
 
         if ($request->route()->getName() === 'mypage.profile.update') {
-            \Log::info('Skipping middleware for profile update');
             return $next($request);
         }
 
         $currentRoute = $this->getCurrentRouteName($request);
 
     if (!Auth::user()->hasVerifiedEmail()) {
-        \Log::info('User email not verified, skipping middleware', ['user_id' => Auth::id()]);
         return $next($request);
     }
 

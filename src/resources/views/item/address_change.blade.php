@@ -17,24 +17,24 @@
             <label for="postal_code">郵便番号</label>
             <input type="text" name="postal_code" id="postal_code" value="{{ old('postal_code', $shippingPostalCode) }}">
             @if ($errors->has('postal_code'))
-            <p class="error-message">{{ $errors->first('postal_code') }}</p>
-        @endif
+                <p class="error-message">{{ $errors->first('postal_code') }}</p>
+            @endif
         </div>
 
         <div class="form-group">
             <label for="address">住所</label>
             <input type="text" name="address" id="address" value="{{ old('address', $shippingAddress) }}">
             @if ($errors->has('address'))
-            <p class="error-message">{{ $errors->first('address') }}</p>
-        @endif
+                <p class="error-message">{{ $errors->first('address') }}</p>
+            @endif
         </div>
 
         <div class="form-group">
             <label for="building">建物名</label>
             <input type="text" name="building" id="building" value="{{ old('building', !is_null($shippingBuilding) ? $shippingBuilding : auth()->user()->building) }}">
             @if ($errors->has('building'))
-            <p class="error-message">{{ $errors->first('building') }}</p>
-        @endif
+                <p class="error-message">{{ $errors->first('building') }}</p>
+            @endif
         </div>
 
         <div class="form-group">
@@ -68,7 +68,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (!response.ok) {
                     const data = await response.json();
                     console.log("エラー:", data);
-
                     if (data.errors) {
                         Object.keys(data.errors).forEach(key => {
                             const errorField = document.getElementById(`${key}-error`);

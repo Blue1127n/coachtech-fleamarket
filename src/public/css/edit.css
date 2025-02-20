@@ -6,6 +6,7 @@ body {
 }
 
 .profile-edit-container {
+    width: 100%;
     max-width: 1512px;
     margin: 0 auto;
     padding: 20px;
@@ -176,46 +177,38 @@ form {
         max-width: 90%;
     }
 
-    .form-group input {
-        width: 90%;
-        font-size: 22px;
+    .profile-image-section {
+        width: 600px;
     }
 
+    .form-group input[type="text"],
+    .form-group input[type="file"],
     .btn-submit {
-        width: 90%;
-        font-size: 26px;
+        width: 600px;
     }
 }
 
 @media screen and (max-width: 850px) {
     .profile-edit-container {
         max-width: 95%;
-        text-align: center;
+        padding: 10px;
     }
 
     .profile-image-section {
         flex-direction: column;
         align-items: center;
-    }
-
-    .form-group label {
-        font-size: 20px;
-    }
-
-    .form-group input {
         width: 100%;
-        height: 45px;
-        font-size: 18px;
+    }
+
+    .form-group input[type="text"],
+    .form-group input[type="file"],
+    .btn-submit {
+        width: 100%;
     }
 
     .btn-select-image {
-        font-size: 18px;
-        padding: 8px 12px;
-    }
-
-    .btn-submit {
         width: 100%;
-        font-size: 22px;
-        padding: 12px;
+        text-align: center;
     }
 }
+

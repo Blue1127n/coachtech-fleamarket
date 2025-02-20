@@ -9,7 +9,6 @@ body {
     margin: 0 auto;
     width: 100%;
     max-width: 1540px;
-    min-width: 1400px;
     font-family: Inter;
     background: rgba(255, 255, 255, 1);
 }
@@ -127,14 +126,6 @@ a:hover {
 }
 
 @media screen and (max-width: 1540px) {
-    .product-container {
-        max-width: 100%;
-    }
-
-    .product-tabs {
-        max-width: 1540px;
-    }
-
     .product-grid {
         grid-template-columns: repeat(4, 1fr);
     }
@@ -142,10 +133,20 @@ a:hover {
 
 @media screen and (max-width: 850px) {
     .product-container {
-        max-width: 90%;
+        max-width: 95%;
     }
 
     .product-grid {
         grid-template-columns: repeat(2, 1fr);
     }
+
+    .product-card {
+        max-width: 100%;
+    }
+
+    .product-image img {
+        width: 100%;
+        max-width: none;
+    }
 }
+

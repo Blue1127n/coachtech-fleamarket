@@ -26,7 +26,6 @@ class RegisterRequest extends FormRequest
      */
     public function rules()
     {
-        \Log::info('expectsJson:', ['result' => $this->expectsJson()]);
         return [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255', 'unique:users,email'],

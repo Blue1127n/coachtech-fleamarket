@@ -20,49 +20,49 @@
             </div>
         </div>
 
-        <form id="purchase-form" action="{{ route('item.processPurchase', ['item_id' => $item->id]) }}" method="POST">
-            @csrf
+    <form id="purchase-form" action="{{ route('item.processPurchase', ['item_id' => $item->id]) }}" method="POST">
+        @csrf
 
-            <div class="payment-method">
-                <h2>支払い方法</h2>
-                <div class="custom-payment-select">
-                    <div class="selected-option" id="selectedPayment">
-                        {{ old('payment_method') ?: '選択してください' }}
-                    </div>
-                    <div class="dropdown-options" id="paymentDropdown">
-                        <div class="dropdown-option" data-value="コンビニ払い">
-                            <span class="check-icon"></span>コンビニ払い
-                        </div>
-                        <div class="dropdown-option" data-value="カード支払い">
-                            <span class="check-icon"></span>カード支払い
-                        </div>
-                    </div>
-                    <input type="hidden" name="payment_method" id="paymentInput" value="{{ old('payment_method') ?: '' }}">
+        <div class="payment-method">
+            <h2>支払い方法</h2>
+            <div class="custom-payment-select">
+                <div class="selected-option" id="selectedPayment">
+                    {{ old('payment_method') ?: '選択してください' }}
                 </div>
-                <p class="error-message" id="payment_method-error"></p>
+                <div class="dropdown-options" id="paymentDropdown">
+                    <div class="dropdown-option" data-value="コンビニ払い">
+                        <span class="check-icon"></span>コンビニ払い
+                    </div>
+                    <div class="dropdown-option" data-value="カード支払い">
+                        <span class="check-icon"></span>カード支払い
+                    </div>
+                </div>
+                <input type="hidden" name="payment_method" id="paymentInput" value="{{ old('payment_method') ?: '' }}">
             </div>
+            <p class="error-message" id="payment_method-error"></p>
+        </div>
 
-            <div class="shipping-address">
-                <h2>配送先</h2>
-                <div class="shipping-content">
-                    <div class="shipping-info">
-                        <p>〒 {{ preg_replace('/(\d{3})(\d{4})/', '$1-$2', old('postal_code', $postalCode)) }}</p>
-                        <p class="error-message" id="postal_code-error"></p>
-                        <p>{{ old('address', $address) }}</p>
-                        <p class="error-message" id="address-error"></p>
-                        @if(!empty(trim($building)))
-                            <p>{{ old('building', $building) }}</p>
-                        @endif
-                    </div>
-
-                    <input type="hidden" name="postal_code" value="{{ old('postal_code', $postalCode) }}">
-                    <input type="hidden" name="address" value="{{ old('address', $address) }}">
-                    <input type="hidden" name="building" value="{{ old('building', $building) }}">
-
-                    <a href="{{ route('item.changeAddress', ['item_id' => $item->id]) }}" class="change-address-link">変更する</a>
+        <div class="shipping-address">
+            <h2>配送先</h2>
+            <div class="shipping-content">
+                <div class="shipping-info">
+                    <p>〒 {{ preg_replace('/(\d{3})(\d{4})/', '$1-$2', old('postal_code', $postalCode)) }}</p>
+                    <p class="error-message" id="postal_code-error"></p>
+                    <p>{{ old('address', $address) }}</p>
+                    <p class="error-message" id="address-error"></p>
+                    @if(!empty(trim($building)))
+                        <p>{{ old('building', $building) }}</p>
+                    @endif
                 </div>
+
+                <input type="hidden" name="postal_code" value="{{ old('postal_code', $postalCode) }}">
+                <input type="hidden" name="address" value="{{ old('address', $address) }}">
+                <input type="hidden" name="building" value="{{ old('building', $building) }}">
+
+                <a href="{{ route('item.changeAddress', ['item_id' => $item->id]) }}" class="change-address-link">変更する</a>
             </div>
         </div>
+    </div>
 
 
     <div class="summary-container">
@@ -102,7 +102,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const csrfToken = document.querySelector('input[name=_token]').value;
             const paymentMethod = document.getElementById("paymentInput").value;
 
-            console.log("送信する支払い方法:", paymentMethod); // デバッグ用
+            console.log("送信する支払い方法:", paymentMethod);
 
             if (!paymentMethod) {
                 document.getElementById("payment_method-error").textContent = "支払い方法を選択してください";
@@ -112,7 +112,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
             const formData = new FormData(form);
 
-            // エラーメッセージをクリア
             document.querySelectorAll(".error-message").forEach(el => el.textContent = "");
 
             try {
@@ -130,11 +129,11 @@ document.addEventListener("DOMContentLoaded", function () {
                 })
             });
 
-                const text = await response.text(); // まずテキストとして取得
-                console.log("サーバーレスポンス:", text); // デバッグ用
+                const text = await response.text();
+                console.log("サーバーレスポンス:", text);
 
                 try {
-                    const data = JSON.parse(text); // JSONに変換
+                    const data = JSON.parse(text);
 
                     if (!response.ok) {
                         console.log("エラー内容:", data);
