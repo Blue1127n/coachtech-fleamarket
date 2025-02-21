@@ -23,8 +23,6 @@ class LogoutTest extends TestCase
 
         $response = $this->post('/logout');
 
-        dump($response->headers->get('Location'));
-
         $this->assertGuest();
 
         $response->assertRedirect('/');

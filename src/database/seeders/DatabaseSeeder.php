@@ -14,14 +14,18 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+
         $this->call([
             StatusesTableSeeder::class,
             ConditionsTableSeeder::class,
+            CategoriesTableSeeder::class,
             UsersTableSeeder::class,
             ItemsTableSeeder::class,
-            CategoriesTableSeeder::class,
-            TransactionsTableSeeder::class,
             ItemCategoryTableSeeder::class,
+            TransactionsTableSeeder::class,
             ]);
+
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 }

@@ -97,7 +97,7 @@ class AuthController extends Controller
             return redirect()->route('verification.notice');
         }
 
-        return redirect()->route('products.mylist')->with('success', '会員登録が完了しました。マイリストをご確認ください。');
+        return redirect()->route('products.index')->with('success', '会員登録が完了しました。');
     }
 
     public function logout(Request $request)

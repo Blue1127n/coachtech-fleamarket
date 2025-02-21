@@ -30,55 +30,60 @@ class ProductListTest extends TestCase
 
     $this->availableStatusId = DB::table('statuses')->where('name', 'available')->value('id');
     $this->soldStatusId = DB::table('statuses')->where('name', 'sold')->value('id');
+
+
+    $user = User::factory()->create([
+        'email_verified_at' => now(),
+        'postal_code' => '1234567',
+        'address' => '東京都渋谷区1-3',
+    ]);
+
+    $this->actingAs($user);
+    session()->regenerate();
+
+    $response = $this->get(route('products.index'));
 }
 
-    /**
-     * 商品一覧が正しく取得できるか
-     */
     public function testProducts()
     {
-        // 商品一覧ページにアクセス
         $response = $this->get('/');
 
-        // ステータスコードが200（OK）であることを確認
         $response->assertStatus(200);
 
-        // データベースに10件の商品があることを確認
         $this->assertEquals(10, Item::count());
 
-        // ビューに商品が表示されていることを確認
         foreach (Item::all() as $item) {
             $response->assertSee($item->name);
         }
     }
 
-    /**
-     * 購入済みの商品に「SOLD」ラベルが表示されることを確認するテスト
-     */
     public function testSoldItems()
 {
     $response = $this->get('/');
 
-    // 修正: IDを取得して比較
     $soldCount = Item::where('status_id', $this->soldStatusId)->count();
     $this->assertEquals(3, $soldCount);
 
     $response->assertSee('SOLD');
 }
 
-    /**
-     * 自分が出品した商品が一覧に表示されないことを確認するテスト
-     */
     public function testUserProducts()
 {
-    $user = User::factory()->create();
+    $user = User::factory()->create([
+        'email_verified_at' => now(),
+        'postal_code' => '1234567',
+        'address' => '東京都渋谷区1-3',
+    ]);
+
     $this->actingAs($user);
 
     $userItems = Item::where('user_id', $user->id)
         ->where('status_id', $this->availableStatusId)
         ->get();
 
-    $response = $this->get('/');
+    $response = $this->get(route('products.index'));
+
+    $response->assertStatus(200);
 
     foreach ($userItems as $item) {
         $response->assertDontSee($item->name);

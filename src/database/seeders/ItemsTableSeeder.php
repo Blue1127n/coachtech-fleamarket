@@ -14,7 +14,7 @@ class ItemsTableSeeder extends Seeder
      */
     public function run()
     {
-            $userIds = DB::table('users')->pluck('id')->toArray();
+        $userIds = DB::table('users')->pluck('id')->toArray();
         if (empty($userIds)) {
             throw new \Exception('Users table is empty. Run UsersTableSeeder first.');
         }
@@ -22,15 +22,6 @@ class ItemsTableSeeder extends Seeder
         $conditions = DB::table('conditions')->pluck('id', 'condition')->toArray();
         if (empty($conditions)) {
             throw new \Exception('Conditions table is empty. Run ConditionsTableSeeder first.');
-        }
-
-        $statuses = DB::table('statuses')->pluck('id', 'name')->toArray();
-        if (empty($statuses)) {
-            throw new \Exception('Statuses table is empty. Run StatusesTableSeeder first.');
-        }
-
-        if (!isset($statuses['available']) || !isset($statuses['sold'])) {
-            throw new \Exception('Statuses table is missing required statuses.');
         }
 
         $items = [
