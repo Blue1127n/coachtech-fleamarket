@@ -155,10 +155,16 @@ class ItemController extends Controller
     public function purchase(Request $request, $item_id)
     {
 
+        Log::info('purchase メソッド開始', ['item_id' => $item_id]);
+    try {
+
         $item = Item::findOrFail($item_id);
+        Log::info('取得した商品情報', ['item' => $item]);
+
         $user = auth()->user();
 
         if (!$user) {
+            Log::warning('未ログインのユーザーが購入ページにアクセスしました', ['item_id' => $item_id]);
             return redirect()->route('login')->with('error', 'ログインが必要です');
         }
 
@@ -178,31 +184,75 @@ class ItemController extends Controller
                         ? $transaction->shipping_building
                         : ($transaction ? null : (!empty($user->building) ? $user->building : null));
 
+                        Log::info('購入ページのデータをセット', [
+                            'postalCode' => $postalCode,
+                            'address' => $address,
+                            'building' => $building
+                        ]);
+
         return view('item.purchase', compact('item', 'postalCode', 'address', 'building'));
+
+    } catch (\Exception $e) {
+        Log::error('purchase メソッドでエラー発生', ['error' => $e->getMessage()]);
+        return response()->json(['error' => '内部エラーが発生しました'], 500);
+    }
     }
 
     public function processPurchase(PurchaseRequest $request, $item_id)
-    {
-        try {
-            $user = auth()->user();
+{
+    try {
+        \Log::info("processPurchase - 開始", ['item_id' => $item_id]);
 
-            $transaction = Transaction::updateOrCreate(
-                ['item_id' => $item_id, 'buyer_id' => $user->id],
-                [
-                    'status_id' => 1,
-                    'payment_method' => $request->payment_method,
-                ]
-            );
+        $user = auth()->user();
+        \Log::info("ログインユーザー", ['user_id' => $user->id]);
 
-            return response()->json([
-                'message' => '支払い方法が選択されました',
-                'redirect_url' => route('payment.page', ['item_id' => $item_id])
-            ]);
-
-        } catch (\Exception $e) {
-            return response()->json(['error' => '内部エラーが発生しました'], 500);
+        if (!$user) {
+            \Log::error('認証ユーザーが見つかりません');
+            return response()->json(['error' => '未認証のリクエストです'], 401);
         }
+
+        // デバッグログ追加
+        Log::info('購入処理開始', [
+            'user_id' => $user->id,
+            'item_id' => $item_id,
+            'payment_method' => $request->payment_method,
+            'postal_code' => $request->postal_code,
+            'address' => $request->address,
+            'building' => $request->building,
+        ]);
+
+        // `firstOrNew` で取得（新規作成 or 既存データ取得）
+        $transaction = Transaction::firstOrNew(
+            ['item_id' => $item_id, 'buyer_id' => $user->id]
+        );
+
+        // データをセット
+        $transaction->status_id = 1;
+        $transaction->payment_method = $request->payment_method;
+        $transaction->shipping_postal_code = $request->postal_code;
+        $transaction->shipping_address = $request->address;
+        $transaction->shipping_building = $request->building;
+
+        // **データを保存**
+        $transaction->save();
+
+        // 🛠️ ここでデータベースの確認ログを出す
+        \Log::info("購入処理時の transactions テーブル", [
+            'transaction' => Transaction::where('item_id', $item_id)
+                ->where('buyer_id', $user->id)
+                ->first()
+        ]);
+
+        return response()->json([
+            'message' => '支払い方法が選択されました',
+            'redirect_url' => route('payment.page', ['item_id' => $item_id])
+        ]);
+
+    } catch (\Throwable $e) {
+        \Log::error("購入処理中にエラー発生", ['message' => $e->getMessage()]);
+        return response()->json(['error' => '内部エラーが発生しました'], 500);
     }
+}
 
 public function changeAddress($item_id)
 {
@@ -231,20 +281,39 @@ public function changeAddress($item_id)
 public function updateAddress(AddressChangeRequest $request, $item_id)
 {
     $user = auth()->user();
+    \Log::info(" updateAddress() が呼ばれた!", [
+        'item_id' => $item_id,
+        'user_id' => $user->id
+    ]);
 
-    $transaction = Transaction::updateOrCreate(
-        ['item_id' => $item_id, 'buyer_id' => $user->id],
-        [
-            'status_id' => 1,
-            'payment_method' => '未設定',
-            'shipping_postal_code' => $request->postal_code,
-            'shipping_address' => $request->address,
-            'shipping_building' => $request->filled('building') ? $request->building : null,
-        ]
+    // `firstOrNew` で取得（新規作成 or 既存データ取得）
+    $transaction = Transaction::firstOrNew(
+        ['item_id' => $item_id, 'buyer_id' => $user->id]
     );
 
-    return redirect()->route('item.purchase', ['item_id' => $item_id])->with('success', '住所が更新されました');
+    \Log::info(" 取得した Transaction データ", [
+        'transaction' => $transaction
+    ]);
+
+    // データをセット
+    $transaction->status_id = 1;
+    $transaction->payment_method = '未設定';
+    $transaction->shipping_postal_code = $request->postal_code;
+    $transaction->shipping_address = $request->address;
+    $transaction->shipping_building = $request->filled('building') ? $request->building : null;
+
+    // **データを保存**
+    $transaction->save();
+
+    \Log::info(" 住所更新後の transactions テーブル", [
+        'updated_transaction' => Transaction::where('item_id', $item_id)->where('buyer_id', $user->id)->first()
+    ]);
+
+    return redirect()->route('item.purchase', ['item_id' => $item_id])
+        ->with('success', '住所が更新されました');
 }
+
+
 
 public function create()
 {

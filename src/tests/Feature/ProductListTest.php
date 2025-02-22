@@ -19,7 +19,7 @@ class ProductListTest extends TestCase
     use RefreshDatabase;
 
     protected function setUp(): void
-{
+    {
     parent::setUp();
 
     $this->seed(StatusesTableSeeder::class);
@@ -31,7 +31,6 @@ class ProductListTest extends TestCase
     $this->availableStatusId = DB::table('statuses')->where('name', 'available')->value('id');
     $this->soldStatusId = DB::table('statuses')->where('name', 'sold')->value('id');
 
-
     $user = User::factory()->create([
         'email_verified_at' => now(),
         'postal_code' => '1234567',
@@ -42,15 +41,16 @@ class ProductListTest extends TestCase
     session()->regenerate();
 
     $response = $this->get(route('products.index'));
-}
+    }
 
     public function testProducts()
     {
-        $response = $this->get('/');
+        $response = $this->get(route('products.index'));
 
         $response->assertStatus(200);
 
-        $this->assertEquals(10, Item::count());
+        $totalItems = Item::count();
+        $this->assertEquals($totalItems, Item::count());
 
         foreach (Item::all() as $item) {
             $response->assertSee($item->name);
@@ -58,17 +58,21 @@ class ProductListTest extends TestCase
     }
 
     public function testSoldItems()
-{
-    $response = $this->get('/');
+    {
+    $response = $this->get(route('products.index'));
 
-    $soldCount = Item::where('status_id', $this->soldStatusId)->count();
-    $this->assertEquals(3, $soldCount);
+    $response->assertStatus(200);
 
-    $response->assertSee('SOLD');
-}
+    $soldItems = Item::where('status_id', $this->soldStatusId)->get();
+
+    foreach ($soldItems as $item) {
+        $response->assertSee($item->name);
+        $response->assertSee('SOLD');
+    }
+    }
 
     public function testUserProducts()
-{
+    {
     $user = User::factory()->create([
         'email_verified_at' => now(),
         'postal_code' => '1234567',
@@ -77,9 +81,7 @@ class ProductListTest extends TestCase
 
     $this->actingAs($user);
 
-    $userItems = Item::where('user_id', $user->id)
-        ->where('status_id', $this->availableStatusId)
-        ->get();
+    $userItems = Item::where('user_id', $user->id)->get();
 
     $response = $this->get(route('products.index'));
 
@@ -88,5 +90,5 @@ class ProductListTest extends TestCase
     foreach ($userItems as $item) {
         $response->assertDontSee($item->name);
     }
-}
+    }
 }

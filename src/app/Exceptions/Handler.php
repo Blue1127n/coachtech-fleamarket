@@ -36,7 +36,13 @@ class Handler extends ExceptionHandler
 
     public function render($request, Throwable $exception)
     {
-
+        \Log::error('エラー発生:', [
+            'message' => $exception->getMessage(),
+            'file' => $exception->getFile(),
+            'line' => $exception->getLine(),
+            'trace' => $exception->getTraceAsString(),
+        ]);
+    
         if ($exception instanceof ValidationException) {
             if ($request->expectsJson()) {
                 return response()->json([

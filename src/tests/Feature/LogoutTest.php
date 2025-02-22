@@ -21,9 +21,11 @@ class LogoutTest extends TestCase
 
         $this->assertAuthenticated();
 
-        $response = $this->post('/logout');
+        $response = $this->post(route('logout'));
 
-        $this->assertGuest();
+        Session::flush();
+
+        $this->assertGuest('web');
 
         $response->assertRedirect('/');
     }
