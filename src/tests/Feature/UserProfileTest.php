@@ -8,68 +8,66 @@ use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Item;
-use Database\Seeders\UsersTableSeeder;
-use Database\Seeders\ItemsTableSeeder;
-use Database\Seeders\StatusesTableSeeder;
-use Database\Seeders\ConditionsTableSeeder;
+use App\Models\Transaction;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 
 class UserProfileTest extends TestCase
 {
     use RefreshDatabase;
 
+    protected $user;
+
     protected function setUp(): void
     {
         parent::setUp();
 
-        // 必要なデータをSeederで準備
-        $this->seed(StatusesTableSeeder::class);
-        $this->seed(ConditionsTableSeeder::class);
-        $this->seed(UsersTableSeeder::class);
-        $this->seed(ItemsTableSeeder::class);
+        // ユーザーの作成
+        $this->user = User::factory()->create([
+            'name' => 'テストユーザー',
+            'profile_image' => 'profile_images/test_image.png',
+        ]);
 
-        // ユーザー情報取得
-        $this->user = DB::table('users')->where('id', 1)->first();
-        $this->availableStatusId = DB::table('statuses')->where('name', 'available')->value('id');
-        $this->soldStatusId = DB::table('statuses')->where('name', 'sold')->value('id');
+        // 出品した商品の作成
+        Item::factory(3)->create([
+            'user_id' => $this->user->id,
+        ]);
+
+        // 購入した商品の作成
+        $purchasedItems = Item::factory(2)->create();
+
+        foreach ($purchasedItems as $item) {
+            Transaction::create([
+                'item_id' => $item->id,
+                'buyer_id' => $this->user->id,
+                'status_id' => 3,
+                'payment_method' => 'カード支払い',
+            ]);
+        }
     }
 
-    /**
-     * ユーザープロフィールページが正しく表示されることをテスト
-     */
-    public function testUserProfileDisplaysCorrectly()
+    /** @test */
+    public function test_user_profile_information_is_displayed_correctly()
     {
-        // ログイン
-        $this->actingAs(User::find($this->user->id));
+        $this->actingAs($this->user);
 
-        // プロフィールページにアクセス
-        $response = $this->get(route('mypage'));
+        $response = $this->get(route('mypage', ['page' => 'sell']));
 
-        // ステータスコード200を確認
-        $response->assertStatus(200);
+        $response->assertStatus(200)
+                 ->assertSee('テストユーザー')
+                 ->assertSee(asset('storage/profile_images/test_image.png'));
 
-        // プロフィール画像、ユーザー名が表示されているか確認
-        $response->assertSee($this->user->name);
-        if ($this->user->profile_image) {
-            $response->assertSee(asset('storage/' . $this->user->profile_image));
-        }
-
-        // 出品した商品一覧が表示されることを確認
-        $sellingItems = DB::table('items')
-            ->where('user_id', $this->user->id)
-            ->where('status_id', $this->availableStatusId)
-            ->get();
-
-        foreach ($sellingItems as $item) {
+        // 出品した商品が表示されているか確認
+        foreach ($this->user->items as $item) {
             $response->assertSee($item->name);
         }
 
-        // 購入した商品一覧が表示されることを確認
-        $purchasedItems = DB::table('items')
-            ->where('status_id', $this->soldStatusId)
-            ->get();
+        // 購入した商品のページも確認
+        $response = $this->get(route('mypage', ['page' => 'buy']));
 
-        foreach ($purchasedItems as $item) {
+        $response->assertStatus(200);
+
+        foreach ($this->user->purchasedItems as $item) {
             $response->assertSee($item->name);
         }
     }
