@@ -211,7 +211,6 @@ class ItemController extends Controller
             return response()->json(['error' => '未認証のリクエストです'], 401);
         }
 
-        // デバッグログ追加
         Log::info('購入処理開始', [
             'user_id' => $user->id,
             'item_id' => $item_id,
@@ -221,22 +220,18 @@ class ItemController extends Controller
             'building' => $request->building,
         ]);
 
-        // `firstOrNew` で取得（新規作成 or 既存データ取得）
         $transaction = Transaction::firstOrNew(
             ['item_id' => $item_id, 'buyer_id' => $user->id]
         );
 
-        // データをセット
         $transaction->status_id = 1;
         $transaction->payment_method = $request->payment_method;
         $transaction->shipping_postal_code = $request->postal_code;
         $transaction->shipping_address = $request->address;
         $transaction->shipping_building = $request->building;
 
-        // **データを保存**
         $transaction->save();
 
-        // 🛠️ ここでデータベースの確認ログを出す
         \Log::info("購入処理時の transactions テーブル", [
             'transaction' => Transaction::where('item_id', $item_id)
                 ->where('buyer_id', $user->id)
@@ -286,7 +281,6 @@ public function updateAddress(AddressChangeRequest $request, $item_id)
         'user_id' => $user->id
     ]);
 
-    // `firstOrNew` で取得（新規作成 or 既存データ取得）
     $transaction = Transaction::firstOrNew(
         ['item_id' => $item_id, 'buyer_id' => $user->id]
     );
@@ -295,14 +289,12 @@ public function updateAddress(AddressChangeRequest $request, $item_id)
         'transaction' => $transaction
     ]);
 
-    // データをセット
     $transaction->status_id = 1;
     $transaction->payment_method = '未設定';
     $transaction->shipping_postal_code = $request->postal_code;
     $transaction->shipping_address = $request->address;
     $transaction->shipping_building = $request->filled('building') ? $request->building : null;
 
-    // **データを保存**
     $transaction->save();
 
     \Log::info(" 住所更新後の transactions テーブル", [
