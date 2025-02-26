@@ -23,13 +23,11 @@ class UserProfileController extends Controller
     return view('profile.show', compact('user', 'items', 'page'));
 }
 
-
     public function edit()
     {
         $user = Auth::user();
-        return view('profile.edit', compact('user'));
+        return view('profile.edit', compact('user'))->with('errors', session('errors', new \Illuminate\Support\MessageBag()));
     }
-
 
     public function update(Request $request, AddressRequest $addressRequest, ProfileRequest $profileRequest)
 {

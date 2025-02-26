@@ -5,15 +5,18 @@ namespace Tests\Feature;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
 use App\Models\User;
 
 class UserProfileEditTest extends TestCase
 {
-    use RefreshDatabase, WithoutMiddleware;
+    use RefreshDatabase;
 
-    public function profile_edit_initial_values()
+    public function test_profile_edit_defaults()
     {
+        $this->withoutMiddleware();
+
         $user = User::create([
             'name' => 'テストユーザー',
             'email' => 'test@example.com',
@@ -25,10 +28,9 @@ class UserProfileEditTest extends TestCase
             'building' => '渋谷ヒカリエ601',
         ]);
 
-        $this->actingAs($user)->withSession(['user_id' => $user->id]);
-        $response = $this->get(route('mypage.profile'));
+        $this->actingAs($user);
 
-        dump($response->headers->get('Location'));
+        $response = $this->get(route('mypage.profile'));
 
         $response->assertStatus(200);
 

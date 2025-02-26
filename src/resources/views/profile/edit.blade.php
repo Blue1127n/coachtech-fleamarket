@@ -118,36 +118,36 @@ document.getElementById('profile-form').addEventListener('submit', function(even
             <input type="file" name="profile_image" id="profile_image" onchange="previewImage(event)" style="display: none;">
         </label>
         <div class="error-message" id="profile_image-error"></div>
-        @error('profile_image')
-            <div class="error-message">{{ $message }}</div>
-        @enderror
+        @if(isset($errors) && $errors->has('profile_image'))
+            <div class="error-message">{{ $errors->first('profile_image') }}</div>
+        @endif
     </div>
 
         <div class="form-group">
             <label for="name">ユーザー名</label>
             <input type="text" name="name" id="name" value="{{ old('name', auth()->user()->name) }}">
             <div class="error-message" id="name-error"></div>
-            @error('name')
-                <div class="error-message">{{ $message }}</div>
-            @enderror
+            @if(isset($errors) && $errors->has('name'))
+                <div class="error-message">{{ $errors->first('name') }}</div>
+            @endif
         </div>
 
         <div class="form-group">
             <label for="postal_code">郵便番号</label>
             <input type="text" name="postal_code" id="postal_code" value="{{ old('postal_code', auth()->user()->postal_code) }}">
             <div class="error-message" id="postal_code-error"></div>
-            @error('postal_code')
-                <div class="error-message">{{ $message }}</div>
-            @enderror
+            @if(isset($errors) && $errors->has('postal_code'))
+                <div class="error-message">{{ $errors->first('postal_code') }}</div>
+            @endif
         </div>
 
         <div class="form-group">
             <label for="address">住所</label>
             <input type="text" name="address" id="address" value="{{ old('address', auth()->user()->address) }}">
             <div class="error-message" id="address-error"></div>
-            @error('address')
-                <div class="error-message">{{ $message }}</div>
-            @enderror
+            @if(isset($errors) && $errors->has('address'))
+                <div class="error-message">{{ $errors->first('address') }}</div>
+            @endif
         </div>
 
         <div class="form-group">
