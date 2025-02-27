@@ -18,19 +18,19 @@ class RedirectIfAuthenticated
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
     public function handle(Request $request, Closure $next, ...$guards)
-{
-    $guards = empty($guards) ? [null] : $guards;
+    {
+        $guards = empty($guards) ? [null] : $guards;
 
-    foreach ($guards as $guard) {
-        if (Auth::guard($guard)->check()) {
+        foreach ($guards as $guard) {
+            if (Auth::guard($guard)->check()) {
 
-            if ($request->routeIs('login') || $request->routeIs('register')) {
-                return $next($request);
+                if ($request->routeIs('login') || $request->routeIs('register')) {
+                    return $next($request);
+                }
+                return redirect(RouteServiceProvider::HOME);
             }
-            return redirect(RouteServiceProvider::HOME);
         }
-    }
 
-    return $next($request);
-}
+        return $next($request);
+    }
 }

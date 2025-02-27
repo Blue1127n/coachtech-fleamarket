@@ -60,17 +60,15 @@ class Item extends Model
     }
 
     public function getImageUrlAttribute()
-{
-
-    if ($this->image) {
-        $extension = pathinfo($this->image, PATHINFO_EXTENSION);
-        if (in_array($extension, ['jpeg', 'png'])) {
-            return asset('storage/' . $this->image);
+    {
+        if ($this->image) {
+            $extension = pathinfo($this->image, PATHINFO_EXTENSION);
+            if (in_array($extension, ['jpeg', 'png'])) {
+                return asset('storage/' . $this->image);
+            }
         }
+        return null;
     }
-
-    return null;
-}
 
     public function setImageAttribute($value)
     {

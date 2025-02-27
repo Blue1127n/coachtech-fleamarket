@@ -19,54 +19,54 @@ class AuthController extends Controller
 
 
     public function login(LoginRequest $request)
-{
-    $credentials = $request->only('email', 'password');
+    {
+        $credentials = $request->only('email', 'password');
 
-    $user = User::where('email', $credentials['email'])
-                ->orWhere('name', $credentials['email'])
-                ->first();
+        $user = User::where('email', $credentials['email'])
+                    ->orWhere('name', $credentials['email'])
+                    ->first();
 
-    if (!$user || !Auth::attempt(['email' => $user->email, 'password' => $credentials['password']])) {
+        if (!$user || !Auth::attempt(['email' => $user->email, 'password' => $credentials['password']])) {
+
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'message' => 'ログインに失敗しました',
+                    'errors' => ['email' => ['認証情報が正しくありません。']]
+                ], 422);
+            }
+
+            return redirect()->back()->withErrors(['login' => 'ログイン情報が登録されていません'])->withInput();
+        }
+
+        if (!$user->hasVerifiedEmail()) {
+            Auth::logout();
+
+            if ($request->expectsJson()) {
+                return response()->json(['error' => 'メール認証が完了していません'], 403);
+            }
+            return back()->withErrors(['login' => __('auth.unverified_email')])->withInput();
+        }
+
+        if (is_null(Auth::user()->address) || empty(Auth::user()->postal_code)) {
+            session(['redirect_to_profile' => true]);
+        }
+
+        $request->session()->regenerate();
 
         if ($request->expectsJson()) {
             return response()->json([
-                'message' => 'ログインに失敗しました',
-                'errors' => ['email' => ['認証情報が正しくありません。']]
-            ], 422);
+                'message' => 'ログイン成功',
+                'user' => Auth::user()
+            ], 200);
         }
 
-        return redirect()->back()->withErrors(['login' => 'ログイン情報が登録されていません'])->withInput();
-    }
-
-    if (!$user->hasVerifiedEmail()) {
-        Auth::logout();
-
-        if ($request->expectsJson()) {
-            return response()->json(['error' => 'メール認証が完了していません'], 403);
+        if (session('redirect_to_profile', false)) {
+            session()->forget('redirect_to_profile');
+            return redirect()->route('mypage.profile')->with('success', 'プロフィールを設定してください');
         }
-        return back()->withErrors(['login' => __('auth.unverified_email')])->withInput();
+
+        return redirect()->intended(route('products.index'))->with('success', 'ログインしました');
     }
-
-    if (is_null(Auth::user()->address) || empty(Auth::user()->postal_code)) {
-        session(['redirect_to_profile' => true]);
-    }
-
-    $request->session()->regenerate();
-
-    if ($request->expectsJson()) {
-        return response()->json([
-            'message' => 'ログイン成功',
-            'user' => Auth::user()
-        ], 200);
-    }
-
-    if (session('redirect_to_profile', false)) {
-        session()->forget('redirect_to_profile');
-        return redirect()->route('mypage.profile')->with('success', 'プロフィールを設定してください');
-    }
-
-    return redirect()->intended(route('products.index'))->with('success', 'ログインしました');
-}
 
     public function showRegisterForm()
     {
@@ -75,7 +75,6 @@ class AuthController extends Controller
 
     public function register(RegisterRequest $request)
     {
-
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,

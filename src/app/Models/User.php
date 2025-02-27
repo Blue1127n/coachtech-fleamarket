@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class User extends Authenticatable implements MustVerifyEmail
@@ -48,6 +49,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
+    protected $appends = ['profile_image_url'];
+
     public function items()
     {
         return $this->hasMany(Item::class);
@@ -68,23 +71,22 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Comment::class);
     }
 
-    protected function profileImageUrl()
-{
-    if ($this->profile_image && \Storage::disk('public')->exists($this->profile_image)) {
-        return asset('storage/' . $this->profile_image);
+    protected function getProfileImageUrlAttribute()
+    {
+        if ($this->profile_image && \Storage::disk('public')->exists($this->profile_image)) {
+            return asset('storage/' . $this->profile_image);
+        }
+        return null;
     }
 
-    return null;
-}
-
     protected function profileImage()
-{
-    return new Attribute(
-        null,
-        function ($value) {
-            if ($value instanceof \Illuminate\Http\UploadedFile) {
+    {
+        return new Attribute(
+            null,
+            function ($value) {
+                if ($value instanceof \Illuminate\Http\UploadedFile) {
 
-                $fileName = uniqid() . '_' . time() . '_' . $value->getClientOriginalName();
+                    $fileName = uniqid() . '_' . time() . '_' . $value->getClientOriginalName();
 
                 if (!in_array($value->getClientOriginalExtension(), ['jpeg', 'png'])) {
                     throw new \RuntimeException('JPEGまたはPNG形式の画像のみアップロードできます。');
@@ -97,20 +99,21 @@ class User extends Authenticatable implements MustVerifyEmail
                 return 'profile_images/' . $fileName;
             }
             return $value;
-        }
-    );
-}
+            }
+        );
+    }
 
-public function purchasedItems()
-{
-    return $this->hasManyThrough(
-        Item::class,
-        Transaction::class,
-        'buyer_id',
-        'id',
-        'id',
-        'item_id'
-    )->whereIn('transactions.status_id', [3, 5]);
-}
+    public function purchasedItems()
+    {
+        return $this->hasManyThrough(
+            Item::class,
+            Transaction::class,
+                'buyer_id',
+                'id',
+                'id',
+                'item_id'
+        )->whereColumn('transactions.item_id', 'items.id')
+        ->whereIn('transactions.status_id', [3, 5]);
+    }
 }
 

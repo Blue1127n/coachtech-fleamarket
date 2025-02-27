@@ -46,14 +46,14 @@ class RegisterRequest extends FormRequest
     }
 
     protected function failedValidation(Validator $validator)
-{
-    throw new HttpResponseException(
-        redirect()->back()->withErrors($validator)->withInput()
-    );
-}
+    {
+        throw new HttpResponseException(
+            redirect()->back()->withErrors($validator)->withInput()
+        );
+    }
 
-public function expectsJson()
-{
-    return request()->expectsJson();
-}
+    public function expectsJson()
+    {
+        return request()->expectsJson();
+    }
 }

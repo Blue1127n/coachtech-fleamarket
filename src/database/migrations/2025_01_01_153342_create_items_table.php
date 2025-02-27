@@ -37,7 +37,7 @@ class CreateItemsTable extends Migration
      * @return void
      */
     public function down()
-{
-    Schema::dropIfExists('items');
-}
+    {
+        Schema::dropIfExists('items');
+    }
 }

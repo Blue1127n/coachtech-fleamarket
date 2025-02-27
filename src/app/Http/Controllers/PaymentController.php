@@ -11,7 +11,6 @@ use Stripe\Checkout\Session;
 
 class PaymentController extends Controller
 {
-
     public function showPaymentPage(Request $request, $item_id)
     {
         if (!auth()->check()) {
@@ -36,7 +35,6 @@ class PaymentController extends Controller
 
     public function checkout(Request $request, $item_id)
     {
-
         $apiKey = config('services.stripe.secret');
 
         if (empty($apiKey)) {
@@ -83,25 +81,24 @@ class PaymentController extends Controller
     }
 
     public function success(Request $request, $transaction_id)
-{
-    $transaction = Transaction::findOrFail($transaction_id);
+    {
+        $transaction = Transaction::findOrFail($transaction_id);
 
-    if ($transaction->status_id == 3) {
-        return redirect()->route('mypage')->with('info', 'この取引はすでに完了しています');
+        if ($transaction->status_id == 3) {
+            return redirect()->route('mypage')->with('info', 'この取引はすでに完了しています');
+        }
+
+        $paymentMethod = $request->input('payment_method', $transaction->payment_method);
+
+        $transaction->update([
+            'status_id' => 3,
+            'payment_method' => $paymentMethod
+        ]);
+
+        $transaction->item->update(['status_id' => 5]);
+
+        return redirect()->route('mypage')->with('success', '購入が完了しました！');
     }
-
-
-    $paymentMethod = $request->input('payment_method', $transaction->payment_method);
-
-    $transaction->update([
-        'status_id' => 3,
-        'payment_method' => $paymentMethod
-    ]);
-
-    $transaction->item->update(['status_id' => 5]);
-
-    return redirect()->route('mypage')->with('success', '購入が完了しました！');
-}
 
     public function cancel(Request $request, $transaction_id)
     {

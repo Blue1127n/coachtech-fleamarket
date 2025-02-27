@@ -14,14 +14,14 @@ class UserProfileController extends Controller
 {
 
     public function show(Request $request)
-{
-    $user = Auth::user();
-    $page = $request->get('page', 'sell');
+    {
+        $user = Auth::user();
+        $page = $request->get('page', 'sell');
 
-    $items = $page === 'sell' ? $user->items : $user->purchasedItems;
+        $items = $page === 'sell' ? $user->items : $user->purchasedItems;
 
-    return view('profile.show', compact('user', 'items', 'page'));
-}
+        return view('profile.show', compact('user', 'items', 'page'));
+    }
 
     public function edit()
     {
@@ -30,53 +30,53 @@ class UserProfileController extends Controller
     }
 
     public function update(Request $request, AddressRequest $addressRequest, ProfileRequest $profileRequest)
-{
+    {
 
-    try {
-        $validatedAddress = $addressRequest->validated();
-        $validatedProfile = $profileRequest->validated();
+        try {
+            $validatedAddress = $addressRequest->validated();
+            $validatedProfile = $profileRequest->validated();
 
-        $user = auth()->user();
-        $user->update([
-            'name' => $validatedAddress['name'],
-            'postal_code' => $validatedAddress['postal_code'],
-            'address' => $validatedAddress['address'],
-            'building' => $validatedAddress['building'] ?? null,
-        ]);
+            $user = auth()->user();
+            $user->update([
+                'name' => $validatedAddress['name'],
+                'postal_code' => $validatedAddress['postal_code'],
+                'address' => $validatedAddress['address'],
+                'building' => $validatedAddress['building'] ?? null,
+            ]);
 
-        if ($profileRequest->hasFile('profile_image')) {
-            $file = $profileRequest->file('profile_image');
-            $finalPath = $file->store('profile_images', 'public');
-            $user->update(['profile_image' => $finalPath]);
+            if ($profileRequest->hasFile('profile_image')) {
+                $file = $profileRequest->file('profile_image');
+                $finalPath = $file->store('profile_images', 'public');
+                $user->update(['profile_image' => $finalPath]);
+            }
+
+            return response()->json([
+                'success' => true,
+                'message' => 'プロフィールが更新されました',
+                'redirect_url' => route('products.index')
+            ]);
+
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return response()->json([
+                'success' => false,
+                'errors' => $e->errors()
+            ], 422);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => '予期しないエラーが発生しました',
+                'error' => $e->getMessage()
+            ], 500);
         }
-
-        return response()->json([
-            'success' => true,
-            'message' => 'プロフィールが更新されました',
-            'redirect_url' => route('products.index')
-        ]);
-
-    } catch (\Illuminate\Validation\ValidationException $e) {
-        return response()->json([
-            'success' => false,
-            'errors' => $e->errors()
-        ], 422);
-    } catch (\Exception $e) {
-        return response()->json([
-            'success' => false,
-            'message' => '予期しないエラーが発生しました',
-            'error' => $e->getMessage()
-        ], 500);
     }
-}
 
     public function purchasedItems()
-{
-    $user = Auth::user();
-    $items = $user->purchasedItems()->get();
+    {
+        $user = Auth::user();
+        $items = $user->purchasedItems;
 
-    return view('profile.purchased', compact('items'));
-}
+        return view('profile.purchased', compact('items'));
+    }
 
     public function soldItems()
     {

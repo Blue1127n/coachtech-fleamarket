@@ -47,19 +47,19 @@ class PurchaseRequest extends FormRequest
     }
 
     public function failedValidation(Validator $validator)
-{
-    throw new HttpResponseException(
-        response()->json([
-            'message' => 'バリデーションエラーが発生しました。',
-            'errors' => $validator->errors()
-        ], 422)
-    );
-}
-
-protected function prepareForValidation()
-{
-    if ($this->isJson()) {
-        $this->merge(json_decode($this->getContent(), true));
+    {
+        throw new HttpResponseException(
+            response()->json([
+                'message' => 'バリデーションエラーが発生しました。',
+                'errors' => $validator->errors()
+            ], 422)
+        );
     }
-}
+
+    protected function prepareForValidation()
+    {
+        if ($this->isJson()) {
+            $this->merge(json_decode($this->getContent(), true));
+        }
+    }
 }
