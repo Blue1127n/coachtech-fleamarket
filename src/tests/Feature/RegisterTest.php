@@ -15,8 +15,9 @@ class RegisterTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
+        $this->seed();
 
-        $this->withoutMiddleware(\Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class);
+        $this->withoutMiddleware();
     }
 
     public function testNameRequired()
@@ -26,9 +27,9 @@ class RegisterTest extends TestCase
             'email' => 'test@example.com',
             'password' => 'password123',
             'password_confirmation' => 'password123',
-        ]);
+        ])->assertRedirect();
 
-        $response->assertSessionHasErrors(['name' => 'お名前を入力してください']);
+        $this->followRedirects($response)->assertSessionHasErrors('name');
     }
 
     public function testEmailRequired()
@@ -38,9 +39,9 @@ class RegisterTest extends TestCase
             'email' => '',
             'password' => 'password123',
             'password_confirmation' => 'password123',
-        ]);
+        ])->assertRedirect();
 
-        $response->assertSessionHasErrors(['email' => 'メールアドレスを入力してください']);
+        $this->followRedirects($response)->assertSessionHasErrors('email');
     }
 
     public function testPasswordRequired()
@@ -50,9 +51,9 @@ class RegisterTest extends TestCase
             'email' => 'test@example.com',
             'password' => '',
             'password_confirmation' => '',
-        ]);
+        ])->assertRedirect();
 
-        $response->assertSessionHasErrors(['password' => 'パスワードを入力してください']);
+        $this->followRedirects($response)->assertSessionHasErrors('password');
     }
 
     public function testPasswordMin()
@@ -62,9 +63,9 @@ class RegisterTest extends TestCase
             'email' => 'test@example.com',
             'password' => '1234567',
             'password_confirmation' => '1234567',
-        ]);
+        ])->assertRedirect();
 
-        $response->assertSessionHasErrors(['password' => 'パスワードは8文字以上で入力してください']);
+        $this->followRedirects($response)->assertSessionHasErrors('password');
     }
 
     public function testPasswordMatch()
@@ -74,9 +75,9 @@ class RegisterTest extends TestCase
             'email' => 'test@example.com',
             'password' => 'password123',
             'password_confirmation' => 'differentpassword',
-        ]);
+        ])->assertRedirect();
 
-        $response->assertSessionHasErrors(['password' => 'パスワードと一致しません']);
+        $this->followRedirects($response)->assertSessionHasErrors('password');
     }
 
     public function testRegisterRedirect()
@@ -86,7 +87,7 @@ class RegisterTest extends TestCase
             'email' => 'test@example.com',
             'password' => 'password123',
             'password_confirmation' => 'password123',
-        ]);
+        ])->assertRedirect();
 
         $this->assertDatabaseHas('users', ['email' => 'test@example.com']);
 

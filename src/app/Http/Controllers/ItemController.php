@@ -245,16 +245,26 @@ class ItemController extends Controller
     {
         $user = auth()->user();
 
-        $transaction = Transaction::firstOrNew(
-            ['item_id' => $item_id, 'buyer_id' => $user->id]
-        );
+        // 既存の取引データを取得（見つからなければ NULL）
+        $transaction = Transaction::where('item_id', $item_id)
+                                    ->where('buyer_id', $user->id)
+                                    ->first();
 
-        $transaction->status_id = 1;
-        $transaction->payment_method = '未設定';
+        // 取引データがない場合は新規作成する
+        if (!$transaction) {
+            $transaction = new Transaction();
+            $transaction->item_id = $item_id;
+            $transaction->buyer_id = $user->id;
+            $transaction->status_id = 1; // 初期ステータス
+            $transaction->payment_method = '未設定';
+        }
+
+        // データを更新
         $transaction->shipping_postal_code = $request->postal_code;
         $transaction->shipping_address = $request->address;
         $transaction->shipping_building = $request->filled('building') ? $request->building : null;
 
+        // 保存
         $transaction->save();
 
         return redirect()->route('item.purchase', ['item_id' => $item_id])
@@ -300,5 +310,5 @@ class ItemController extends Controller
             'message' => '商品が出品されました',
             'image_path' => $imagePath
         ]);
-    }
+}
 }
