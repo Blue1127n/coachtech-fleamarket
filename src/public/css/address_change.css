@@ -1,0 +1,119 @@
+body {
+    margin: 0;
+    padding: 0;
+    background: rgba(255, 255, 255, 1);
+}
+
+.address-change-container {
+    max-width: 680px;
+    width: 100%;
+    padding: 20px;
+    margin: 50px auto;
+    text-align: center;
+    background: rgba(255, 255, 255, 1);
+    font-family: Inter;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+}
+
+.page-title {
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 43.57px;
+    margin-bottom: 70px;
+    text-align: center;
+}
+
+.form-group {
+    margin-bottom: 60px;
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 43.57px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.form-group label {
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 29.05px;
+    margin-bottom: 5px;
+    color: rgba(0, 0, 0, 1);
+    display: block;
+}
+
+.form-group input {
+    width: 100%;
+    max-width: 680px;
+    height: 45px;
+    gap: 0px;
+    border-radius: 4px;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid rgba(95, 95, 95, 1);
+    border-radius: 5px;
+}
+
+.update-btn {
+    background-color: rgba(255, 85, 85, 1);
+    color: rgba(255, 255, 255, 1);
+    padding: 12px;
+    font-size: 18px;
+    font-weight: bold;
+    border: none;
+    width: 100%;
+    max-width: 680px;
+    height: 60px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 31.47px;
+    text-align: center;
+}
+
+.update-btn:hover {
+    background-color: rgba(255, 85, 85, 1);
+}
+
+.error-message {
+    color: rgba(255, 85, 85, 1);
+    font-size: 16px;
+    margin-top: 2px;
+}
+
+@media screen and (max-width: 1540px) {
+    .address-change-container {
+        width: 90%;
+        max-width: 680px;
+    }
+
+    .form-group input {
+        width: 90%;
+        max-width: 680px;
+    }
+        .update-btn {
+        width: 90%;
+        max-width: 680px;
+    }
+}
+
+@media screen and (max-width: 850px) {
+    .address-change-container {
+        width: 95%;
+        max-width: 100%;
+    }
+
+    .form-group input {
+        width: 100%;
+        max-width: none;
+    }
+
+    .update-btn {
+        width: 100%;
+        max-width: none;
+    }
+}
+
+

@@ -1,0 +1,345 @@
+body {
+    font-family: Inter;
+    background-color: rgba(255, 255, 255, 1);
+    margin: 0;
+    padding: 0;
+}
+
+.item-detail-container {
+    display: flex;
+    max-width: 1512px;
+    background-color: rgba(255, 255, 255, 1);
+    gap: 65px;
+}
+
+.item-detail-left {
+    flex: 1;
+    text-align: center;
+    max-width: 690px;
+    margin-top: 40px;
+}
+
+.item-image img {
+    max-width: 600px;
+    max-height: 600px;
+    margin-top: 36px;
+    border-radius: 4px;
+    gap: 0px;
+    object-fit: cover;
+}
+
+.item-detail-right {
+    flex: 1.5;
+    display: flex;
+    flex-direction: column;
+    max-width: 690px;
+    margin-top: 30px;
+}
+
+.item-detail {
+    color: rgba(0, 0, 0, 1);
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+}
+
+.item-detail h1 {
+    font-size: 45px;
+    font-weight: 700;
+    line-height: 54.46px;
+}
+
+.item-brand {
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 24.2px;
+    margin-top: 15px;
+}
+
+.item-price {
+    font-weight: 400;
+}
+
+.item-price-symbol,
+.item-price-tax {
+    font-size: 30px;
+    line-height: 36.31px;
+}
+
+.item-price-value {
+    font-size: 45px;
+    line-height: 54.46px;
+}
+
+.item-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 30px;
+    margin: 20px 0;
+}
+
+.item-actions a {
+    text-decoration: none;
+}
+
+.like-section, .comment-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+
+button.like-button,.like-section {
+    border: none;
+    background: rgba(255, 255, 255, 1);
+    cursor: pointer;
+}
+
+.like-section img, .comment-section img {
+    display: block;
+    max-width: 40px;
+    max-height: 40px;
+    height: auto;
+    gap: 104px;
+}
+
+.like-count, .comment-count {
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 21.78px;
+}
+
+.like-icon {
+    cursor: pointer;
+    object-fit: contain;
+    transition: filter 0.3s ease;
+    filter: grayscale(100%) brightness(1);
+    width: 40px;
+    height: 40px;
+}
+
+.like-icon.liked {
+    filter: grayscale(0%) sepia(1) hue-rotate(45deg) saturate(5) brightness(1.2);
+}
+
+.comment-icon {
+    color: rgba(0, 0, 0, 1);
+    width: 40px;
+    height: 40px;
+}
+
+.purchase-btn {
+    display: inline-block;
+    width: 570px;
+    height: 56px;
+    gap: 0px;
+    padding: 10px 20px;
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 36.31px;
+    text-align: center;
+    color: rgba(255, 255, 255, 1);
+    background: rgba(255, 85, 85, 1);
+    text-decoration: none;
+}
+
+.purchase-btn:hover {
+    background-color: rgba(255, 85, 85, 1);
+}
+
+.item-description, .item-info {
+    margin: 20px 0;
+    color: rgba(0, 0, 0, 1);
+}
+
+.item-description h2, .item-info h2 {
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 43.57px;
+    text-align: left;
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+}
+
+.item-description p {
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 29.05px;
+    text-align: left;
+}
+
+.categories-section {
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 29.05px;
+    margin-bottom: 10px;
+}
+
+.category-badge {
+    display: inline-block;
+    background-color: rgba(217, 217, 217, 1);
+    color: rgba(0, 0, 0, 1);
+    height: 30px;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 24.2px;
+    text-align: center;
+    padding: 5px 10px;
+    border-radius: 15px;
+    margin-left: 20px;
+}
+
+.condition-section {
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 29.05px;
+}
+
+.condition-text {
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 24.2px;
+    color: rgba(0, 0, 0, 1);
+    margin-left: 20px;
+}
+
+.comments-section {
+    margin-top: 15px;
+}
+
+.comments-section h2 {
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 43.57px;
+    color: rgba(95, 95, 95, 1);
+}
+
+.comments-list {
+    list-style: none;
+    padding: 0;
+}
+
+.comments-section .comment {
+    background-color: rgba(255, 255, 255, 1);
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.comments-section .comment img {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: rgba(217, 217, 217, 1);
+    margin-right: 10px;
+    vertical-align: middle;
+    display: inline-block;
+}
+
+.user-profile-placeholder {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background-color: rgba(217, 217, 217, 1);
+    margin-right: 10px;
+    vertical-align: middle;
+    display: inline-block;
+}
+
+.comments-section .comment strong {
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 36.31px;
+    margin-bottom: 20px;
+    text-align: left;
+    color: rgba(0, 0, 0, 1);
+}
+
+.comments-section .comment p {
+    width: 570px;
+    margin: 20px 0 5px;
+    gap: 0px;
+    border-radius: 5px;
+    font-size: 20px;
+    font-weight: 300;
+    line-height: 24.2px;
+    text-align: left;
+    padding: 10px 10px;
+    color: rgba(0, 0, 0, 1);
+    background: rgba(229, 229, 229, 1);
+}
+
+.comment-submit-btn {
+    display: inline-block;
+    width: 570px;
+    height: 56px;
+    gap: 0px;
+    font-size: 25px;
+    font-weight: 700;
+    line-height: 30.26px;
+    text-align: center;
+    color: rgba(255, 255, 255, 1);
+    background-color: rgba(255, 85, 85, 1);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-bottom: 50px;
+}
+
+.comment-submit-btn:hover {
+    background-color: rgba(255, 85, 85, 1);
+}
+
+#comment-form p {
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 33.89px;
+    margin-bottom: 10px;
+    margin-top: 5px;
+    color: rgba(0, 0, 0, 1);
+}
+
+textarea[name="content"] {
+    width: 570px;
+    height: 246px;
+    gap: 10px;
+    padding: 10px;
+    font-size: 14px;
+    margin-bottom: 20px;
+    border: 2px solid rgba(95, 95, 95, 1);
+    border-radius: 2px;
+    resize: none;
+}
+
+@media screen and (max-width: 1540px) {
+    .item-detail-container {
+        max-width: 90%;
+        flex-wrap: wrap;
+    }
+
+    .item-detail-left, .item-detail-right {
+        max-width: 48%;
+    }
+
+    .item-image img {
+        max-width: 100%;
+        height: auto;
+    }
+}
+
+@media screen and (max-width: 850px) {
+    .item-detail-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .item-detail-left, .item-detail-right {
+        max-width: 100%;
+    }
+
+    .purchase-btn {
+        width: 100%;
+    }
+}
+

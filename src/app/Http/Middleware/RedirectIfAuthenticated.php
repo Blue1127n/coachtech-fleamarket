@@ -23,6 +23,10 @@ class RedirectIfAuthenticated
 
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
+
+                if ($request->routeIs('login') || $request->routeIs('register')) {
+                    return $next($request);
+                }
                 return redirect(RouteServiceProvider::HOME);
             }
         }

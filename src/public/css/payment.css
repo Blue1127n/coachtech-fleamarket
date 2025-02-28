@@ -1,0 +1,128 @@
+body {
+    font-family: Inter;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+    background-color: #f9f9f9;
+    color: rgba(0, 0, 0, 1);
+    margin: 0;
+    padding: 0;
+    max-width: 1512px;
+}
+
+.payment-container {
+    width: 100%;
+    max-width: 680px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    text-align: center;
+}
+
+h1 {
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 43.57px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.item-details {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.item-image {
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.item-details h2 {
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 36.31px;
+    margin-bottom: 5px;
+}
+
+.item-price-symbol {
+    font-size: 27px;
+    font-weight: 400;
+    line-height: 32.68px;
+}
+
+.item-price-value {
+    font-size: 32px;
+    font-weight: 400;
+    line-height: 38.73px;
+}
+
+.payment-method {
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.payment-method h3 {
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 24.2px;
+    margin-bottom: 20px;
+}
+
+.payment-method p {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 24.2px;
+    margin: 5px 0;
+}
+
+.payment-btn, .back-btn {
+    display: block;
+    width: 100%;
+    max-width: 400px;
+    margin: 30px auto;
+    padding: 12px 20px;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 5px;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+}
+
+.payment-btn {
+    background-color: rgba(255, 85, 85, 1);
+    color: rgba(255, 255, 255, 1);
+    border: none;
+}
+
+.payment-btn:hover {
+    background-color: rgba(255, 85, 85, 1);
+}
+
+.back-btn {
+    background-color: rgba(217, 217, 217, 1);
+    color: rgba(0, 0, 0, 1);
+    border: none;
+}
+
+.back-btn:hover {
+    background-color: rgba(217, 217, 217, 1);
+}
+
+@media screen and (max-width: 1540px) {
+    .payment-container {
+        max-width: 100%;
+    }
+}
+
+@media screen and (max-width: 850px) {
+    .payment-container {
+        max-width: 95%;
+        padding: 15px;
+    }
+}

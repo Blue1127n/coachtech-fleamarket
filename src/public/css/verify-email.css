@@ -1,0 +1,63 @@
+body {
+    font-family: Inter;
+    background-color: rgba(255, 255, 255, 1);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+}
+
+.verify-email-container {
+    width: 100%;
+    max-width: 1540px;
+    margin-top: 50px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.verify-email-container h1 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: rgba(95, 95, 95, 1);
+}
+
+.verify-email-container p {
+    font-size: 16px;
+    line-height: 1.5;
+    color: rgba(95, 95, 95, 1);
+    margin-bottom: 20px;
+}
+
+.resend-button {
+    background-color: rgba(0, 115, 204, 1);
+    color: rgba(255, 255, 255, 1);
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.resend-button:hover {
+    background-color: rgba(0, 115, 204, 1);
+}
+
+@media screen and (max-width: 850px) {
+    .verify-email-container {
+        max-width: 90%;
+        padding: 15px;
+    }
+}
+
+@media screen and (max-width: 1540px) {
+    .verify-email-container {
+        max-width: 100%;
+    }
+}

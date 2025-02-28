@@ -1,0 +1,126 @@
+body {
+    font-family: Inter;
+    background-color: rgba(255, 255, 255, 1);
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.register-container {
+    max-width: 680px;
+    margin: 100px auto;
+    padding: 20px;
+    gap: 0px;
+    background-color: rgba(255, 255, 255, 1);
+    text-align: center;
+}
+
+.register-container h2 {
+    margin-bottom: 40px;
+    margin-top: 0px;
+    color: rgba(0, 0, 0, 1);
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 43.57px;
+    text-align: center;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+    text-align: center;
+}
+
+.form-group {
+    margin-bottom: 35px;
+    text-align: left;
+}
+
+.form-group label {
+    color: rgba(0, 0, 0, 1);
+    display: block;
+    margin-bottom: 8px;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 29.05px;
+    text-align: left;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+}
+
+.input-text {
+    width: 100%;
+    max-width: 680px;
+    height: 58px;
+    padding: 10px;
+    gap: 0px;
+    font-size: 14px;
+    border: 1px solid rgba(95, 95, 95, 1);
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.error-message {
+    color: rgba(255, 85, 85, 1);
+    font-size: 20px;
+    margin-top: 5px;
+}
+
+.btn-submit {
+    display: block;
+    width: 100%;
+    max-width: 680px;
+    height: 65px;
+    gap: 0px;
+    background-color: rgba(255, 85, 85, 1);
+    color: rgba(255, 255, 255, 1);
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 31.47px;
+    text-align: center;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 60px;
+    margin-bottom: 30px;
+}
+
+.btn-submit:hover {
+    background-color: rgba(255, 85, 85, 1);
+}
+
+.register-container p a {
+    color: rgba(0, 115, 204, 1);
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 24.2px;
+    text-align: center;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+}
+
+.register-container p a:hover {
+    text-decoration: underline;
+}
+
+@media screen and (max-width: 850px) {
+    .register-container {
+        max-width: 90%;
+        padding: 15px;
+    }
+
+    .input-text, .btn-submit {
+        max-width: 100%;
+    }
+}
+
+@media screen and (max-width: 1540px) {
+    .register-container {
+        max-width: 600px;
+    }
+
+    .input-text, .btn-submit {
+        max-width: 95%;
+    }
+}
