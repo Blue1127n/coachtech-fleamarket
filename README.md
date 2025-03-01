@@ -58,14 +58,9 @@
     `php artisan db:seed`  
 
 
-## 商品画像保存先  
+## MailHog  
 
-[商品画像保存先](public/imems)  
-
-
-## プロフィール画像保存先  
-
-[プロフィール画像保存先](public/profile_images)  
+- http://localhost:8025/
 
 
 ## 使用技術(実行環境)  
