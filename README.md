@@ -10,7 +10,11 @@
 
     `git clone git@github.com:Blue1127n/coachtech-fleamarket.git  
 
-  2.DockerDesktopアプリを立ち上げる  
+　2.プロジェクトディレクトリに移動  
+
+    `cd coachtech-fleamarket`  
+
+  3.DockerDesktopアプリを立ち上げる  
 
     `docker-compose up -d --build`  
 
