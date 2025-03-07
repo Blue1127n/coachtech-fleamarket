@@ -10,11 +10,17 @@
 
     `git clone git@github.com:Blue1127n/coachtech-fleamarket.git  
 
-　2.プロジェクトディレクトリに移動  
+  2.プロジェクトディレクトリに移動  
 
     `cd coachtech-fleamarket`  
 
-  3.DockerDesktopアプリを立ち上げる  
+  3.権限をつける  
+
+    `chmod +x setup.sh`  
+    `./setup.sh`  
+    `sudo chmod -R 777 *`  
+
+  4.DockerDesktopアプリを立ち上げる  
 
     `docker-compose up -d --build`  
 
