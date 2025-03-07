@@ -8,13 +8,9 @@
 
   1.GitHub からクローン  
 
-    `git clone git@github.com:coachtech-material/laravel-docker-template.git`  
+    `git clone git@github.com:Blue1127n/coachtech-fleamarket.git  
 
-  2.リポジトリ名の変更  
-
-    `mv laravel-docker-template <任意のリポジトリ名>`  
-
-  3.DockerDesktopアプリを立ち上げる  
+  2.DockerDesktopアプリを立ち上げる  
 
     `docker-compose up -d --build`  
 
