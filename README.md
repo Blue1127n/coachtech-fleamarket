@@ -8,7 +8,7 @@
 
   1.GitHub からクローン  
 
-    `git clone git@github.com:Blue1127n/coachtech-fleamarket.git  
+    `git clone git@github.com:Blue1127n/coachtech-fleamarket.git`   
 
   2.プロジェクトディレクトリに移動  
 
@@ -30,7 +30,6 @@
 
   1.PHPコンテナ内にログイン  
 
-    `sudo chmod -R 777 *`  
     `docker-compose exec php bash`  
 
   2.インストール  
