@@ -14,7 +14,7 @@
 
     `cd coachtech-fleamarket`  
 
-  3.権限をつける  
+  3.権限設定  
 
     `chmod +x setup.sh`  
     `./setup.sh`  
