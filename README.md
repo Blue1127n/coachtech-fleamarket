@@ -18,7 +18,7 @@
 
     `chmod +x setup.sh`  
     `./setup.sh`  
-    `sudo chmod -R 777 *`  
+    `code .`  
 
   4.DockerDesktopアプリを立ち上げる  
 
@@ -30,6 +30,7 @@
 
   1.PHPコンテナ内にログイン  
 
+    `sudo chmod -R 777 *`  
     `docker-compose exec php bash`  
 
   2.インストール  
