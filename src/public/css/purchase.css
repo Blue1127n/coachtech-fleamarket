@@ -296,32 +296,57 @@ body {
     background-color: rgba(255, 85, 85, 1);
 }
 
-@media screen and (max-width: 1540px) {
-    .purchase-container {
-        max-width: 90%;
-        flex-direction: row;
-    }
-
-    .summary-container {
-        max-width: 300px;
-    }
-
-    .summary-button .purchase-summary-btn {
-        width: 300px;
-    }
-}
-
-@media screen and (max-width: 850px) {
+@media (min-width: 768px) and (max-width: 1024px) {
     .purchase-container {
         flex-direction: column;
         align-items: center;
     }
 
+    .purchase-details,
     .summary-container {
         max-width: 100%;
+        width: 100%;
     }
 
-    .summary-button .purchase-summary-btn {
-        width: 100%;
+    .item-info {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .item-details {
+        margin: 20px 0 0 0;
+    }
+
+    .custom-payment-select,
+    .error-message,
+    .shipping-info p,
+    .change-address-link,
+    .summary,
+    .purchase-summary-btn {
+        margin: 0 auto;
+    }
+
+    .summary {
+        width: 90%;
+    }
+
+    .purchase-summary-btn {
+        width: 90%;
+    }
+
+    .summary-table td {
+        font-size: 16px;
+        padding: 8px;
+    }
+
+    .shipping-content {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .change-address-link {
+        margin-top: 10px;
+        margin-right: 0;
     }
 }

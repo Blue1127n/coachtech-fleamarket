@@ -312,34 +312,90 @@ textarea[name="content"] {
     resize: none;
 }
 
-@media screen and (max-width: 1540px) {
+@media (min-width: 768px) and (max-width: 850px) {
     .item-detail-container {
-        max-width: 90%;
-        flex-wrap: wrap;
+        flex-direction: column;
+        gap: 30px;
+        padding: 0 15px;
     }
 
-    .item-detail-left, .item-detail-right {
-        max-width: 48%;
+    .item-detail-left,
+    .item-detail-right {
+        max-width: 100%;
+        margin: 0 auto;
     }
 
     .item-image img {
         max-width: 100%;
         height: auto;
     }
+
+    .item-detail h1 {
+        font-size: 28px;
+        line-height: 34px;
+    }
+
+    .item-brand,
+    .item-price-tax,
+    .item-price-symbol,
+    .item-price-value,
+    .item-description p,
+    .condition-section,
+    .condition-text,
+    .category-badge,
+    .form-group label,
+    #comment-form p {
+        font-size: 16px;
+    }
+
+    .purchase-btn,
+    .comment-submit-btn,
+    textarea[name="content"],
+    .comments-section .comment p {
+        width: 100%;
+        max-width: 100%;
+        font-size: 16px;
+    }
+
+    .like-icon,
+    .comment-icon {
+        width: 32px;
+        height: 32px;
+    }
+
+    .comments-section .comment img,
+    .user-profile-placeholder {
+        width: 50px;
+        height: 50px;
+    }
+
+    .comments-section .comment strong {
+        font-size: 20px;
+    }
 }
 
-@media screen and (max-width: 850px) {
+@media (min-width: 1024px) and (max-width: 1366px) {
     .item-detail-container {
-        flex-direction: column;
-        align-items: center;
+        flex-direction: row;
+        padding: 20px;
+        gap: 50px;
     }
 
     .item-detail-left, .item-detail-right {
-        max-width: 100%;
-    }
-
-    .purchase-btn {
+        max-width: 50%;
         width: 100%;
     }
-}
 
+    .item-image img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    .purchase-btn,
+    .comments-section .comment p,
+    .comment-submit-btn,
+    textarea[name="content"] {
+        width: 100%;
+        max-width: 100%;
+    }
+}

@@ -6,13 +6,6 @@ body {
     width: 100%;
 }
 
-.global-error {
-    color: rgba(255, 85, 85, 1);
-    font-size: 20px;
-    margin-bottom: 15px;
-    text-align: left;
-}
-
 .login-container {
     width: 100%;
     max-width: 680px;
@@ -108,22 +101,33 @@ body {
     text-decoration: underline;
 }
 
-@media screen and (max-width: 850px) {
+@media (min-width: 768px) and (max-width: 850px) {
     .login-container {
-        max-width: 90%;
+        width: 100%;
+        padding: 10px;
     }
 
-    .input-text, .btn-submit {
+    .input-text,
+    .btn-submit {
+        width: 100%;
         max-width: 100%;
-    }
-}
-
-@media screen and (max-width: 1540px) {
-    .login-container {
-        max-width: 600px;
+        font-size: 18px;
     }
 
-    .input-text, .btn-submit {
-        max-width: 95%;
+    .btn-submit {
+        height: 50px;
+        font-size: 20px;
+    }
+
+    .form-group label {
+        font-size: 18px;
+    }
+
+    .error-message {
+        font-size: 16px;
+    }
+
+    .login-container p a {
+        font-size: 16px;
     }
 }

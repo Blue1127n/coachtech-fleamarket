@@ -24,23 +24,14 @@
     margin: 0 auto;
 }
 
-@media screen and (max-width: 850px) {
+@media (max-width: 1024px) {
     .container {
-        max-width: 95%;
-    }
-
-    .header {
+        min-width: auto;
         padding: 10px;
-        justify-content: space-between;
     }
 
-    .header__logo {
-        max-width: 250px;
-    }
-}
-
-@media screen and (max-width: 1540px) {
-    .container {
-        max-width: 95%;
+    .header__logo img {
+        max-width: 100%;
+        height: auto;
     }
 }

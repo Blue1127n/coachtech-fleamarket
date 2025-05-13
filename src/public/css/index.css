@@ -125,28 +125,33 @@ a:hover {
     text-decoration: underline;
 }
 
-@media screen and (max-width: 1540px) {
-    .product-grid {
-        grid-template-columns: repeat(4, 1fr);
-    }
-}
-
-@media screen and (max-width: 850px) {
-    .product-container {
-        max-width: 95%;
-    }
-
+@media (min-width: 768px) and (max-width: 1024px) {
     .product-grid {
         grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+        padding: 20px;
     }
 
     .product-card {
         max-width: 100%;
+        margin: 0 auto;
     }
 
-    .product-image img {
-        width: 100%;
-        max-width: none;
+    .tab, .tab.active {
+        margin-left: 30px;
+    }
+}
+
+@media (min-width: 1025px) and (max-width: 1366px) {
+    .product-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+        padding: 20px;
+    }
+
+    .product-card {
+        max-width: 100%;
+        margin: 0 auto;
     }
 }
 

@@ -13,7 +13,7 @@
     <body>
         <div class="container">
             <header>
-                <div class="logo">
+                <div class="header__logo">
                     <img src="{{ asset('storage/items/logo.svg') }}" alt="Logo">
                 </div>
             </header>
