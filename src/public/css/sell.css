@@ -352,22 +352,53 @@ body {
     margin-top: 10px;
 }
 
-@media screen and (max-width: 1540px) {
+@media (min-width: 768px) and (max-width: 850px) {
     .sell-container {
-        max-width: 95%;
-    }
-
-    .custom-condition-select,
-    .form-group input,
-    .form-group textarea,
-    .submit-button {
-        max-width: 100%;
-    }
-}
-
-@media screen and (max-width: 850px) {
-    .sell-container {
-        max-width: 100%;
         padding: 10px;
+    }
+
+    .title {
+        font-size: 28px;
+    }
+
+    .form-group {
+        padding: 0 10px;
+    }
+
+    .image-upload-box {
+        height: auto;
+        min-height: 150px;
+        flex-direction: column;
+    }
+
+    .image-button {
+        width: auto;
+        font-size: 14px;
+        padding: 8px 16px;
+    }
+
+    .custom-condition-select {
+        padding: 10px;
+        font-size: 14px;
+        background-position: right 8px center;
+    }
+
+    .dropdown-option {
+        font-size: 14px;
+        padding: 8px 10px;
+    }
+
+    .name-input,
+    .description-textarea,
+    .price-input,
+    .submit-button {
+        font-size: 16px;
+        padding: 10px;
+    }
+
+    .submit-button {
+        height: 50px;
+        font-size: 20px;
+        margin-top: 40px;
     }
 }

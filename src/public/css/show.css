@@ -196,73 +196,103 @@ body {
     border-radius: 4px;
 }
 
-@media screen and (max-width: 1540px) {
+@media (min-width: 768px) and (max-width: 850px) {
     .profile-container {
-        max-width: 100%;
-    }
-
-    .profile-header {
-        justify-content: space-between;
-        padding: 0 15px;
-    }
-
-    .profile-info h2 {
-        font-size: 32px;
-    }
-
-    .profile-btn {
-        justify-content: center;
-    }
-
-    .profile-btn .btn {
-        width: 250px;
-        font-size: 22px;
-    }
-
-    .items {
-        grid-template-columns: repeat(4, 1fr);
-        max-width: 100%;
-    }
-}
-
-@media screen and (max-width: 850px) {
-    .profile-container {
-        max-width: 95%;
-        padding: 15px;
+        padding: 20px 10px;
     }
 
     .profile-header {
         flex-direction: column;
         align-items: center;
-        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .profile-image {
+        margin-left: 0;
+        margin-right: 0;
     }
 
     .profile-info h2 {
         font-size: 28px;
-    }
-
-    .profile-btn {
-        width: 100%;
-        display: flex;
-        justify-content: center;
+        margin-left: 0;
+        text-align: center;
     }
 
     .profile-btn .btn {
-        width: 90%;
+        width: 100%;
+        max-width: 310px;
         font-size: 20px;
+        height: 50px;
+        margin: 20px 0 0 0;
     }
 
     .tabs {
         flex-direction: column;
-        text-align: center;
-        gap: 10px;
+        align-items: flex-start;
+        padding-left: 10px;
+    }
+
+    .tabs a {
+        font-size: 18px;
+        margin: 5px 10px;
     }
 
     .items {
         grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+        padding: 10px;
+    }
+
+    .item {
+        width: 100%;
+        height: auto;
     }
 
     .product-image img {
+        max-width: 100%;
         height: auto;
+    }
+
+    .item p {
+        font-size: 18px;
+    }
+}
+
+@media (min-width: 851px) and (max-width: 1024px) {
+    .profile-header {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 10px;
+    }
+
+    .profile-image {
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .profile-info h2 {
+        margin-left: 0;
+        text-align: center;
+        font-size: 30px;
+    }
+
+    .profile-btn .btn {
+        margin-right: 0;
+        margin-top: 10px;
+        width: 100%;
+        max-width: 310px;
+        font-size: 22px;
+        height: 55px;
+    }
+
+    .tabs {
+        justify-content: center;
+    }
+
+    .items {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+        padding: 20px;
     }
 }

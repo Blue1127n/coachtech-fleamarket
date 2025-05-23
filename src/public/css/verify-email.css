@@ -49,15 +49,26 @@ body {
     background-color: rgba(0, 115, 204, 1);
 }
 
-@media screen and (max-width: 850px) {
+@media (min-width: 768px) and (max-width: 850px) {
     .verify-email-container {
-        max-width: 90%;
-        padding: 15px;
+        padding: 20px 10px;
+        margin-top: 30px;
+    }
+
+    .verify-email-container h1 {
+        font-size: 20px;
+        margin-bottom: 15px;
+    }
+
+    .verify-email-container p {
+        font-size: 14px;
+        margin-bottom: 15px;
+    }
+
+    .resend-button {
+        width: 100%;
+        max-width: 300px;
+        font-size: 15px;
     }
 }
 
-@media screen and (max-width: 1540px) {
-    .verify-email-container {
-        max-width: 100%;
-    }
-}

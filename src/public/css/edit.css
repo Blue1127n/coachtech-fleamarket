@@ -172,26 +172,9 @@ form {
     background-color: rgba(255, 85, 85, 1);
 }
 
-@media screen and (max-width: 1540px) {
+@media (min-width: 768px) and (max-width: 850px) {
     .profile-edit-container {
-        max-width: 90%;
-    }
-
-    .profile-image-section {
-        width: 600px;
-    }
-
-    .form-group input[type="text"],
-    .form-group input[type="file"],
-    .btn-submit {
-        width: 600px;
-    }
-}
-
-@media screen and (max-width: 850px) {
-    .profile-edit-container {
-        max-width: 95%;
-        padding: 10px;
+        padding: 20px 10px;
     }
 
     .profile-image-section {
@@ -200,15 +183,35 @@ form {
         width: 100%;
     }
 
+    .image-preview {
+        width: 120px;
+        height: 120px;
+        margin-bottom: 10px;
+    }
+
+    .btn-select-image {
+        font-size: 18px;
+        padding: 8px 16px;
+        margin-left: 0;
+    }
+
     .form-group input[type="text"],
     .form-group input[type="file"],
     .btn-submit {
         width: 100%;
+        font-size: 18px;
     }
 
-    .btn-select-image {
-        width: 100%;
-        text-align: center;
+    .form-group label {
+        font-size: 18px;
+    }
+
+    .btn-submit {
+        font-size: 22px;
+        height: 50px;
+    }
+
+    .error-message {
+        font-size: 14px;
     }
 }
-
