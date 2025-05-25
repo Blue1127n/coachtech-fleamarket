@@ -79,7 +79,6 @@ STRIPE_SECRET_KEY="シークレットキー"
 ```
 
 
-
 ## テーブル仕様
 
 ### usersテーブル
@@ -91,7 +90,7 @@ STRIPE_SECRET_KEY="シークレットキー"
 | password | varchar(255) |  |  | ◯ |  |
 | postal code | varchar(8) |  |  | ◯ |  |
 | address | varchar(255) |  |  | ◯ |  |
-| building | varchar(255) |  |  | ◯ |  |
+| building | varchar(255) |  |  |  |  |
 | profile_image | varchar(255) |  |  |  |  |
 | created_at | timestamp |  |  |  |  |
 | updated_at | timestamp |  |  |  |  |
@@ -123,7 +122,7 @@ STRIPE_SECRET_KEY="シークレットキー"
 | カラム名 | 型 | primary key | unique key | not null | foreign key |
 | --- | --- | --- | --- | --- | --- |
 | id | bigint | ◯ |  | ◯ |  |
-| user_id | bigint |  |  | ◯ | users(id) |
+| item_id | bigint |  |  | ◯ | items(id) |
 | category_id | bigint |  |  | ◯ | categories(id) |
 | created_at | timestamp |  |  |  |  |
 | updated_at | timestamp |  |  |  |  |
@@ -197,7 +196,7 @@ name: テストユーザー
 email: test@example.com  
 password: password  
 -------------------------
-name: テストユーザー２  
+name: テストユーザー2  
 email: test2@example.com  
 password: password  
 -------------------------
