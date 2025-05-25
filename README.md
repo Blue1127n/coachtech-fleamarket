@@ -69,6 +69,116 @@
 - http://localhost:8025/
 
 
+## Stripeについて
+コンビニ支払いとカード支払いのオプションがありますが、決済画面にてコンビニ支払いを選択しますと、レシートを印刷する画面に遷移します。そのため、カード支払いを成功させた場合に意図する画面遷移が行える想定です。<br>
+
+また、StripeのAPIキーは以下のように設定をお願いいたします。
+```
+STRIPE_PUBLIC_KEY="パブリックキー"
+STRIPE_SECRET_KEY="シークレットキー"
+```
+
+
+
+## テーブル仕様
+
+### usersテーブル
+| カラム名 | 型 | primary key | unique key | not null | foreign key |
+| --- | --- | --- | --- | --- | --- |
+| id | bigint | ◯ |  | ◯ |  |
+| name | varchar(255) |  |  | ◯ |  |
+| email | varchar(255) |  | ◯ | ◯ |  |
+| password | varchar(255) |  |  | ◯ |  |
+| postal code | varchar(8) |  |  | ◯ |  |
+| address | varchar(255) |  |  | ◯ |  |
+| building | varchar(255) |  |  | ◯ |  |
+| profile_image | varchar(255) |  |  |  |  |
+| created_at | timestamp |  |  |  |  |
+| updated_at | timestamp |  |  |  |  |
+
+### itemsテーブル
+| カラム名 | 型 | primary key | unique key | not null | foreign key |
+| --- | --- | --- | --- | --- | --- |
+| id | bigint | ◯ |  | ◯ |  |
+| user_id | bigint |  |  | ◯ | users(id) |
+| status_id | bigint |  |  | ◯ | statuses(id) |
+| condition_id | bigint |  |  |  | conditions(id) |
+| name | varchar(255) |  |  | ◯ |  |
+| description | text |  |  | ◯ |  |
+| price | integer |  |  | ◯ |  |
+| image | varchar(255) |  |  | ◯ |  |
+| brand | varchar(255) |  |  |  |  |
+| created_at | timestamp |  |  |  |  |
+| updated_at | timestamp |  |  |  |  |
+
+### categoriesテーブル
+| カラム名 | 型 | primary key | unique key | not null | foreign key |
+| --- | --- | --- | --- | --- | --- |
+| id | bigint | ◯ |  | ◯ |  |
+| name | varchar(255) |  | ◯ | ◯ |  |
+| created_at | timestamp |  |  |  |  |
+| updated_at | timestamp |  |  |  |  |
+
+### item_categoryテーブル（中間テーブル）
+| カラム名 | 型 | primary key | unique key | not null | foreign key |
+| --- | --- | --- | --- | --- | --- |
+| id | bigint | ◯ |  | ◯ |  |
+| user_id | bigint |  |  | ◯ | users(id) |
+| category_id | bigint |  |  | ◯ | categories(id) |
+| created_at | timestamp |  |  |  |  |
+| updated_at | timestamp |  |  |  |  |
+
+### transactionsテーブル
+| カラム名 | 型 | primary key | unique key | not null | foreign key |
+| --- | --- | --- | --- | --- | --- |
+| id | bigint | ◯ |  | ◯ |  |
+| item_id | bigint |  | ◯ | ◯ | items(id) |
+| buyer_id | bigint |  |  |  | users(id) |
+| status_id | bigint |  |  | ◯ | statuses(id) |
+| payment_method | varchar(50) |  |  | ◯ |  |
+| shipping_postal_code | varchar(8) |  |  | ◯ |  |
+| shipping_address | text |  |  | ◯ |  |
+| shipping_building | varchar(255) |  |  |  |  |
+| created_at | timestamp |  |  |  |  |
+| updated_at | timestamp |  |  |  |  |
+
+### likesテーブル
+| カラム名 | 型 | primary key | unique key | not null | foreign key |
+| --- | --- | --- | --- | --- | --- |
+| id | bigint | ◯ |  | ◯ |  |
+| user_id | bigint |  | ◯ | ◯ | users(id) |
+| item_id | bigint |  | ◯ | ◯ | items(id) |
+| created_at | timestamp |  |  |  |  |
+| updated_at | timestamp |  |  |  |  |
+
+### commentsテーブル
+| カラム名 | 型 | primary key | unique key | not null | foreign key |
+| --- | --- | --- | --- | --- | --- |
+| id | bigint | ◯ |  | ◯ |  |
+| user_id | bigint |  |  | ◯ | users(id) |
+| item_id | bigint |  |  | ◯ | items(id) |
+| content | text |  |  | ◯ |  |
+| created_at | timestamp |  |  |  |  |
+| updated_at | timestamp |  |  |  |  |
+
+### statusesテーブル
+| カラム名 | 型 | primary key | unique key | not null | foreign key |
+| --- | --- | --- | --- | --- | --- |
+| id | bigint | ◯ |  | ◯ |  |
+| name | varchar(255) |  |  | ◯ |  |
+| description | text |  |  | ◯ |  |
+| created_at | timestamp |  |  |  |  |
+| updated_at | timestamp |  |  |  |  |
+
+### conditionsテーブル
+| カラム名 | 型 | primary key | unique key | not null | foreign key |
+| --- | --- | --- | --- | --- | --- |
+| id | bigint | ◯ |  | ◯ |  |
+| condition | varchar(255) |  |  | ◯ |  |
+| created_at | timestamp |  |  |  |  |
+| updated_at | timestamp |  |  |  |  |
+
+
 ## 使用技術(実行環境)  
 
 - PHP8.3.11  
@@ -79,6 +189,36 @@
 ## ER図  
 
 ![ER図](public/images/ER図.svg)  
+
+
+## テストアカウント  
+
+name: テストユーザー  
+email: test@example.com  
+password: password  
+-------------------------
+name: テストユーザー２  
+email: test2@example.com  
+password: password  
+-------------------------
+
+
+## PHPUnitを利用したテストの環境構築と確認
+
+以下のコマンド:  
+```
+//テスト用データベースの作成
+docker-compose exec mysql bash
+mysql -u root -p
+
+//パスワードはrootと入力
+CREATE DATABASE demo_test;
+SHOW DATABASES;
+
+//テストの実行
+./vendor/bin/phpunit
+```
+※.env.testingにもStripeのAPIキーを設定してください。
 
 
 ## URL  
